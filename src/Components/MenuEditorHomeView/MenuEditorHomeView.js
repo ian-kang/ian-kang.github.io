@@ -1,47 +1,9 @@
-import { Add, Edit, Save } from "@mui/icons-material";
-import {
-  Box,
-  Button,
-  Grid,
-  Tab,
-  Tabs,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import React, { useState } from "react";
-import MenuCategoryTabBar from "../MenuCategoryTabBar/MenuCategoryTabBar";
 import MenuEditorListView from "../MenuEditorListView/MenuEditorListView";
-import MenuEditorPreview from "../MenuEditorPreview/MenuEditorPreview";
 
-function MenuEditorHomeView({
-  data,
-  customerId,
-  updateMenu,
-  deleteMenu,
-  addMenu,
-  addCategory,
-  editCategory,
-}) {
-  const [value, setValue] = useState();
-  const [disabled, setDisabled] = useState(true);
-  const [categoryOnChange, SetCategoryOnChange] = useState(data.menus);
-
-  const handleTabChange = (event, newValue) => {
-    setValue(newValue);
-  };
-  const handleInputOnChange = (event) => {
-    const targetInput = event.target.name;
-    const value = event.target.value;
-    const updated = { ...categoryOnChange, [targetInput]: value };
-    SetCategoryOnChange(updated);
-  };
-  const handleEditCategoryButton = () => {
-    setDisabled(false);
-  };
-  const handleSaveCategoryButton = () => {
-    setDisabled(true);
-  };
-
+function MenuEditorHomeView({ customerId, menus }) {
+  const categories = [...new Set(menus.map((menu) => menu.category))];
   return (
     <Grid container>
       <Grid container item justifyContent="center">
@@ -50,17 +12,15 @@ function MenuEditorHomeView({
         </Grid>
       </Grid>
 
-      {Object.keys(data.menus).map((category) => (
+      {menus.map((menu) => (
         <Grid container item justifyContent="center">
           <Grid container item xs={10} spacing={4}>
             <Grid container item xs={12}>
+              c
               <MenuEditorListView
-                menus={data.menus[category]}
-                updateMenu={updateMenu}
-                deleteMenu={deleteMenu}
-                addMenu={addMenu}
                 customerId={customerId}
-                category={category}
+                menus={menus}
+                categories={categories}
               />
             </Grid>
           </Grid>

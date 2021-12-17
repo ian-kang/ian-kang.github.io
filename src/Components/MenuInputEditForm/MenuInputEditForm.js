@@ -11,7 +11,6 @@ import { Delete, Edit, Save } from "@mui/icons-material";
 function MenuInputEditForm({
   customerId,
   menu,
-  menuId,
   updateMenu,
   deleteMenu,
   category,
@@ -40,7 +39,7 @@ function MenuInputEditForm({
     });
   };
   const handleSaveButtonOnClick = (event) => {
-    updateMenu(customerId, category, menuId, menuOnChange);
+    updateMenu(customerId, category, menu.menuId, menuOnChange);
     setMenuOnChange(menu);
     setDisabled({
       name: true,
@@ -50,7 +49,7 @@ function MenuInputEditForm({
     });
   };
   const handleDeleteButtonOnClick = (event) => {
-    deleteMenu(customerId, category, menuId);
+    deleteMenu(customerId, category, menu.menuId);
   };
   return (
     <Grid container item spacing={2}>

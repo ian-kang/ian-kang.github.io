@@ -6,6 +6,7 @@ import NavBar from "./Components/NavBar/NavBar";
 import repo from "./Repository/database";
 
 export default function App() {
+  const customerId = "restaurant1";
   const [database, setDatabase] = useState(repo);
 
   const updateMenu = (customerId, category, menuId, updatedMenu) => {
@@ -40,17 +41,12 @@ export default function App() {
   return (
     <Box>
       <NavBar
-        logo={database["restaurant1"]["logoImg"]}
-        name={database["restaurant1"].name}
+        logo={database[customerId]["logoImg"]}
+        name={database[customerId].name}
       />
       <MenuEditorHomeView
-        data={database["restaurant1"]}
-        customerId="restaurant1"
-        updateMenu={updateMenu}
-        deleteMenu={deleteMenu}
-        addMenu={addMenu}
-        addCategory={addCategory}
-        editCategory={editCategory}
+        customerId={customerId}
+        menus={database[customerId].menus}
       />
     </Box>
   );
