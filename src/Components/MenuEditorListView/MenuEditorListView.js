@@ -7,7 +7,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import MenuCard from "../MenuCard/MenuCard";
 import MenuInputAddForm from "../MenuInputAddForm/MenuInputAddForm";
 import MenuInputEditForm from "../MenuInputEditForm/MenuInputEditForm";
@@ -20,6 +20,13 @@ function MenuEditorListView({
   deleteMenu,
   addMenu,
 }) {
+  const [disabled, setDisabled] = useState(true);
+  const handleEditButtonOnClick = () => {
+    setDisabled(false);
+  };
+  const handleSaveButtonOnClick = () => {
+    setDisabled(true);
+  };
   return (
     <Box>
       <Box sx={{ mt: 4 }}>
@@ -30,7 +37,7 @@ function MenuEditorListView({
           <Grid container item xs={6} spacing={2} alignItems="center">
             <Grid item xs={6}>
               <TextField
-                disabled
+                disabled={disabled}
                 required
                 label="Category"
                 name="category"
@@ -40,15 +47,27 @@ function MenuEditorListView({
               />
             </Grid>
             <Grid item xs={3}>
-              <Button
-                fullWidth
-                variant="contained"
-                startIcon={<Edit />}
-                // onClick={handleEditButtonOnClick}
-              >
-                Edit
-              </Button>
+              {disabled ? (
+                <Button
+                  fullWidth
+                  variant="contained"
+                  startIcon={<Edit />}
+                  onClick={handleEditButtonOnClick}
+                >
+                  Edit
+                </Button>
+              ) : (
+                <Button
+                  fullWidth
+                  variant="contained"
+                  startIcon={<Save />}
+                  onClick={handleSaveButtonOnClick}
+                >
+                  Save
+                </Button>
+              )}
             </Grid>
+
             <Grid item xs={3}>
               <Button
                 fullWidth
