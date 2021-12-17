@@ -58,7 +58,7 @@ function MenuInputEditForm({
         <TextField
           disabled={disabled.name}
           required
-          label="Name"
+          label="Menu name"
           name="name"
           value={menuOnChange.name}
           onChange={handleInputOnChange}

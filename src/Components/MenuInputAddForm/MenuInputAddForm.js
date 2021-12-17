@@ -36,7 +36,7 @@ function MenuInputAddForm({ buttonName, customerId, category, addMenu }) {
         <Grid item xs={6}>
           <TextField
             required
-            label="Name"
+            label="Menu name"
             name="name"
             value={menu.name}
             onChange={handleInputOnChange}

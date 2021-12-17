@@ -53,7 +53,7 @@ function MenuEditorHomeView({
       {Object.keys(data.menus).map((category) => (
         <Grid container item justifyContent="center">
           <Grid container item xs={10} spacing={4}>
-            <Grid container item xs={6}>
+            <Grid container item xs={12}>
               <MenuEditorListView
                 menus={data.menus[category]}
                 updateMenu={updateMenu}
