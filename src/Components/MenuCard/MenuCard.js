@@ -5,8 +5,7 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
-import MenuEditorPreviewListItem from "../MenuEditorPreviewListItem/MenuEditorPreviewListItem";
+import React from "react";
 
 function MenuCard({ menu }) {
   return (

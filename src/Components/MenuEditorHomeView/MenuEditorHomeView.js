@@ -63,9 +63,6 @@ function MenuEditorHomeView({
                 category={category}
               />
             </Grid>
-            <Grid item xs={6}>
-              <MenuEditorPreview menus={data.menus[category]} />
-            </Grid>
           </Grid>
         </Grid>
       ))}
