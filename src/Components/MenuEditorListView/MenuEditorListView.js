@@ -1,5 +1,5 @@
-import { Delete } from "@mui/icons-material";
-import { Grid } from "@mui/material";
+import { Delete, Edit, Save } from "@mui/icons-material";
+import { Button, Grid, TextField } from "@mui/material";
 import React from "react";
 import MenuInputAddForm from "../MenuInputAddForm/MenuInputAddForm";
 import MenuInputEditForm from "../MenuInputEditForm/MenuInputEditForm";
@@ -14,6 +14,18 @@ function MenuEditorListView({
 }) {
   return (
     <Grid container spacing={4}>
+      <Grid item xs={12}>
+        <TextField
+          disabled
+          required
+          label="Category"
+          name="category"
+          value={category}
+          // onChange={handleInputOnChange}
+          fullWidth
+        />
+      </Grid>
+
       {Object.keys(menus).map((menuId) => (
         <Grid item>
           <MenuInputEditForm

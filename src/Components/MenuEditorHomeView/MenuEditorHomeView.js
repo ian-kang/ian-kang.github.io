@@ -50,72 +50,25 @@ function MenuEditorHomeView({
         </Grid>
       </Grid>
 
-      {Object.keys(categoryOnChange).map((category) => (
-        <TextField
-          disabled={disabled}
-          required
-          name={category}
-          value={category}
-          onChange={handleInputOnChange}
-        />
-      ))}
-      <Grid item>
-        <Button
-          variant="outlined"
-          startIcon={<Edit />}
-          onClick={handleEditCategoryButton}
-        >
-          Category
-        </Button>
-      </Grid>
-      <Grid item>
-        <Button variant="outlined" startIcon={<Add />} onClick={addCategory}>
-          Category
-        </Button>
-      </Grid>
-      <Grid item>
-        <Button
-          variant="outlined"
-          startIcon={<Save />}
-          onClick={handleSaveCategoryButton}
-        >
-          Category
-        </Button>
-      </Grid>
-
-      <Grid
-        container
-        alignItems="center"
-        spacing={2}
-        sx={{ borderBottom: 1, borderColor: "divider", mb: 4 }}
-      >
-        <Grid item>
-          <MenuCategoryTabBar
-            data={data}
-            category={value}
-            handleTabChange={handleTabChange}
-          />
-        </Grid>
-      </Grid>
-      {value && (
+      {Object.keys(data.menus).map((category) => (
         <Grid container item justifyContent="center">
           <Grid container item xs={10} spacing={4}>
-            <Grid item xs={6}>
+            <Grid container item xs={6}>
               <MenuEditorListView
-                menus={data.menus[value]}
+                menus={data.menus[category]}
                 updateMenu={updateMenu}
                 deleteMenu={deleteMenu}
                 addMenu={addMenu}
                 customerId={customerId}
-                category={value}
+                category={category}
               />
             </Grid>
             <Grid item xs={6}>
-              <MenuEditorPreview menus={data.menus[value]} />
+              <MenuEditorPreview menus={data.menus[category]} />
             </Grid>
           </Grid>
         </Grid>
-      )}
+      ))}
     </Grid>
   );
 }
