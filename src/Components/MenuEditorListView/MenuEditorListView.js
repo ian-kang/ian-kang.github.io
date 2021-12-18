@@ -34,6 +34,7 @@ function MenuEditorListView({
   const handleInputOnChange = (event) => {
     const value = event.target.value;
     setCategoryOnChange(value);
+    console.log("");
   };
   return (
     <>
