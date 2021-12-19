@@ -40,7 +40,6 @@ function MenuInputEditForm({
   };
   const handleSaveButtonOnClick = (event) => {
     updateMenu(customerId, category, menu.menuId, menuOnChange);
-    setMenuOnChange(menu);
     setDisabled({
       name: true,
       rate: true,

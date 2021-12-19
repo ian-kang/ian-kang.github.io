@@ -1,8 +1,8 @@
 import { Grid, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import MenuEditorListView from "../MenuEditorListView/MenuEditorListView";
 
-function MenuEditorHomeView({ customerId, menus }) {
+function MenuEditorHomeView({ menus, customerId, updateMenu }) {
   const categories = [...new Set(menus.map((menu) => menu.category))];
   return (
     <Grid container>
@@ -11,21 +11,18 @@ function MenuEditorHomeView({ customerId, menus }) {
           <Typography variant="h5">Menu Editor</Typography>
         </Grid>
       </Grid>
-
-      {menus.map((menu) => (
-        <Grid container item justifyContent="center">
-          <Grid container item xs={10} spacing={4}>
-            <Grid container item xs={12}>
-              c
-              <MenuEditorListView
-                customerId={customerId}
-                menus={menus}
-                categories={categories}
-              />
-            </Grid>
+      <Grid container item justifyContent="center">
+        <Grid container item xs={10} spacing={4}>
+          <Grid container item xs={12}>
+            <MenuEditorListView
+              menus={menus}
+              categories={categories}
+              customerId={customerId}
+              updateMenu={updateMenu}
+            />
           </Grid>
         </Grid>
-      ))}
+      </Grid>
     </Grid>
   );
 }

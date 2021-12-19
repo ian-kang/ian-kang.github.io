@@ -11,7 +11,13 @@ export default function App() {
 
   const updateMenu = (customerId, category, menuId, updatedMenu) => {
     const updated = { ...database };
-    updated[customerId].menus[category][menuId] = updatedMenu;
+    updated[customerId].menus.forEach((menu, index) => {
+      if (menu.menuId === menuId) {
+        updated[customerId].menus[index] = updatedMenu;
+        setDatabase(updated);
+        return;
+      }
+    });
     setDatabase(updated);
   };
   const deleteMenu = (customerId, category, menuId) => {
@@ -45,8 +51,9 @@ export default function App() {
         name={database[customerId].name}
       />
       <MenuEditorHomeView
-        customerId={customerId}
         menus={database[customerId].menus}
+        customerId={customerId}
+        updateMenu={updateMenu}
       />
     </Box>
   );

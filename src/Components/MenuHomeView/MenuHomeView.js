@@ -6,26 +6,34 @@ import MenuCategoryTabBar from "../MenuCategoryTabBar/MenuCategoryTabBar";
 import NavBar from "../NavBar/NavBar";
 
 function MenuHomeView() {
+  const customerId = "restaurant1";
+  const categories = [
+    ...new Set(database[customerId].menus.map((menu) => menu.category)),
+  ];
+  const menus = database[customerId].menus;
   const [category, setCategory] = useState();
   const handleTabChange = (event, newCategory) => {
     setCategory(newCategory);
   };
+
   return (
     <Box>
       <NavBar
-        logo={database["restaurant1"]["logoImg"]}
-        name={database["restaurant1"].name}
+        // logo={database[customerId]["logoImg"]}
+        name={database[customerId].name}
       />
       <Grid container item justifyContent="center">
         <Grid item>
           <Typography variant="h5">Your Menu</Typography>
         </Grid>
       </Grid>
-      <MenuCategoryTabBar
-        data={database["restaurant1"]}
-        category={category}
-        handleTabChange={handleTabChange}
-      />
+      <Grid sx={{ mb: 4 }}>
+        <MenuCategoryTabBar
+          category={category}
+          categories={categories}
+          handleTabChange={handleTabChange}
+        />
+      </Grid>
 
       <Grid container justifyContent="center">
         <Grid
@@ -37,15 +45,13 @@ function MenuHomeView() {
           alignItems="flex-start"
         >
           {category &&
-            Object.keys(database["restaurant1"].menus[category]).map(
-              (menuId) => (
+            menus
+              .filter((menu) => menu.category === category)
+              .map((menu) => (
                 <Grid item xs={12} md={6} lg={4} xl={3}>
-                  <PairedMenuCard
-                    menu={database["restaurant1"].menus[category][menuId]}
-                  />
+                  <PairedMenuCard menu={menu} />
                 </Grid>
-              )
-            )}
+              ))}
         </Grid>
       </Grid>
     </Box>

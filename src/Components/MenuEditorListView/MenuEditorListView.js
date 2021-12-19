@@ -1,4 +1,4 @@
-import { Delete, Edit, Save } from "@mui/icons-material";
+import { Edit, Save } from "@mui/icons-material";
 import {
   Button,
   Divider,
@@ -12,28 +12,17 @@ import MenuCard from "../MenuCard/MenuCard";
 import MenuInputAddForm from "../MenuInputAddForm/MenuInputAddForm";
 import MenuInputEditForm from "../MenuInputEditForm/MenuInputEditForm";
 
-function MenuEditorListView({
-  menus,
-  updateMenu,
-  customerId,
-  categories,
-  deleteMenu,
-  addMenu,
-  updateCategory,
-}) {
+function MenuEditorListView({ menus, categories, customerId, updateMenu }) {
   const [disabled, setDisabled] = useState(true);
-  const [categoryOnChange, setCategoryOnChange] = useState(category);
 
   const handleEditButtonOnClick = () => {
     setDisabled(false);
   };
   const handleSaveButtonOnClick = () => {
-    updateCategory(customerId, category, categoryOnChange);
     setDisabled(true);
   };
   const handleInputOnChange = (event) => {
     const value = event.target.value;
-    setCategoryOnChange(value);
   };
   return (
     <>
@@ -51,7 +40,7 @@ function MenuEditorListView({
                     required
                     label="Category"
                     name="category"
-                    value={categoryOnChange}
+                    value={category}
                     onChange={handleInputOnChange}
                     fullWidth
                   />
@@ -89,29 +78,30 @@ function MenuEditorListView({
                   <Typography variant="h5">{category}</Typography>
                 </Grid>
               </Grid>
-              {Object.keys(menus).map((menuId) => (
-                <Grid container item xs={12} alignItems="center" spacing={4}>
-                  <Grid item xs={6}>
-                    <MenuInputEditForm
-                      customerId={customerId}
-                      menu={menus[menuId]}
-                      menuId={menuId}
-                      updateMenu={updateMenu}
-                      deleteMenu={deleteMenu}
-                      category={category}
-                    />
+              {menus
+                .filter((menu) => menu.category === category)
+                .map((menu) => (
+                  <Grid container item xs={12} alignItems="center" spacing={4}>
+                    <Grid item xs={6}>
+                      <MenuInputEditForm
+                        customerId={customerId}
+                        menu={menu}
+                        updateMenu={updateMenu}
+                        // deleteMenu={deleteMenu}
+                        category={category}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <MenuCard menu={menu} />
+                    </Grid>
                   </Grid>
-                  <Grid item xs={6}>
-                    <MenuCard menu={menus[menuId]} />
-                  </Grid>
-                </Grid>
-              ))}
+                ))}
               <Grid item xs={6}>
                 <MenuInputAddForm
                   buttonName="Add"
                   customerId={customerId}
                   category={category}
-                  addMenu={addMenu}
+                  // addMenu={addMenu}
                 />
               </Grid>
             </Grid>

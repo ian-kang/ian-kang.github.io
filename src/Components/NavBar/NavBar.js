@@ -51,7 +51,7 @@ function NavBar({ logo, name }) {
           <Stack direction="row" spacing={2} alignItems="center">
             <Avatar
               art="logo"
-              src={logo}
+              // src={logo}
               sx={{ width: 80, height: 80 }}
               variant="rounded"
             />
