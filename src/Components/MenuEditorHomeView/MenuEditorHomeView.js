@@ -33,7 +33,7 @@ function MenuEditorHomeView({
               editCategory={editCategory}
             />
           </Grid>
-          <Grid>
+          <Grid container item>
             <CategoryAddForm
               customerId={customerId}
               addCategory={addCategory}
