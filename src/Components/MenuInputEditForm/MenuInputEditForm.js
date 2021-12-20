@@ -31,6 +31,7 @@ function MenuInputEditForm({ customerId, menu, updateMenu, deleteMenu }) {
   };
   const handleCancel = () => {
     setOpen(false);
+    setMenuOnEdit(menu);
   };
   const handleSave = () => {
     setOpen(false);

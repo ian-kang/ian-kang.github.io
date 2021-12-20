@@ -19,6 +19,7 @@ function CategoryForm({ customerId, category, editCategory }) {
     setCategoryOnEdit(value);
   };
   const handleCancel = () => {
+    setCategoryOnEdit(category);
     setOpen(false);
   };
   const handleSave = () => {
