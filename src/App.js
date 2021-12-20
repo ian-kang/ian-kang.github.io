@@ -34,17 +34,23 @@ export default function App({ fireBaseDatabase }) {
     });
   };
   const addCategory = (customerId, category) => {
-    const updated = { ...database };
-    updated[customerId].menus.push({
-      menuId: Date.now(),
-      category,
-      name: "New menu",
-      rate: "none",
-      price: "",
-      desc: "New menu description",
-      img: "",
+    const newId = Date.now();
+    fireBaseDatabase.addMenu(
+      customerId,
+      {
+        menuId: newId,
+        category,
+        name: "New menu",
+        rate: "none",
+        price: "",
+        desc: "New menu description",
+        img: "",
+      },
+      newId
+    );
+    fireBaseDatabase.getMenus(customerId, (data) => {
+      setDatabase(data);
     });
-    setDatabase(updated);
   };
   const editCategory = (customerId, oldCategory, newCategory) => {
     const updated = { ...database };
