@@ -2,7 +2,7 @@ import { Grid, Typography } from "@mui/material";
 import React from "react";
 import MenuEditorListView from "../MenuEditorListView/MenuEditorListView";
 
-function MenuEditorHomeView({ menus, customerId, updateMenu }) {
+function MenuEditorHomeView({ menus, customerId, updateMenu, deleteMenu }) {
   const categories = [...new Set(menus.map((menu) => menu.category))];
   return (
     <Grid container>
@@ -19,6 +19,7 @@ function MenuEditorHomeView({ menus, customerId, updateMenu }) {
               categories={categories}
               customerId={customerId}
               updateMenu={updateMenu}
+              deleteMenu={deleteMenu}
             />
           </Grid>
         </Grid>

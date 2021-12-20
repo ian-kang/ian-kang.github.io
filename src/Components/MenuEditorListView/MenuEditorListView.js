@@ -12,7 +12,13 @@ import MenuCard from "../MenuCard/MenuCard";
 import MenuInputAddForm from "../MenuInputAddForm/MenuInputAddForm";
 import MenuInputEditForm from "../MenuInputEditForm/MenuInputEditForm";
 
-function MenuEditorListView({ menus, categories, customerId, updateMenu }) {
+function MenuEditorListView({
+  menus,
+  categories,
+  customerId,
+  updateMenu,
+  deleteMenu,
+}) {
   const [disabled, setDisabled] = useState(true);
 
   const handleEditButtonOnClick = () => {
@@ -87,8 +93,7 @@ function MenuEditorListView({ menus, categories, customerId, updateMenu }) {
                         customerId={customerId}
                         menu={menu}
                         updateMenu={updateMenu}
-                        // deleteMenu={deleteMenu}
-                        category={category}
+                        deleteMenu={deleteMenu}
                       />
                     </Grid>
                     <Grid item xs={6}>

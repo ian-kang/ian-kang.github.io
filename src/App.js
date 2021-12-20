@@ -9,7 +9,7 @@ export default function App() {
   const customerId = "restaurant1";
   const [database, setDatabase] = useState(repo);
 
-  const updateMenu = (customerId, category, menuId, updatedMenu) => {
+  const updateMenu = (customerId, menuId, updatedMenu) => {
     const updated = { ...database };
     updated[customerId].menus.forEach((menu, index) => {
       if (menu.menuId === menuId) {
@@ -20,10 +20,13 @@ export default function App() {
     });
     setDatabase(updated);
   };
-  const deleteMenu = (customerId, category, menuId) => {
-    const deleted = { ...database };
-    delete deleted[customerId].menus[category][menuId];
-    setDatabase(deleted);
+  const deleteMenu = (customerId, menuId) => {
+    const copied = { ...database };
+    const filtered = copied[customerId].menus.filter(
+      (menu) => menu.menuId !== menuId
+    );
+    copied[customerId]["menus"] = filtered;
+    setDatabase(copied);
   };
   const addMenu = (customerId, category, menu) => {
     console.log(database);
@@ -54,6 +57,7 @@ export default function App() {
         menus={database[customerId].menus}
         customerId={customerId}
         updateMenu={updateMenu}
+        deleteMenu={deleteMenu}
       />
     </Box>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Grid,
@@ -8,13 +8,7 @@ import {
 } from "@mui/material";
 import { Delete, Edit, Save } from "@mui/icons-material";
 
-function MenuInputEditForm({
-  customerId,
-  menu,
-  updateMenu,
-  deleteMenu,
-  category,
-}) {
+function MenuInputEditForm({ customerId, menu, updateMenu, deleteMenu }) {
   const [disabled, setDisabled] = useState({
     name: true,
     rate: true,
@@ -22,6 +16,9 @@ function MenuInputEditForm({
     desc: true,
   });
   const [menuOnChange, setMenuOnChange] = useState(menu);
+  useEffect(() => {
+    return setMenuOnChange(menu);
+  });
 
   const handleInputOnChange = (event) => {
     const targetInput = event.target.name;
@@ -39,7 +36,7 @@ function MenuInputEditForm({
     });
   };
   const handleSaveButtonOnClick = (event) => {
-    updateMenu(customerId, category, menu.menuId, menuOnChange);
+    updateMenu(customerId, menu.menuId, menuOnChange);
     setDisabled({
       name: true,
       rate: true,
@@ -48,7 +45,7 @@ function MenuInputEditForm({
     });
   };
   const handleDeleteButtonOnClick = (event) => {
-    deleteMenu(customerId, category, menu.menuId);
+    deleteMenu(customerId, menu.menuId);
   };
   return (
     <Grid container item spacing={2}>
