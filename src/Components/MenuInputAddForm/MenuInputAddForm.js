@@ -97,21 +97,24 @@ function MenuInputAddForm({ buttonName, customerId, category, addMenu }) {
             }}
           />
         </Grid>
-        <Grid
-          container
-          item
-          xs={12}
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Grid item>
-            <ImageList cols={1}>
-              <ImageListItem>
-                <img src={imageFileOnEdit} alt="No Iamge" loading="lazy" />
-              </ImageListItem>
-            </ImageList>
+        {imageFileOnEdit && (
+          <Grid
+            container
+            item
+            xs={12}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid item>
+              <ImageList cols={1}>
+                <ImageListItem>
+                  <img src={imageFileOnEdit} alt="No Iamge" loading="lazy" />
+                </ImageListItem>
+              </ImageList>
+            </Grid>
           </Grid>
-        </Grid>
+        )}
+
         <Grid container item xs={12} justifyContent="right">
           <Grid item>
             <label htmlFor="contained-button-file">
