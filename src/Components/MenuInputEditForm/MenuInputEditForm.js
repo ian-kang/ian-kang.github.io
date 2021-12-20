@@ -7,21 +7,30 @@ import {
   DialogContentText,
   DialogTitle,
   Grid,
+  ImageList,
+  ImageListItem,
+  Input,
   InputAdornment,
   MenuItem,
   TextField,
 } from "@mui/material";
-import { Delete, Edit, Save } from "@mui/icons-material";
+import { Camera, Delete, Edit, PhotoCamera, Save } from "@mui/icons-material";
 
 function MenuInputEditForm({ customerId, menu, updateMenu, deleteMenu }) {
   const [open, setOpen] = useState();
   const [menuOnEdit, setMenuOnEdit] = useState(menu);
+  const [imageFileOnEdit, setImageFileOnEdit] = useState(menu.img);
 
   const handleEditButtonOnClick = (event) => {
     setOpen(true);
   };
   const handleDeleteButtonOnClick = (event) => {
     deleteMenu(customerId, menu.menuId);
+  };
+
+  const handleFileInputOnChange = (event) => {
+    const file = event.target.files[0];
+    setImageFileOnEdit(file);
   };
 
   const handleOnChange = (event) => {
@@ -85,6 +94,7 @@ function MenuInputEditForm({ customerId, menu, updateMenu, deleteMenu }) {
           }}
         />
       </Grid>
+
       <Grid item xs={12}>
         <TextField
           disabled
@@ -171,6 +181,41 @@ function MenuInputEditForm({ customerId, menu, updateMenu, deleteMenu }) {
                 }}
                 onChange={handleOnChange}
               />
+            </Grid>
+            <Grid
+              container
+              item
+              xs={12}
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Grid item>
+                <ImageList cols={1}>
+                  <ImageListItem>
+                    <img src={imageFileOnEdit} alt="No Iamge" loading="lazy" />
+                  </ImageListItem>
+                </ImageList>
+              </Grid>
+            </Grid>
+            <Grid container item xs={12} justifyContent="right">
+              <Grid item>
+                <label htmlFor="contained-button-file">
+                  <Input
+                    sx={{ display: "none" }}
+                    type="file"
+                    accept="image/*"
+                    id="contained-button-file"
+                    onChange={handleFileInputOnChange}
+                  />
+                  <Button
+                    variant="contained"
+                    component="span"
+                    startIcon={<PhotoCamera />}
+                  >
+                    Image Upload
+                  </Button>
+                </label>
+              </Grid>
             </Grid>
             <Grid item xs={12}>
               <TextField
