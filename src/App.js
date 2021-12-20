@@ -22,15 +22,13 @@ export default function App({ fireBaseDatabase }) {
     });
   };
   const deleteMenu = (customerId, menuId) => {
-    const duplicatedMenus = { ...database };
-    const filteredMenus = Object.values(duplicatedMenus.menus).filter(
-      (menu) => menu.menuId !== menuId
-    );
-    duplicatedMenus["menus"] = filteredMenus;
-    setDatabase(duplicatedMenus);
+    fireBaseDatabase.deleteMenu(customerId, menuId);
+    fireBaseDatabase.getMenus(customerId, (data) => {
+      setDatabase(data);
+    });
   };
-  const addMenu = (customerId, newMenu) => {
-    fireBaseDatabase.addMenu(customerId, newMenu);
+  const addMenu = (customerId, newMenu, newMenuId) => {
+    fireBaseDatabase.addMenu(customerId, newMenu, newMenuId);
     fireBaseDatabase.getMenus(customerId, (data) => {
       setDatabase(data);
     });

@@ -29,7 +29,7 @@ function MenuInputAddForm({ buttonName, customerId, category, addMenu }) {
     setNewMenu(updated);
   };
   const handleAddButtonOnClick = () => {
-    addMenu(customerId, newMenu);
+    addMenu(customerId, newMenu, newMenu.menuId);
     setNewMenu({
       menuId: Date.now(),
       category,

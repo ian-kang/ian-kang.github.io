@@ -1,6 +1,14 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, update, get, child } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  set,
+  update,
+  get,
+  child,
+  remove,
+} from "firebase/database";
 
 // Set the configuration for your app
 // TODO: Replace with your project's config object
@@ -18,11 +26,14 @@ export default class FirebaseDatabase {
     const app = initializeApp(firebaseConfig);
     this.database = getDatabase(app);
   }
-  addMenu(customerId, menu) {
-    set(ref(this.database, customerId + "/menus/" + Date.now()), menu);
+  addMenu(customerId, menu, menuId) {
+    set(ref(this.database, customerId + "/menus/" + menuId), menu);
   }
   updateMenu(customerId, menuId, updatedMenu) {
     update(ref(this.database, customerId + "/menus/" + menuId), updatedMenu);
+  }
+  deleteMenu(customerId, menuId) {
+    remove(ref(this.database, customerId + "/menus/" + menuId));
   }
   getMenus(customerId, callbackfn) {
     const dbRef = ref(this.database);
