@@ -6,14 +6,15 @@ import MenuInputAddForm from "../MenuInputAddForm/MenuInputAddForm";
 import MenuInputEditForm from "../MenuInputEditForm/MenuInputEditForm";
 
 function MenuEditorListView({
-  menus,
-  categories,
+  data,
   customerId,
   updateMenu,
   deleteMenu,
   addMenu,
   editCategory,
 }) {
+  const menusArray = Object.values(data.menus);
+  const categories = [...new Set(menusArray.map((menu) => menu.category))];
   return (
     <>
       {categories.map((category) => (
@@ -41,7 +42,7 @@ function MenuEditorListView({
                   <Typography variant="h5">{category}</Typography>
                 </Grid>
               </Grid>
-              {menus
+              {menusArray
                 .filter((menu) => menu.category === category)
                 .map((menu) => (
                   <Grid container item xs={12} alignItems="center" spacing={4}>

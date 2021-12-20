@@ -6,7 +6,7 @@ import NavBar from "./Components/NavBar/NavBar";
 
 export default function App({ fireBaseDatabase }) {
   const customerId = "restaurant1";
-  const [database, setDatabase] = useState();
+  const [database, setDatabase] = useState({});
 
   useEffect(() => {
     fireBaseDatabase.getMenus(customerId, (data) => {
@@ -58,20 +58,18 @@ export default function App({ fireBaseDatabase }) {
   };
   return (
     <>
-      {database && (
-        <Box>
-          <NavBar logo={database["logo"]} name={database.name} />
-          <MenuEditorHomeView
-            menus={database.menus}
-            customerId={customerId}
-            updateMenu={updateMenu}
-            deleteMenu={deleteMenu}
-            addMenu={addMenu}
-            editCategory={editCategory}
-            addCategory={addCategory}
-          />
-        </Box>
-      )}
+      <Box>
+        <NavBar logo={database["logo"]} name={database.name} />
+        <MenuEditorHomeView
+          data={database}
+          customerId={customerId}
+          updateMenu={updateMenu}
+          deleteMenu={deleteMenu}
+          addMenu={addMenu}
+          editCategory={editCategory}
+          addCategory={addCategory}
+        />
+      </Box>
     </>
   );
 }

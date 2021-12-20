@@ -4,7 +4,7 @@ import CategoryAddForm from "../CategoryAddForm/CategoryAddForm";
 import MenuEditorListView from "../MenuEditorListView/MenuEditorListView";
 
 function MenuEditorHomeView({
-  menus,
+  data,
   customerId,
   updateMenu,
   deleteMenu,
@@ -12,8 +12,6 @@ function MenuEditorHomeView({
   editCategory,
   addCategory,
 }) {
-  const menusArray = Object.values(menus);
-  const categories = [...new Set(menusArray.map((menu) => menu.category))];
   return (
     <Grid container>
       <Grid container item justifyContent="center">
@@ -23,17 +21,19 @@ function MenuEditorHomeView({
       </Grid>
       <Grid container item justifyContent="center">
         <Grid container item xs={10} spacing={4}>
-          <Grid container item xs={12}>
-            <MenuEditorListView
-              menus={menusArray}
-              categories={categories}
-              customerId={customerId}
-              updateMenu={updateMenu}
-              deleteMenu={deleteMenu}
-              addMenu={addMenu}
-              editCategory={editCategory}
-            />
-          </Grid>
+          {Object.keys(data).find((key) => key === "menus") && (
+            <Grid container item xs={12}>
+              <MenuEditorListView
+                data={data}
+                customerId={customerId}
+                updateMenu={updateMenu}
+                deleteMenu={deleteMenu}
+                addMenu={addMenu}
+                editCategory={editCategory}
+              />
+            </Grid>
+          )}
+
           <Grid container item xs={12}>
             <CategoryAddForm
               customerId={customerId}
