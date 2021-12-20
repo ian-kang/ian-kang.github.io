@@ -9,25 +9,31 @@ import {
 import { Add } from "@mui/icons-material";
 
 function MenuInputAddForm({ buttonName, customerId, category, addMenu }) {
-  const [menu, setMenu] = useState({
+  const [newMenu, setNewMenu] = useState({
+    menuId: Date.now(),
+    category,
     name: "",
     rate: "none",
     price: "",
     desc: "",
+    img: "",
   });
   const handleInputOnChange = (event) => {
     const targetInput = event.target.name;
     const value = event.target.value;
-    const updated = { ...menu, [targetInput]: value };
-    setMenu(updated);
+    const updated = { ...newMenu, [targetInput]: value };
+    setNewMenu(updated);
   };
   const handleAddButtonOnClick = () => {
-    addMenu(customerId, category, menu);
-    setMenu({
+    addMenu(customerId, newMenu);
+    setNewMenu({
+      menuId: Date.now(),
+      category,
       name: "",
       rate: "none",
       price: "",
       desc: "",
+      img: "",
     });
   };
   return (
@@ -38,7 +44,7 @@ function MenuInputAddForm({ buttonName, customerId, category, addMenu }) {
             required
             label="Menu name"
             name="name"
-            value={menu.name}
+            value={newMenu.name}
             onChange={handleInputOnChange}
             fullWidth
           />
@@ -48,7 +54,7 @@ function MenuInputAddForm({ buttonName, customerId, category, addMenu }) {
             select
             label="Rate"
             name="rate"
-            value={menu.rate}
+            value={newMenu.rate}
             onChange={handleInputOnChange}
             fullWidth
           >
@@ -71,7 +77,7 @@ function MenuInputAddForm({ buttonName, customerId, category, addMenu }) {
             type="number"
             label="Price"
             name="price"
-            value={menu.price}
+            value={newMenu.price}
             onChange={handleInputOnChange}
             fullWidth
             InputProps={{
@@ -85,7 +91,7 @@ function MenuInputAddForm({ buttonName, customerId, category, addMenu }) {
           <TextField
             label="Description"
             name="desc"
-            value={menu.desc}
+            value={newMenu.desc}
             onChange={handleInputOnChange}
             fullWidth
             multiline

@@ -18,6 +18,7 @@ function MenuEditorListView({
   customerId,
   updateMenu,
   deleteMenu,
+  addMenu,
 }) {
   const [disabled, setDisabled] = useState(true);
 
@@ -106,7 +107,7 @@ function MenuEditorListView({
                   buttonName="Add"
                   customerId={customerId}
                   category={category}
-                  // addMenu={addMenu}
+                  addMenu={addMenu}
                 />
               </Grid>
             </Grid>

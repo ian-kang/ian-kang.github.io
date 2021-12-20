@@ -28,14 +28,10 @@ export default function App() {
     copied[customerId]["menus"] = filtered;
     setDatabase(copied);
   };
-  const addMenu = (customerId, category, menu) => {
-    console.log(database);
-    console.log(customerId, category, menu);
-    const added = { ...database };
-    added[customerId].menus[category][
-      `${category}${Object.keys(added[customerId].menus[category]).length + 1}`
-    ] = menu;
-    setDatabase(added);
+  const addMenu = (customerId, newMenu) => {
+    const copied = { ...database };
+    copied[customerId].menus.push(newMenu);
+    setDatabase(copied);
   };
   const addCategory = (customerId, category) => {
     const updated = { ...database };
@@ -58,6 +54,7 @@ export default function App() {
         customerId={customerId}
         updateMenu={updateMenu}
         deleteMenu={deleteMenu}
+        addMenu={addMenu}
       />
     </Box>
   );
