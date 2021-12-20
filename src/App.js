@@ -35,12 +35,25 @@ export default function App() {
   };
   const addCategory = (customerId, category) => {
     const updated = { ...database };
-    updated[customerId].menus = category;
+    updated[customerId].menus.push({
+      menuId: Date.now(),
+      category,
+      name: "",
+      rate: "none",
+      price: "",
+      desc: "",
+      img: "",
+    });
     setDatabase(updated);
   };
-  const editCategory = (customerId, category) => {
+  const editCategory = (customerId, oldCategory, newCategory) => {
     const updated = { ...database };
-    updated[customerId].menus = category;
+    updated[customerId].menus.forEach((menu) => {
+      if (menu.category === oldCategory) {
+        menu.category = newCategory;
+        return;
+      }
+    });
     setDatabase(updated);
   };
   return (
@@ -55,6 +68,8 @@ export default function App() {
         updateMenu={updateMenu}
         deleteMenu={deleteMenu}
         addMenu={addMenu}
+        editCategory={editCategory}
+        addCategory={addCategory}
       />
     </Box>
   );

@@ -6,8 +6,14 @@ import {
   Box,
   TextField,
   Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@mui/material";
 import React, { useState } from "react";
+import CategoryForm from "../CategoryForm/CategoryForm";
 import MenuCard from "../MenuCard/MenuCard";
 import MenuInputAddForm from "../MenuInputAddForm/MenuInputAddForm";
 import MenuInputEditForm from "../MenuInputEditForm/MenuInputEditForm";
@@ -19,18 +25,8 @@ function MenuEditorListView({
   updateMenu,
   deleteMenu,
   addMenu,
+  editCategory,
 }) {
-  const [disabled, setDisabled] = useState(true);
-
-  const handleEditButtonOnClick = () => {
-    setDisabled(false);
-  };
-  const handleSaveButtonOnClick = () => {
-    setDisabled(true);
-  };
-  const handleInputOnChange = (event) => {
-    const value = event.target.value;
-  };
   return (
     <>
       {categories.map((category) => (
@@ -40,40 +36,11 @@ function MenuEditorListView({
           </Box>
           <Box>
             <Grid container spacing={4} sx={{ mt: 1 }}>
-              <Grid container item xs={6} spacing={2} alignItems="center">
-                <Grid item xs={9}>
-                  <TextField
-                    disabled={disabled}
-                    required
-                    label="Category"
-                    name="category"
-                    value={category}
-                    onChange={handleInputOnChange}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={3}>
-                  {disabled ? (
-                    <Button
-                      fullWidth
-                      variant="contained"
-                      startIcon={<Edit />}
-                      onClick={handleEditButtonOnClick}
-                    >
-                      Edit
-                    </Button>
-                  ) : (
-                    <Button
-                      fullWidth
-                      variant="contained"
-                      startIcon={<Save />}
-                      onClick={handleSaveButtonOnClick}
-                    >
-                      Save
-                    </Button>
-                  )}
-                </Grid>
-              </Grid>
+              <CategoryForm
+                customerId={customerId}
+                category={category}
+                editCategory={editCategory}
+              />
               <Grid
                 item
                 container
