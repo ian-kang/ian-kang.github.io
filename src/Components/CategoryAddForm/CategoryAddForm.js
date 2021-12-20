@@ -10,6 +10,7 @@ function CategoryAddForm({ customerId, addCategory }) {
   };
   const handleAddButtonOnClick = () => {
     addCategory(customerId, category);
+    setCategory("");
   };
 
   return (
