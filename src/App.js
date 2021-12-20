@@ -1,13 +1,18 @@
 import { Box } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import MenuEditorHomeView from "./Components/MenuEditorHomeView/MenuEditorHomeView";
 import NavBar from "./Components/NavBar/NavBar";
-import repo from "./Repository/database";
 
-export default function App() {
+export default function App({ fireBaseDatabase }) {
   const customerId = "restaurant1";
-  const [database, setDatabase] = useState(repo);
+  const [database, setDatabase] = useState();
+
+  useEffect(() => {
+    fireBaseDatabase.getMenus(customerId, (data) => {
+      setDatabase(data);
+    });
+  });
 
   const updateMenu = (customerId, menuId, updatedMenu) => {
     const updated = { ...database };
@@ -57,20 +62,21 @@ export default function App() {
     setDatabase(updated);
   };
   return (
-    <Box>
-      <NavBar
-        logo={database[customerId]["logoImg"]}
-        name={database[customerId].name}
-      />
-      <MenuEditorHomeView
-        menus={database[customerId].menus}
-        customerId={customerId}
-        updateMenu={updateMenu}
-        deleteMenu={deleteMenu}
-        addMenu={addMenu}
-        editCategory={editCategory}
-        addCategory={addCategory}
-      />
-    </Box>
+    <>
+      {database && (
+        <Box>
+          <NavBar logo={database["logo"]} name={database.name} />
+          <MenuEditorHomeView
+            menus={database.menus}
+            customerId={customerId}
+            updateMenu={updateMenu}
+            deleteMenu={deleteMenu}
+            addMenu={addMenu}
+            editCategory={editCategory}
+            addCategory={addCategory}
+          />
+        </Box>
+      )}
+    </>
   );
 }

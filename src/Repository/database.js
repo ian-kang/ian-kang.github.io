@@ -5,8 +5,7 @@ const database = {
     address: "1820 Industrial St Los Angeles, CA 90021",
     phone: "(213) 327-0304",
     website: "http://pourhauswinebar.com/",
-    logoImg:
-      "https://res.cloudinary.com/db7ss52zt/image/upload/v1639668058/Menu%20Creator/Logo/Pour_Haus_Wine_Bar_Logo_uhxovp.jpg",
+    logo: "https://res.cloudinary.com/db7ss52zt/image/upload/v1639668058/Menu%20Creator/Logo/Pour_Haus_Wine_Bar_Logo_uhxovp.jpg",
     menus: [
       {
         menuId: "foodId1",

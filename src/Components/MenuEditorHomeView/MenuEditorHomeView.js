@@ -12,7 +12,8 @@ function MenuEditorHomeView({
   editCategory,
   addCategory,
 }) {
-  const categories = [...new Set(menus.map((menu) => menu.category))];
+  const menusArray = Object.values(menus);
+  const categories = [...new Set(menusArray.map((menu) => menu.category))];
   return (
     <Grid container>
       <Grid container item justifyContent="center">
@@ -24,7 +25,7 @@ function MenuEditorHomeView({
         <Grid container item xs={10} spacing={4}>
           <Grid container item xs={12}>
             <MenuEditorListView
-              menus={menus}
+              menus={menusArray}
               categories={categories}
               customerId={customerId}
               updateMenu={updateMenu}

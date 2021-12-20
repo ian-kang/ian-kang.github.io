@@ -8,6 +8,9 @@ import Home from "./Components/Home/Home";
 import About from "./Components/About/About";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import MenuHomeView from "./Components/MenuHomeView/MenuHomeView";
+import FirebaseDatabase from "./Repository/realtimeDatabase";
+
+const fireBaseDatabase = new FirebaseDatabase();
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,7 +19,10 @@ ReactDOM.render(
         <Route path="/" element={<Home />}></Route>
         <Route path="/about" element={<About />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
-        <Route path="/design" element={<App />}></Route>
+        <Route
+          path="/design"
+          element={<App fireBaseDatabase={fireBaseDatabase} />}
+        ></Route>
         <Route path="/menu" element={<MenuHomeView />}></Route>
       </Routes>
     </BrowserRouter>
