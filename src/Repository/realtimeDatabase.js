@@ -18,11 +18,11 @@ export default class FirebaseDatabase {
     const app = initializeApp(firebaseConfig);
     this.database = getDatabase(app);
   }
-  writeMenus(customerId, menus) {
-    set(ref(this.database, customerId + "/menus"), menus);
+  addMenu(customerId, menu) {
+    set(ref(this.database, customerId + "/menus/" + Date.now()), menu);
   }
-  updateMenus(customerId, menus) {
-    update(ref(this.database, customerId + "/menus"), menus);
+  updateMenu(customerId, menuId, updatedMenu) {
+    update(ref(this.database, customerId + "/menus/" + menuId), updatedMenu);
   }
   getMenus(customerId, callbackfn) {
     const dbRef = ref(this.database);

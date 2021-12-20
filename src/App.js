@@ -11,32 +11,29 @@ export default function App({ fireBaseDatabase }) {
   useEffect(() => {
     fireBaseDatabase.getMenus(customerId, (data) => {
       setDatabase(data);
+      console.log(data);
     });
-  });
+  }, []);
 
   const updateMenu = (customerId, menuId, updatedMenu) => {
-    const updated = { ...database };
-    updated[customerId].menus.forEach((menu, index) => {
-      if (menu.menuId === menuId) {
-        updated[customerId].menus[index] = updatedMenu;
-        setDatabase(updated);
-        return;
-      }
+    fireBaseDatabase.updateMenu(customerId, menuId, updatedMenu);
+    fireBaseDatabase.getMenus(customerId, (data) => {
+      setDatabase(data);
     });
-    setDatabase(updated);
   };
   const deleteMenu = (customerId, menuId) => {
-    const copied = { ...database };
-    const filtered = copied[customerId].menus.filter(
+    const duplicatedMenus = { ...database };
+    const filteredMenus = Object.values(duplicatedMenus.menus).filter(
       (menu) => menu.menuId !== menuId
     );
-    copied[customerId]["menus"] = filtered;
-    setDatabase(copied);
+    duplicatedMenus["menus"] = filteredMenus;
+    setDatabase(duplicatedMenus);
   };
   const addMenu = (customerId, newMenu) => {
-    const copied = { ...database };
-    copied[customerId].menus.push(newMenu);
-    setDatabase(copied);
+    fireBaseDatabase.addMenu(customerId, newMenu);
+    fireBaseDatabase.getMenus(customerId, (data) => {
+      setDatabase(data);
+    });
   };
   const addCategory = (customerId, category) => {
     const updated = { ...database };
