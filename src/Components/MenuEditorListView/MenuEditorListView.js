@@ -1,18 +1,5 @@
-import { Edit, Save } from "@mui/icons-material";
-import {
-  Button,
-  Divider,
-  Grid,
-  Box,
-  TextField,
-  Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-} from "@mui/material";
-import React, { useState } from "react";
+import { Divider, Grid, Box, Typography } from "@mui/material";
+import React from "react";
 import CategoryForm from "../CategoryForm/CategoryForm";
 import MenuCard from "../MenuCard/MenuCard";
 import MenuInputAddForm from "../MenuInputAddForm/MenuInputAddForm";
@@ -36,11 +23,13 @@ function MenuEditorListView({
           </Box>
           <Box>
             <Grid container spacing={4} sx={{ mt: 1 }}>
-              <CategoryForm
-                customerId={customerId}
-                category={category}
-                editCategory={editCategory}
-              />
+              <Grid item xs={6}>
+                <CategoryForm
+                  customerId={customerId}
+                  category={category}
+                  editCategory={editCategory}
+                />
+              </Grid>
               <Grid
                 item
                 container

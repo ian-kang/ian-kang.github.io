@@ -30,7 +30,7 @@ function CategoryForm({ customerId, category, editCategory }) {
     setOpen(true);
   };
   return (
-    <Grid container item xs={6} spacing={2} alignItems="center">
+    <Grid container item spacing={2} alignItems="center">
       <Grid item xs={9}>
         <TextField
           disabled

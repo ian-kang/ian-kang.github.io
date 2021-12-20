@@ -38,10 +38,10 @@ export default function App() {
     updated[customerId].menus.push({
       menuId: Date.now(),
       category,
-      name: "",
+      name: "New menu",
       rate: "none",
       price: "",
-      desc: "",
+      desc: "New menu description",
       img: "",
     });
     setDatabase(updated);

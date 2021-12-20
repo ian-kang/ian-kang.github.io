@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Dialog,
@@ -14,7 +14,7 @@ import {
   MenuItem,
   TextField,
 } from "@mui/material";
-import { Camera, Delete, Edit, PhotoCamera, Save } from "@mui/icons-material";
+import { Delete, Edit, PhotoCamera, Save } from "@mui/icons-material";
 
 function MenuInputEditForm({ customerId, menu, updateMenu, deleteMenu }) {
   const [open, setOpen] = useState();
@@ -94,7 +94,6 @@ function MenuInputEditForm({ customerId, menu, updateMenu, deleteMenu }) {
           }}
         />
       </Grid>
-
       <Grid item xs={12}>
         <TextField
           disabled

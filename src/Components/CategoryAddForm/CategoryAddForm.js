@@ -1,9 +1,9 @@
 import { Add } from "@mui/icons-material";
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Divider, Grid, TextField } from "@mui/material";
 import React, { useState } from "react";
 
 function CategoryAddForm({ customerId, addCategory }) {
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("New Category");
   const handleOnChange = (event) => {
     const value = event.target.value;
     setCategory(value);
@@ -14,10 +14,11 @@ function CategoryAddForm({ customerId, addCategory }) {
 
   return (
     <Grid container item xs={6} spacing={2} alignItems="center">
+      <Divider />
       <Grid item xs={9}>
         <TextField
           required
-          label="Category"
+          label="New category"
           name="category"
           value={category}
           onChange={handleOnChange}

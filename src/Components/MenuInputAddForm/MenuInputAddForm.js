@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import {
   Button,
   Grid,
+  ImageList,
+  ImageListItem,
+  Input,
   InputAdornment,
   MenuItem,
   TextField,
 } from "@mui/material";
-import { Add } from "@mui/icons-material";
+import { Add, PhotoCamera } from "@mui/icons-material";
 
 function MenuInputAddForm({ buttonName, customerId, category, addMenu }) {
   const [newMenu, setNewMenu] = useState({
@@ -18,6 +21,7 @@ function MenuInputAddForm({ buttonName, customerId, category, addMenu }) {
     desc: "",
     img: "",
   });
+  const [imageFileOnEdit, setImageFileOnEdit] = useState("");
   const handleInputOnChange = (event) => {
     const targetInput = event.target.name;
     const value = event.target.value;
@@ -35,6 +39,12 @@ function MenuInputAddForm({ buttonName, customerId, category, addMenu }) {
       desc: "",
       img: "",
     });
+  };
+  const handleFileInputOnChange = (event) => {
+    const file = event.target.files[0];
+    setImageFileOnEdit(file);
+    const updated = { ...newMenu, img: file };
+    setNewMenu(updated);
   };
   return (
     <div>
@@ -86,6 +96,41 @@ function MenuInputAddForm({ buttonName, customerId, category, addMenu }) {
               ),
             }}
           />
+        </Grid>
+        <Grid
+          container
+          item
+          xs={12}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Grid item>
+            <ImageList cols={1}>
+              <ImageListItem>
+                <img src={imageFileOnEdit} alt="No Iamge" loading="lazy" />
+              </ImageListItem>
+            </ImageList>
+          </Grid>
+        </Grid>
+        <Grid container item xs={12} justifyContent="right">
+          <Grid item>
+            <label htmlFor="contained-button-file">
+              <Input
+                sx={{ display: "none" }}
+                type="file"
+                accept="image/*"
+                id="contained-button-file"
+                onChange={handleFileInputOnChange}
+              />
+              <Button
+                variant="contained"
+                component="span"
+                startIcon={<PhotoCamera />}
+              >
+                Image Upload
+              </Button>
+            </label>
+          </Grid>
         </Grid>
         <Grid item xs={12}>
           <TextField
