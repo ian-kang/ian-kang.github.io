@@ -48,12 +48,27 @@ function MenuInputAddForm({
     setNewMenu(updated);
   };
   const handleAddButtonOnClick = async () => {
-    const result = await cloudinary.imageUpload(imageFileOnEdit, [
-      newMenu.menuId,
-      newMenu.category,
-      newMenu.name,
-    ]);
-    addMenu(customerId, { ...newMenu, img: result.url }, newMenu.menuId);
+    if (imageFileOnEdit) {
+      const result = await cloudinary.imageUpload(imageFileOnEdit, [
+        newMenu.menuId,
+        newMenu.category,
+        newMenu.name,
+      ]);
+      addMenu(customerId, { ...newMenu, img: result.url }, newMenu.menuId);
+      setNewMenu({
+        menuId: Date.now(),
+        category,
+        name: "",
+        rate: "none",
+        price: "",
+        desc: "",
+        img: "",
+      });
+      setImageUrlOnEdit("");
+      setImageFileOnEdit();
+      return;
+    }
+    addMenu(customerId, newMenu, newMenu.menuId);
     setNewMenu({
       menuId: Date.now(),
       category,
@@ -63,7 +78,6 @@ function MenuInputAddForm({
       desc: "",
       img: "",
     });
-    setImageUrlOnEdit("");
   };
 
   return (
