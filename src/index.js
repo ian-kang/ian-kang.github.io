@@ -27,7 +27,10 @@ ReactDOM.render(
             <App fireBaseDatabase={fireBaseDatabase} cloudinary={cloudinary} />
           }
         ></Route>
-        <Route path="/menu" element={<MenuHomeView />}></Route>
+        <Route
+          path="/menu"
+          element={<MenuHomeView fireBaseDatabase={fireBaseDatabase} />}
+        ></Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

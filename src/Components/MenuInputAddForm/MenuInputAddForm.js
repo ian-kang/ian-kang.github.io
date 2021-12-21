@@ -27,22 +27,21 @@ function MenuInputAddForm({
     desc: "",
     img: "",
   });
-  const [imageUrlOnEdit, setImageUrlOnEdit] = useState("");
-  const [imageFileOnEdit, setImageFileOnEdit] = useState();
+  const [imageFileOnEdit, setImageFileOnAdd] = useState();
 
   useEffect(() => {
     setNewMenu({ ...newMenu, category });
   }, [category]);
 
   const handleInputOnChange = (event) => {
-    if (event.target.name === "img") {
+    const targetInput = event.target.name;
+    if (targetInput === "img") {
       const file = event.target.files[0];
       const url = URL.createObjectURL(file);
-      setImageUrlOnEdit(url);
-      setImageFileOnEdit(file);
+      setImageFileOnAdd(file);
+      setNewMenu({ ...newMenu, category, [targetInput]: url });
       return;
     }
-    const targetInput = event.target.name;
     const value = event.target.value;
     setNewMenu({ ...newMenu, category, [targetInput]: value });
   };
@@ -63,8 +62,7 @@ function MenuInputAddForm({
         desc: "",
         img: "",
       });
-      setImageUrlOnEdit("");
-      setImageFileOnEdit();
+      setImageFileOnAdd();
       return;
     }
     addMenu(customerId, newMenu, newMenu.menuId);
@@ -130,7 +128,7 @@ function MenuInputAddForm({
             }}
           />
         </Grid>
-        {imageUrlOnEdit && (
+        {newMenu.img && (
           <Grid
             container
             item
@@ -141,7 +139,7 @@ function MenuInputAddForm({
             <Grid item>
               <ImageList cols={1}>
                 <ImageListItem>
-                  <img src={imageUrlOnEdit} alt="No Iamge" loading="lazy" />
+                  <img src={newMenu.img} alt="Not found" loading="lazy" />
                 </ImageListItem>
               </ImageList>
             </Grid>
@@ -150,12 +148,12 @@ function MenuInputAddForm({
 
         <Grid container item xs={12} justifyContent="right">
           <Grid item>
-            <label htmlFor="contained-button-file">
+            <label htmlFor={`contained-button-file-${category}`}>
               <Input
                 sx={{ display: "none" }}
                 type="file"
                 accept="image/*"
-                id="contained-button-file"
+                id={`contained-button-file-${category}`}
                 name="img"
                 onChange={handleInputOnChange}
               />

@@ -1,14 +1,5 @@
-import {
-  Avatar,
-  Box,
-  Breadcrumbs,
-  Stack,
-  Tab,
-  Tabs,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Stack, Tab, Tabs, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 
 function NavBar({ logo, name }) {
   const [navValue, setNavValue] = useState();

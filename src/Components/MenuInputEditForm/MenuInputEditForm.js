@@ -62,10 +62,11 @@ function MenuInputEditForm({
         menuOnEdit.name,
       ]);
       updateMenu(customerId, menu.menuId, { ...menuOnEdit, img: result.url });
-
+      setMenuOnEdit(menu);
       return;
     }
     updateMenu(customerId, menu.menuId, menuOnEdit);
+    setMenuOnEdit(menu);
   };
   return (
     <Grid container item spacing={2}>
@@ -153,6 +154,17 @@ function MenuInputEditForm({
           <DialogContentText></DialogContentText>
 
           <Grid sx={{ mt: 1 }} container item spacing={2} alignItems="center">
+            <Grid item xs={12}>
+              <TextField
+                required
+                autoFocus
+                label="Category"
+                name="category"
+                value={menuOnEdit.category}
+                fullWidth
+                onChange={handleOnChange}
+              />
+            </Grid>
             <Grid item xs={6}>
               <TextField
                 required
@@ -222,12 +234,12 @@ function MenuInputEditForm({
 
             <Grid container item xs={12} justifyContent="right">
               <Grid item>
-                <label htmlFor="contained-button-file-edit">
+                <label htmlFor={`contained-button-file-${menuOnEdit.menuId}`}>
                   <Input
                     sx={{ display: "none" }}
                     type="file"
                     accept="image/*"
-                    id="contained-button-file-edit"
+                    id={`contained-button-file-${menuOnEdit.menuId}`}
                     name="img"
                     onChange={handleOnChange}
                   />

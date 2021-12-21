@@ -66,20 +66,18 @@ export default function App({ fireBaseDatabase, cloudinary }) {
     });
   };
   return (
-    <>
-      <Box>
-        <NavBar logo={database["logo"]} name={database.name} />
-        <MenuEditorHomeView
-          data={database}
-          cloudinary={cloudinary}
-          customerId={customerId}
-          updateMenu={updateMenu}
-          deleteMenu={deleteMenu}
-          addMenu={addMenu}
-          editCategory={editCategory}
-          addCategory={addCategory}
-        />
-      </Box>
-    </>
+    <Box>
+      <NavBar logo={database["logo"]} name={database.name} />
+      <MenuEditorHomeView
+        data={database}
+        cloudinary={cloudinary}
+        customerId={customerId}
+        updateMenu={updateMenu}
+        deleteMenu={deleteMenu}
+        addMenu={addMenu}
+        editCategory={editCategory}
+        addCategory={addCategory}
+      />
+    </Box>
   );
 }
