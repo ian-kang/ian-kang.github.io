@@ -49,4 +49,7 @@ export default class FirebaseDatabase {
         console.error(error);
       });
   }
+  updateCategory(customerId, menusWithNewCategory) {
+    update(ref(this.database, customerId + "/menus"), menusWithNewCategory);
+  }
 }

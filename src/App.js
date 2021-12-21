@@ -53,14 +53,18 @@ export default function App({ fireBaseDatabase }) {
     });
   };
   const editCategory = (customerId, oldCategory, newCategory) => {
-    const updated = { ...database };
-    updated[customerId].menus.forEach((menu) => {
-      if (menu.category === oldCategory) {
-        menu.category = newCategory;
+    const copied = { ...database.menus };
+    Object.keys(copied).forEach((key) => {
+      if (copied[key].category === oldCategory) {
+        copied[key].category = newCategory;
         return;
       }
     });
-    setDatabase(updated);
+    fireBaseDatabase.updateCategory(customerId, copied);
+
+    fireBaseDatabase.getMenus(customerId, (data) => {
+      setDatabase(data);
+    });
   };
   return (
     <>

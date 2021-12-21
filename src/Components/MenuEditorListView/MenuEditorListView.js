@@ -1,6 +1,6 @@
 import { Divider, Grid, Box, Typography } from "@mui/material";
 import React from "react";
-import CategoryForm from "../CategoryForm/CategoryForm";
+import CategoryAddForm from "../CategoryEditForm/CategoryEditForm";
 import MenuCard from "../MenuCard/MenuCard";
 import MenuInputAddForm from "../MenuInputAddForm/MenuInputAddForm";
 import MenuInputEditForm from "../MenuInputEditForm/MenuInputEditForm";
@@ -25,7 +25,7 @@ function MenuEditorListView({
           <Box>
             <Grid container spacing={4} sx={{ mt: 1 }}>
               <Grid item xs={6}>
-                <CategoryForm
+                <CategoryAddForm
                   customerId={customerId}
                   category={category}
                   editCategory={editCategory}
