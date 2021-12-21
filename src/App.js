@@ -11,7 +11,6 @@ export default function App({ fireBaseDatabase }) {
   useEffect(() => {
     fireBaseDatabase.getMenus(customerId, (data) => {
       setDatabase(data);
-      console.log(data);
     });
   }, []);
 

@@ -97,6 +97,15 @@ function MenuInputEditForm({ customerId, menu, updateMenu, deleteMenu }) {
       <Grid item xs={12}>
         <TextField
           disabled
+          label="Category"
+          name="category"
+          value={menu.category}
+          fullWidth
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          disabled
           label="Description"
           name="desc"
           value={menu.desc}

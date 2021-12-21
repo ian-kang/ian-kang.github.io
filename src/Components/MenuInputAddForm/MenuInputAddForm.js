@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Grid,
@@ -21,11 +21,16 @@ function MenuInputAddForm({ buttonName, customerId, category, addMenu }) {
     desc: "",
     img: "",
   });
+
+  useEffect(() => {
+    setNewMenu({ ...newMenu, category });
+  }, [category]);
+
   const [imageFileOnEdit, setImageFileOnEdit] = useState("");
   const handleInputOnChange = (event) => {
     const targetInput = event.target.name;
     const value = event.target.value;
-    const updated = { ...newMenu, [targetInput]: value };
+    const updated = { ...newMenu, category, [targetInput]: value };
     setNewMenu(updated);
   };
   const handleAddButtonOnClick = () => {
@@ -134,6 +139,15 @@ function MenuInputAddForm({ buttonName, customerId, category, addMenu }) {
               </Button>
             </label>
           </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            disabled
+            label="Category"
+            name="category"
+            value={newMenu.category}
+            fullWidth
+          />
         </Grid>
         <Grid item xs={12}>
           <TextField

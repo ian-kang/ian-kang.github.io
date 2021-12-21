@@ -50,6 +50,6 @@ export default class FirebaseDatabase {
       });
   }
   updateCategory(customerId, menusWithNewCategory) {
-    update(ref(this.database, customerId + "/menus"), menusWithNewCategory);
+    update(ref(this.database, customerId + "/menus/"), menusWithNewCategory);
   }
 }
