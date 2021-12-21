@@ -26,6 +26,7 @@ function MenuInputAddForm({
     price: "",
     desc: "",
     img: "",
+    pair: [],
   });
   const [imageFileOnEdit, setImageFileOnAdd] = useState();
 

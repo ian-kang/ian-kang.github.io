@@ -44,6 +44,7 @@ export default function App({ fireBaseDatabase, cloudinary }) {
         price: "",
         desc: "New menu description",
         img: "",
+        pair: [],
       },
       newId
     );

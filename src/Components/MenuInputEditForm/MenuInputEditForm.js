@@ -1,25 +1,33 @@
 import React, { useState } from "react";
 import {
   Button,
+  Chip,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
+  FormControl,
   Grid,
   ImageList,
   ImageListItem,
   Input,
   InputAdornment,
+  InputLabel,
+  ListSubheader,
   MenuItem,
+  OutlinedInput,
+  Select,
   TextField,
 } from "@mui/material";
 import { Delete, Edit, PhotoCamera, Save } from "@mui/icons-material";
+import { Box } from "@mui/system";
 
 function MenuInputEditForm({
   cloudinary,
   customerId,
   menu,
+  menusArray,
   updateMenu,
   deleteMenu,
 }) {
@@ -42,6 +50,11 @@ function MenuInputEditForm({
       setImageUrlOnEdit(url);
       setImageFileOnEdit(file);
       return;
+    } else if (event.target.name === "pair") {
+      const value = event.target.value;
+      const pairs = typeof value === "string" ? value.split(",") : value;
+      setMenuOnEdit({ ...menuOnEdit, pair: pairs });
+      return;
     }
     const target = event.target.name;
     const value = event.target.value;
@@ -54,19 +67,22 @@ function MenuInputEditForm({
     setImageFileOnEdit();
   };
   const handleSave = async () => {
-    setOpen(false);
     if (imageFileOnEdit) {
       const result = await cloudinary.imageUpload(imageFileOnEdit, [
         menuOnEdit.menuId,
         menuOnEdit.category,
         menuOnEdit.name,
       ]);
-      updateMenu(customerId, menu.menuId, { ...menuOnEdit, img: result.url });
+      updateMenu(customerId, menu.menuId, {
+        ...menuOnEdit,
+        img: result.url,
+      });
       setMenuOnEdit(menu);
       return;
     }
-    updateMenu(customerId, menu.menuId, menuOnEdit);
+    updateMenu(customerId, menu.menuId, { ...menuOnEdit });
     setMenuOnEdit(menu);
+    setOpen(false);
   };
   return (
     <Grid container item spacing={2}>
@@ -122,6 +138,16 @@ function MenuInputEditForm({
           label="Description"
           name="desc"
           value={menu.desc}
+          fullWidth
+          multiline
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          disabled
+          label="Best Paired With"
+          name="pair"
+          value={menu.pair}
           fullWidth
           multiline
         />
@@ -262,6 +288,33 @@ function MenuInputEditForm({
                 multiline
                 onChange={handleOnChange}
               />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl fullWidth>
+                <InputLabel id={`best-paired-with-${menuOnEdit.menuId}`}>
+                  Best Paired With
+                </InputLabel>
+                <Select
+                  labelId={`best-paired-with-${menuOnEdit.menuId}`}
+                  multiple
+                  value={menuOnEdit.pair}
+                  name="pair"
+                  label="Best Pair With"
+                  onChange={handleOnChange}
+                  input={<OutlinedInput />}
+                  renderValue={(selected) => (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {selected.map((value) => (
+                        <Chip key={value} label={value} />
+                      ))}
+                    </Box>
+                  )}
+                >
+                  {menusArray.map((menu) => (
+                    <MenuItem value={menu.name}>{menu.name}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
           </Grid>
         </DialogContent>

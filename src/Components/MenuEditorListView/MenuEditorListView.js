@@ -52,6 +52,8 @@ function MenuEditorListView({
                         cloudinary={cloudinary}
                         customerId={customerId}
                         menu={menu}
+                        menusArray={menusArray}
+                        categories={categories}
                         updateMenu={updateMenu}
                         deleteMenu={deleteMenu}
                       />
