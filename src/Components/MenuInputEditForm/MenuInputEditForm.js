@@ -27,6 +27,7 @@ function MenuInputEditForm({
   cloudinary,
   customerId,
   menu,
+  menus,
   menusArray,
   updateMenu,
   deleteMenu,
@@ -50,10 +51,10 @@ function MenuInputEditForm({
       setImageUrlOnEdit(url);
       setImageFileOnEdit(file);
       return;
-    } else if (event.target.name === "pair") {
+    } else if (event.target.name === "pairs") {
       const value = event.target.value;
       const pairs = typeof value === "string" ? value.split(",") : value;
-      setMenuOnEdit({ ...menuOnEdit, pair: pairs });
+      setMenuOnEdit({ ...menuOnEdit, pairs });
       return;
     }
     const target = event.target.name;
@@ -146,8 +147,8 @@ function MenuInputEditForm({
         <TextField
           disabled
           label="Best Paired With"
-          name="pair"
-          value={menu.pair}
+          name="pairs"
+          value={menu.pairs.map((menuId) => menus[menuId].name)}
           fullWidth
           multiline
         />
@@ -297,21 +298,21 @@ function MenuInputEditForm({
                 <Select
                   labelId={`best-paired-with-${menuOnEdit.menuId}`}
                   multiple
-                  value={menuOnEdit.pair}
-                  name="pair"
-                  label="Best Pair With"
+                  value={menuOnEdit.pairs}
+                  name="pairs"
+                  label="Best Paired With"
                   onChange={handleOnChange}
                   input={<OutlinedInput />}
                   renderValue={(selected) => (
                     <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                       {selected.map((value) => (
-                        <Chip key={value} label={value} />
+                        <Chip key={value} label={menus[value].name} />
                       ))}
                     </Box>
                   )}
                 >
                   {menusArray.map((menu) => (
-                    <MenuItem value={menu.name}>{menu.name}</MenuItem>
+                    <MenuItem value={menu.menuId}>{menu.name}</MenuItem>
                   ))}
                 </Select>
               </FormControl>

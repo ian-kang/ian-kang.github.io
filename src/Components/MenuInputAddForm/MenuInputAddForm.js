@@ -26,7 +26,7 @@ function MenuInputAddForm({
     price: "",
     desc: "",
     img: "",
-    pair: [],
+    pairs: [],
   });
   const [imageFileOnEdit, setImageFileOnAdd] = useState();
 
@@ -62,6 +62,7 @@ function MenuInputAddForm({
         price: "",
         desc: "",
         img: "",
+        pairs: [],
       });
       setImageFileOnAdd();
       return;
@@ -75,6 +76,7 @@ function MenuInputAddForm({
       price: "",
       desc: "",
       img: "",
+      pairs: [],
     });
   };
 

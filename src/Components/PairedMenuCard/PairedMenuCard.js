@@ -13,7 +13,7 @@ import {
 import React, { useState } from "react";
 import MenuEditorPreviewListItem from "../MenuEditorPreviewListItem/MenuEditorPreviewListItem";
 
-function PairedMenuCard({ menu }) {
+function PairedMenuCard({ menu, menus }) {
   const [expanded, setExpanded] = useState(false);
 
   const handleClick = () => {
@@ -48,7 +48,9 @@ function PairedMenuCard({ menu }) {
         {expanded ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <MenuEditorPreviewListItem menu={menu} />
+        {menu.pairs.map((menuId) => (
+          <MenuEditorPreviewListItem menu={menus[menuId]} />
+        ))}
       </Collapse>
     </Card>
   );

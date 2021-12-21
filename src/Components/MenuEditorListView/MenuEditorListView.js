@@ -52,6 +52,7 @@ function MenuEditorListView({
                         cloudinary={cloudinary}
                         customerId={customerId}
                         menu={menu}
+                        menus={data.menus}
                         menusArray={menusArray}
                         categories={categories}
                         updateMenu={updateMenu}
