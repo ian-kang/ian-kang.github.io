@@ -80,8 +80,8 @@ function MenuInputEditForm({
       setMenuOnEdit(menu);
       return;
     }
-    updateMenu(customerId, menu.menuId, { ...menuOnEdit });
-    setMenuOnEdit(menu);
+    updateMenu(customerId, menu.menuId, menuOnEdit);
+    setMenuOnEdit(menuOnEdit);
     setOpen(false);
   };
   return (
