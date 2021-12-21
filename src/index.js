@@ -9,8 +9,10 @@ import About from "./Components/About/About";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import MenuHomeView from "./Components/MenuHomeView/MenuHomeView";
 import FirebaseDatabase from "./Repository/realtimeDatabase";
+import Cloudinary from "./Service/Cloudinary/cloudinary";
 
 const fireBaseDatabase = new FirebaseDatabase();
+const cloudinary = new Cloudinary();
 
 ReactDOM.render(
   <React.StrictMode>
@@ -21,7 +23,9 @@ ReactDOM.render(
         <Route path="/dashboard" element={<Dashboard />}></Route>
         <Route
           path="/design"
-          element={<App fireBaseDatabase={fireBaseDatabase} />}
+          element={
+            <App fireBaseDatabase={fireBaseDatabase} cloudinary={cloudinary} />
+          }
         ></Route>
         <Route path="/menu" element={<MenuHomeView />}></Route>
       </Routes>

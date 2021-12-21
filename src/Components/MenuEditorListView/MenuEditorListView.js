@@ -7,6 +7,7 @@ import MenuInputEditForm from "../MenuInputEditForm/MenuInputEditForm";
 
 function MenuEditorListView({
   data,
+  cloudinary,
   customerId,
   updateMenu,
   deleteMenu,
@@ -61,6 +62,7 @@ function MenuEditorListView({
                 ))}
               <Grid item xs={6}>
                 <MenuInputAddForm
+                  cloudinary={cloudinary}
                   buttonName="Add"
                   customerId={customerId}
                   category={category}

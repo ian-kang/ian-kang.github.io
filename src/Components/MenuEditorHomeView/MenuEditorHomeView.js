@@ -5,6 +5,7 @@ import MenuEditorListView from "../MenuEditorListView/MenuEditorListView";
 
 function MenuEditorHomeView({
   data,
+  cloudinary,
   customerId,
   updateMenu,
   deleteMenu,
@@ -25,6 +26,7 @@ function MenuEditorHomeView({
             <Grid container item xs={12}>
               <MenuEditorListView
                 data={data}
+                cloudinary={cloudinary}
                 customerId={customerId}
                 updateMenu={updateMenu}
                 deleteMenu={deleteMenu}

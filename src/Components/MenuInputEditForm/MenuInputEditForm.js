@@ -29,8 +29,9 @@ function MenuInputEditForm({ customerId, menu, updateMenu, deleteMenu }) {
   };
 
   const handleFileInputOnChange = (event) => {
-    const file = event.target.files[0];
-    setImageFileOnEdit(file);
+    const file = event;
+    console.log(file);
+    setImageFileOnEdit(URL.createObjectURL(file));
   };
 
   const handleOnChange = (event) => {
@@ -92,15 +93,6 @@ function MenuInputEditForm({ customerId, menu, updateMenu, deleteMenu }) {
           InputProps={{
             startAdornment: <InputAdornment position="start">$</InputAdornment>,
           }}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          disabled
-          label="Category"
-          name="category"
-          value={menu.category}
-          fullWidth
         />
       </Grid>
       <Grid item xs={12}>

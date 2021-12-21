@@ -11,7 +11,13 @@ import {
 } from "@mui/material";
 import { Add, PhotoCamera } from "@mui/icons-material";
 
-function MenuInputAddForm({ buttonName, customerId, category, addMenu }) {
+function MenuInputAddForm({
+  cloudinary,
+  buttonName,
+  customerId,
+  category,
+  addMenu,
+}) {
   const [newMenu, setNewMenu] = useState({
     menuId: Date.now(),
     category,
@@ -21,20 +27,33 @@ function MenuInputAddForm({ buttonName, customerId, category, addMenu }) {
     desc: "",
     img: "",
   });
+  const [imageUrlOnEdit, setImageUrlOnEdit] = useState("");
+  const [imageFileOnEdit, setImageFileOnEdit] = useState();
 
   useEffect(() => {
     setNewMenu({ ...newMenu, category });
   }, [category]);
 
-  const [imageFileOnEdit, setImageFileOnEdit] = useState("");
   const handleInputOnChange = (event) => {
+    if (event.target.name === "img") {
+      const file = event.target.files[0];
+      const url = URL.createObjectURL(file);
+      setImageUrlOnEdit(url);
+      setImageFileOnEdit(file);
+      return;
+    }
     const targetInput = event.target.name;
     const value = event.target.value;
     const updated = { ...newMenu, category, [targetInput]: value };
     setNewMenu(updated);
   };
-  const handleAddButtonOnClick = () => {
-    addMenu(customerId, newMenu, newMenu.menuId);
+  const handleAddButtonOnClick = async () => {
+    const result = await cloudinary.imageUpload(imageFileOnEdit, [
+      newMenu.menuId,
+      newMenu.category,
+      newMenu.name,
+    ]);
+    addMenu(customerId, { ...newMenu, img: result.url }, newMenu.menuId);
     setNewMenu({
       menuId: Date.now(),
       category,
@@ -44,13 +63,9 @@ function MenuInputAddForm({ buttonName, customerId, category, addMenu }) {
       desc: "",
       img: "",
     });
+    setImageUrlOnEdit("");
   };
-  const handleFileInputOnChange = (event) => {
-    const file = event.target.files[0];
-    setImageFileOnEdit(file);
-    const updated = { ...newMenu, img: file };
-    setNewMenu(updated);
-  };
+
   return (
     <div>
       <Grid container item spacing={2}>
@@ -102,7 +117,7 @@ function MenuInputAddForm({ buttonName, customerId, category, addMenu }) {
             }}
           />
         </Grid>
-        {imageFileOnEdit && (
+        {imageUrlOnEdit && (
           <Grid
             container
             item
@@ -113,7 +128,7 @@ function MenuInputAddForm({ buttonName, customerId, category, addMenu }) {
             <Grid item>
               <ImageList cols={1}>
                 <ImageListItem>
-                  <img src={imageFileOnEdit} alt="No Iamge" loading="lazy" />
+                  <img src={imageUrlOnEdit} alt="No Iamge" loading="lazy" />
                 </ImageListItem>
               </ImageList>
             </Grid>
@@ -128,7 +143,8 @@ function MenuInputAddForm({ buttonName, customerId, category, addMenu }) {
                 type="file"
                 accept="image/*"
                 id="contained-button-file"
-                onChange={handleFileInputOnChange}
+                name="img"
+                onChange={handleInputOnChange}
               />
               <Button
                 variant="contained"
@@ -139,15 +155,6 @@ function MenuInputAddForm({ buttonName, customerId, category, addMenu }) {
               </Button>
             </label>
           </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            disabled
-            label="Category"
-            name="category"
-            value={newMenu.category}
-            fullWidth
-          />
         </Grid>
         <Grid item xs={12}>
           <TextField

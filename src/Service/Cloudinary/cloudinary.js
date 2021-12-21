@@ -3,7 +3,7 @@ export default class Cloudinary {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", "wgjkx4in");
-    formData.append("folder", "Icecreampunks/Request Photos");
+    formData.append("folder", "Menu Creator/Menu Pictures");
     formData.append("tags", tags);
 
     const response = await fetch(
