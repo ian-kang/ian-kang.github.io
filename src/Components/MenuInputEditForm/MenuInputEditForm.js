@@ -16,10 +16,17 @@ import {
 } from "@mui/material";
 import { Delete, Edit, PhotoCamera, Save } from "@mui/icons-material";
 
-function MenuInputEditForm({ customerId, menu, updateMenu, deleteMenu }) {
+function MenuInputEditForm({
+  cloudinary,
+  customerId,
+  menu,
+  updateMenu,
+  deleteMenu,
+}) {
   const [open, setOpen] = useState();
   const [menuOnEdit, setMenuOnEdit] = useState(menu);
-  const [imageFileOnEdit, setImageFileOnEdit] = useState(menu.img);
+  const [imageUrlOnEdit, setImageUrlOnEdit] = useState(menu.img);
+  const [imageFileOnEdit, setImageFileOnEdit] = useState();
 
   const handleEditButtonOnClick = (event) => {
     setOpen(true);
@@ -28,13 +35,14 @@ function MenuInputEditForm({ customerId, menu, updateMenu, deleteMenu }) {
     deleteMenu(customerId, menu.menuId);
   };
 
-  const handleFileInputOnChange = (event) => {
-    const file = event;
-    console.log(file);
-    setImageFileOnEdit(URL.createObjectURL(file));
-  };
-
   const handleOnChange = (event) => {
+    if (event.target.name === "img") {
+      const file = event.target.files[0];
+      const url = URL.createObjectURL(file);
+      setImageUrlOnEdit(url);
+      setImageFileOnEdit(file);
+      return;
+    }
     const target = event.target.name;
     const value = event.target.value;
     setMenuOnEdit({ ...menuOnEdit, [target]: value });
@@ -42,9 +50,21 @@ function MenuInputEditForm({ customerId, menu, updateMenu, deleteMenu }) {
   const handleCancel = () => {
     setOpen(false);
     setMenuOnEdit(menu);
+    setImageUrlOnEdit(menu.img);
+    setImageFileOnEdit();
   };
-  const handleSave = () => {
+  const handleSave = async () => {
     setOpen(false);
+    if (imageFileOnEdit) {
+      const result = await cloudinary.imageUpload(imageFileOnEdit, [
+        menuOnEdit.menuId,
+        menuOnEdit.category,
+        menuOnEdit.name,
+      ]);
+      updateMenu(customerId, menu.menuId, { ...menuOnEdit, img: result.url });
+
+      return;
+    }
     updateMenu(customerId, menu.menuId, menuOnEdit);
   };
   return (
@@ -182,30 +202,34 @@ function MenuInputEditForm({ customerId, menu, updateMenu, deleteMenu }) {
                 onChange={handleOnChange}
               />
             </Grid>
-            <Grid
-              container
-              item
-              xs={12}
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Grid item>
-                <ImageList cols={1}>
-                  <ImageListItem>
-                    <img src={imageFileOnEdit} alt="No Iamge" loading="lazy" />
-                  </ImageListItem>
-                </ImageList>
+            {imageUrlOnEdit && (
+              <Grid
+                container
+                item
+                xs={12}
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Grid item>
+                  <ImageList cols={1}>
+                    <ImageListItem>
+                      <img src={imageUrlOnEdit} alt="No Iamge" loading="lazy" />
+                    </ImageListItem>
+                  </ImageList>
+                </Grid>
               </Grid>
-            </Grid>
+            )}
+
             <Grid container item xs={12} justifyContent="right">
               <Grid item>
-                <label htmlFor="contained-button-file">
+                <label htmlFor="contained-button-file-edit">
                   <Input
                     sx={{ display: "none" }}
                     type="file"
                     accept="image/*"
-                    id="contained-button-file"
-                    onChange={handleFileInputOnChange}
+                    id="contained-button-file-edit"
+                    name="img"
+                    onChange={handleOnChange}
                   />
                   <Button
                     variant="contained"

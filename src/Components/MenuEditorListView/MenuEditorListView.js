@@ -49,6 +49,7 @@ function MenuEditorListView({
                   <Grid container item xs={12} alignItems="center" spacing={4}>
                     <Grid item xs={6}>
                       <MenuInputEditForm
+                        cloudinary={cloudinary}
                         customerId={customerId}
                         menu={menu}
                         updateMenu={updateMenu}

@@ -44,8 +44,7 @@ function MenuInputAddForm({
     }
     const targetInput = event.target.name;
     const value = event.target.value;
-    const updated = { ...newMenu, category, [targetInput]: value };
-    setNewMenu(updated);
+    setNewMenu({ ...newMenu, category, [targetInput]: value });
   };
   const handleAddButtonOnClick = async () => {
     if (imageFileOnEdit) {
