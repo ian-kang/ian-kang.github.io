@@ -18,7 +18,7 @@ function MenuHomeView({ fireBaseDatabase }) {
     <Box>
       <NavBar logo={database["logo"]} name={database.name} />
       {Object.keys(database).find((key) => key === "menus") && (
-        <MenuListView data={database} />
+        <MenuListView key={Date.now()} data={database} />
       )}
     </Box>
   );

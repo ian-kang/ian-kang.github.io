@@ -49,7 +49,7 @@ function PairedMenuCard({ menu, menus }) {
       </ListItemButton>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         {menu.pairs.map((menuId) => (
-          <MenuEditorPreviewListItem menu={menus[menuId]} />
+          <MenuEditorPreviewListItem key={menuId} menu={menus[menuId]} />
         ))}
       </Collapse>
     </Card>

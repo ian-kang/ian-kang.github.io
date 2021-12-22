@@ -51,7 +51,11 @@ function MenuListView({ data }) {
                 .filter((menu) => menu.category === category)
                 .map((menu) => (
                   <Grid item xs={12} md={6} lg={4} xl={3}>
-                    <PairedMenuCard menu={menu} menus={data.menus} />
+                    <PairedMenuCard
+                      key={menu.menuId}
+                      menu={menu}
+                      menus={data.menus}
+                    />
                   </Grid>
                 ))}
           </Grid>
