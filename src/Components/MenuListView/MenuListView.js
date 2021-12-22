@@ -22,8 +22,10 @@ function MenuListView({ data }) {
       </Grid>
 
       <Grid container item justifyContent="center" xs={10}>
-        <Grid item xs={12} sx={{ mb: 4 }}>
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Grid item xs={12} sx={{ mb: 4, mt: 4 }}>
+          <Box
+            sx={{ display: "flex", justifyContent: "center", borderBottom: 1 }}
+          >
             <MenuCategoryTabBar
               category={category}
               categories={categories}

@@ -25,29 +25,34 @@ function MenuEditorListView({
           </Box>
           <Box>
             <Grid container spacing={4} sx={{ mt: 1 }}>
-              <Grid item xs={6}>
+              <Grid
+                item
+                container
+                xs={12}
+                md={6}
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Grid item>
+                  <Typography variant="h6">{category}</Typography>
+                </Grid>
+              </Grid>
+              <Grid item xs={12} md={6}>
                 <CategoryAddForm
                   customerId={customerId}
                   category={category}
                   editCategory={editCategory}
                 />
               </Grid>
-              <Grid
-                item
-                container
-                xs={6}
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Grid item>
-                  <Typography variant="h5">{category}</Typography>
-                </Grid>
-              </Grid>
+
               {menusArray
                 .filter((menu) => menu.category === category)
                 .map((menu) => (
                   <Grid container item xs={12} alignItems="center" spacing={4}>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6}>
+                      <MenuCard menu={menu} />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
                       <MenuInputEditForm
                         cloudinary={cloudinary}
                         customerId={customerId}
@@ -59,12 +64,9 @@ function MenuEditorListView({
                         deleteMenu={deleteMenu}
                       />
                     </Grid>
-                    <Grid item xs={6}>
-                      <MenuCard menu={menu} />
-                    </Grid>
                   </Grid>
                 ))}
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <MenuInputAddForm
                   cloudinary={cloudinary}
                   buttonName="Add"
