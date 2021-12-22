@@ -2,6 +2,7 @@ import { Grid, Typography } from "@mui/material";
 import React, { useState } from "react";
 import PairedMenuCard from "../PairedMenuCard/PairedMenuCard";
 import MenuCategoryTabBar from "../MenuCategoryTabBar/MenuCategoryTabBar";
+import { Box } from "@mui/system";
 
 function MenuListView({ data }) {
   const [category, setCategory] = useState();
@@ -13,20 +14,22 @@ function MenuListView({ data }) {
     setCategory(newCategory);
   };
   return (
-    <Grid container>
+    <Grid container justifyContent="center">
       <Grid container item justifyContent="center">
         <Grid item>
           <Typography variant="h5">Your Menu</Typography>
         </Grid>
       </Grid>
 
-      <Grid container item justifyContent="center">
-        <Grid sx={{ mb: 4 }}>
-          <MenuCategoryTabBar
-            category={category}
-            categories={categories}
-            handleTabChange={handleTabChange}
-          />
+      <Grid container item justifyContent="center" xs={10}>
+        <Grid item xs={12} sx={{ mb: 4 }}>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <MenuCategoryTabBar
+              category={category}
+              categories={categories}
+              handleTabChange={handleTabChange}
+            />
+          </Box>
         </Grid>
 
         <Grid container justifyContent="center">
