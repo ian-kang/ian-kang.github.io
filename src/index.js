@@ -3,20 +3,20 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Components/Home/Home";
 import About from "./Components/About/About";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import MenuHomeView from "./Components/MenuHomeView/MenuHomeView";
 import FirebaseDatabase from "./Repository/realtimeDatabase";
 import Cloudinary from "./Service/Cloudinary/cloudinary";
+import { HashRouter, Route, Routes } from "react-router-dom";
 
 const fireBaseDatabase = new FirebaseDatabase();
 const cloudinary = new Cloudinary();
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/home" element={<Home />}></Route>
         <Route path="/about" element={<About />}></Route>
@@ -32,7 +32,7 @@ ReactDOM.render(
           element={<MenuHomeView fireBaseDatabase={fireBaseDatabase} />}
         ></Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );
