@@ -146,16 +146,19 @@ function MenuInputEditForm({
           multiline
         />
       </Grid>
-      <Grid item xs={12}>
-        <TextField
-          disabled
-          label="Best Paired With"
-          name="pairs"
-          value={menu.pairs.map((menuId) => menus[menuId].name)}
-          fullWidth
-          multiline
-        />
-      </Grid>
+      {menu.pairs && (
+        <Grid item xs={12}>
+          <TextField
+            disabled
+            label="Best Paired With"
+            name="pairs"
+            value={menu.pairs.map((menuId) => menus[menuId].name)}
+            fullWidth
+            multiline
+          />
+        </Grid>
+      )}
+
       <Grid container item xs={12} spacing={2}>
         <Grid item xs={6}>
           <Button

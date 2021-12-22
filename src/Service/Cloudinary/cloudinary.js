@@ -6,13 +6,10 @@ export default class Cloudinary {
     formData.append("folder", "Menu Creator/Menu Pictures");
     formData.append("tags", tags);
 
-    const response = await fetch(
-      "https://api.cloudinary.com/v1_1/db7ss52zt/image/upload",
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
+    const response = await fetch(process.env.REACT_APP_CLOUDINARY_URL, {
+      method: "POST",
+      body: formData,
+    });
 
     return await response.json();
   }
