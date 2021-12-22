@@ -15,11 +15,11 @@ import {
 export default class FirebaseDatabase {
   constructor() {
     const firebaseConfig = {
-      apiKey: "AIzaSyCt2mIHFWq3tlxp2gWtiVt6x9GIpLPtZnw",
-      authDomain: "menu-creator-35f21.firebaseapp.com",
-      projectId: "menu-creator-35f21",
-      storageBucket: "menu-creator-35f21.appspot.com",
-      appId: "1:312681521941:web:71aefc928cdc87ba237f1c",
+      apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+      authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+      projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+      storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+      appId: process.env.REACT_APP_FIREBASE_APP_ID,
     };
     const app = initializeApp(firebaseConfig);
     this.database = getDatabase(app);
