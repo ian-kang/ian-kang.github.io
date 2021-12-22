@@ -3,9 +3,6 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import Home from "./Components/Home/Home";
-import About from "./Components/About/About";
-import Dashboard from "./Components/Dashboard/Dashboard";
 import MenuHomeView from "./Components/MenuHomeView/MenuHomeView";
 import FirebaseDatabase from "./Repository/realtimeDatabase";
 import Cloudinary from "./Service/Cloudinary/cloudinary";
@@ -16,11 +13,8 @@ const cloudinary = new Cloudinary();
 
 ReactDOM.render(
   <React.StrictMode>
-    <HashRouter>
+    <HashRouter basename="/">
       <Routes>
-        <Route path="/home" element={<Home />}></Route>
-        <Route path="/about" element={<About />}></Route>
-        <Route path="/dashboard" element={<Dashboard />}></Route>
         <Route
           path="/design"
           element={
