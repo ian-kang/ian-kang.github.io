@@ -1,11 +1,21 @@
 import React from "react";
 import { Star, StarBorder, StarHalf } from "@mui/icons-material";
-import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from "@mui/material";
 
 function MenuEditorPreviewListItem({ menu }) {
   return (
-    <List>
-      <ListItem>
+    <List sx={{ p: 1 }}>
+      <ListItem
+        secondaryAction={
+          <Typography variant="subtitle2">${menu.price}</Typography>
+        }
+      >
         {menu.rate === "high" ? (
           <ListItemIcon>
             <Star />
@@ -21,7 +31,7 @@ function MenuEditorPreviewListItem({ menu }) {
         ) : null}
 
         <ListItemText primary={menu.name} secondary={menu.desc} />
-        <ListItemText primary={`$${menu.price}`} />
+        {/* <ListItemText primary={`$${menu.price}`} /> */}
       </ListItem>
     </List>
   );
