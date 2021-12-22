@@ -1,5 +1,5 @@
 import { Grid, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PairedMenuCard from "../PairedMenuCard/PairedMenuCard";
 import MenuCategoryTabBar from "../MenuCategoryTabBar/MenuCategoryTabBar";
 import { Box } from "@mui/system";
@@ -9,6 +9,9 @@ function MenuListView({ data }) {
 
   const menusArray = Object.values(data.menus);
   const categories = [...new Set(menusArray.map((menu) => menu.category))];
+  useEffect(() => {
+    setCategory(menusArray[0].category);
+  }, []);
 
   const handleTabChange = (event, newCategory) => {
     setCategory(newCategory);

@@ -1,8 +1,6 @@
 import { Menu } from "@mui/icons-material";
 import {
-  Avatar,
   Box,
-  Drawer,
   IconButton,
   Paper,
   Stack,
