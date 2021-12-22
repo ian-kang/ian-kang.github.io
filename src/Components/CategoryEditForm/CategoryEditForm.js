@@ -24,8 +24,8 @@ function CategoryAddForm({ customerId, category, editCategory }) {
   };
   const handleSave = () => {
     editCategory(customerId, category, categoryOnEdit);
+    setCategoryOnEdit(category);
     setOpen(false);
-    setCategoryOnEdit(categoryOnEdit);
   };
   const handleEditButtonOnClick = () => {
     setOpen(true);

@@ -19,9 +19,7 @@ export default class FirebaseDatabase {
       authDomain: "menu-creator-35f21.firebaseapp.com",
       projectId: "menu-creator-35f21",
       storageBucket: "menu-creator-35f21.appspot.com",
-      messagingSenderId: "312681521941",
       appId: "1:312681521941:web:71aefc928cdc87ba237f1c",
-      measurementId: "G-H1M17478JG",
     };
     const app = initializeApp(firebaseConfig);
     this.database = getDatabase(app);

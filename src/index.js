@@ -18,7 +18,7 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />}></Route>
+        <Route path="/home" element={<Home />}></Route>
         <Route path="/about" element={<About />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
         <Route
@@ -28,7 +28,7 @@ ReactDOM.render(
           }
         ></Route>
         <Route
-          path="/menu"
+          path="/"
           element={<MenuHomeView fireBaseDatabase={fireBaseDatabase} />}
         ></Route>
       </Routes>

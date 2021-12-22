@@ -14,7 +14,6 @@ import {
   Input,
   InputAdornment,
   InputLabel,
-  ListSubheader,
   MenuItem,
   OutlinedInput,
   Select,
@@ -42,6 +41,9 @@ function MenuInputEditForm({
   };
   const handleDeleteButtonOnClick = (event) => {
     deleteMenu(customerId, menu.menuId);
+  };
+  const handleImageDeleteButton = () => {
+    setImageUrlOnEdit("");
   };
 
   const handleOnChange = (event) => {
@@ -79,9 +81,10 @@ function MenuInputEditForm({
         img: result.url,
       });
       setMenuOnEdit(menu);
+      setOpen(false);
       return;
     }
-    updateMenu(customerId, menu.menuId, menuOnEdit);
+    updateMenu(customerId, menu.menuId, { ...menuOnEdit, img: imageUrlOnEdit });
     setMenuOnEdit(menuOnEdit);
     setOpen(false);
   };
@@ -259,7 +262,24 @@ function MenuInputEditForm({
               </Grid>
             )}
 
-            <Grid container item xs={12} justifyContent="right">
+            <Grid
+              container
+              item
+              xs={12}
+              spacing={2}
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Grid item>
+                <Button
+                  variant="contained"
+                  component="span"
+                  startIcon={<Delete />}
+                  onClick={handleImageDeleteButton}
+                >
+                  Delete Image
+                </Button>
+              </Grid>
               <Grid item>
                 <label htmlFor={`contained-button-file-${menuOnEdit.menuId}`}>
                   <Input
@@ -275,7 +295,7 @@ function MenuInputEditForm({
                     component="span"
                     startIcon={<PhotoCamera />}
                   >
-                    Image Upload
+                    Upload
                   </Button>
                 </label>
               </Grid>
