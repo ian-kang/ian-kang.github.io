@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
-import NavBar from "../NavBar/NavBar";
 import MenuListView from "../MenuListView/MenuListView";
 
 function MenuHomeView({ fireBaseDatabase }) {
@@ -16,7 +15,6 @@ function MenuHomeView({ fireBaseDatabase }) {
 
   return (
     <Box>
-      <NavBar logo={database["logo"]} name={database.name} />
       {Object.keys(database).find((key) => key === "menus") && (
         <MenuListView key={Date.now()} data={database} />
       )}

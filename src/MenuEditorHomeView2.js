@@ -1,10 +1,9 @@
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
-import "./App.css";
 import MenuEditorHomeView from "./Components/MenuEditorHomeView/MenuEditorHomeView";
 import NavBar from "./Components/NavBar/NavBar";
 
-export default function App({ fireBaseDatabase, cloudinary }) {
+export default function MenuEditorHomeView2({ fireBaseDatabase, cloudinary }) {
   const customerId = "restaurant1";
   const [database, setDatabase] = useState({});
 
@@ -67,18 +66,15 @@ export default function App({ fireBaseDatabase, cloudinary }) {
     });
   };
   return (
-    <Box>
-      <NavBar logo={database["logo"]} name={database.name} />
-      <MenuEditorHomeView
-        data={database}
-        cloudinary={cloudinary}
-        customerId={customerId}
-        updateMenu={updateMenu}
-        deleteMenu={deleteMenu}
-        addMenu={addMenu}
-        editCategory={editCategory}
-        addCategory={addCategory}
-      />
-    </Box>
+    <MenuEditorHomeView
+      data={database}
+      cloudinary={cloudinary}
+      customerId={customerId}
+      updateMenu={updateMenu}
+      deleteMenu={deleteMenu}
+      addMenu={addMenu}
+      editCategory={editCategory}
+      addCategory={addCategory}
+    />
   );
 }

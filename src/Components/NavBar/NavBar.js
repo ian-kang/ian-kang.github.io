@@ -48,8 +48,8 @@ function NavBar({ logo, name }) {
               onChange={handleNavOnChange}
               aria-label="nav tabs example"
             >
-              <Tab label="Menu Editor" href="/#/design" value="design" />
-              <Tab label="Your Menu" href="/#/" value="menu" />
+              <Tab label="Menu Editor" href="/#/editor" value="design" />
+              <Tab label="Your Menu" href="/#/menu" value="menu" />
             </Tabs>
           </Box>
         )}

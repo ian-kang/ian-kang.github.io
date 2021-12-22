@@ -15,10 +15,10 @@ function NavBarToggleList({ logo, name }) {
   const handleOnClick = (event, index) => {
     switch (index) {
       case 0:
-        navigate("/");
+        navigate("/menu");
         return;
       case 1:
-        navigate("/design");
+        navigate("/editor");
         return;
       default:
         return;

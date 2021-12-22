@@ -1,28 +1,42 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+import MenuEditorHomeView2 from "./MenuEditorHomeView2";
 import MenuHomeView from "./Components/MenuHomeView/MenuHomeView";
 import FirebaseDatabase from "./Repository/realtimeDatabase";
 import Cloudinary from "./Service/Cloudinary/cloudinary";
 import { HashRouter, Route, Routes } from "react-router-dom";
+import Home from "./Components/Home/Home";
+import BaseLayout from "./Components/BaseLayout/BaseLayout";
 
 const fireBaseDatabase = new FirebaseDatabase();
 const cloudinary = new Cloudinary();
 
 ReactDOM.render(
   <React.StrictMode>
-    <HashRouter basename="/">
+    <HashRouter>
       <Routes>
+        <Route path="/" element={<BaseLayout component={<Home />} />} />
         <Route
-          path="/design"
+          path="/editor"
           element={
-            <App fireBaseDatabase={fireBaseDatabase} cloudinary={cloudinary} />
+            <BaseLayout
+              component={
+                <MenuEditorHomeView2
+                  fireBaseDatabase={fireBaseDatabase}
+                  cloudinary={cloudinary}
+                />
+              }
+            />
           }
         ></Route>
         <Route
-          path="/"
-          element={<MenuHomeView fireBaseDatabase={fireBaseDatabase} />}
+          path="/menu"
+          element={
+            <BaseLayout
+              component={<MenuHomeView fireBaseDatabase={fireBaseDatabase} />}
+            />
+          }
         ></Route>
       </Routes>
     </HashRouter>
