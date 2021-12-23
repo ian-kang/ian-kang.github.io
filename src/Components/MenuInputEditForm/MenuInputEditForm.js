@@ -321,7 +321,7 @@ function MenuInputEditForm({
                 <Select
                   labelId={`best-paired-with-${menuOnEdit.menuId}`}
                   multiple
-                  value={menuOnEdit.pairs}
+                  value={menuOnEdit.pairs ? menuOnEdit.pairs : []}
                   name="pairs"
                   label="Best Paired With"
                   onChange={handleOnChange}

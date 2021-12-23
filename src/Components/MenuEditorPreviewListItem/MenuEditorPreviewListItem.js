@@ -31,7 +31,6 @@ function MenuEditorPreviewListItem({ menu }) {
         ) : null}
 
         <ListItemText primary={menu.name} secondary={menu.desc} />
-        {/* <ListItemText primary={`$${menu.price}`} /> */}
       </ListItem>
     </List>
   );
