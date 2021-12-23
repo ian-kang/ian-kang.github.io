@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   Button,
   Grid,
-  ImageList,
-  ImageListItem,
   Input,
   InputAdornment,
   MenuItem,
@@ -134,11 +132,12 @@ function MenuAddCard({ cloudinary, customerId, category, addMenu }) {
             alignItems="center"
           >
             <Grid item>
-              <ImageList cols={1}>
-                <ImageListItem>
-                  <img src={newMenu.img} alt="Not found" loading="lazy" />
-                </ImageListItem>
-              </ImageList>
+              <img
+                src={newMenu.img}
+                alt=""
+                loading="lazy"
+                style={{ width: "100%", height: "100%" }}
+              />
             </Grid>
           </Grid>
         )}
