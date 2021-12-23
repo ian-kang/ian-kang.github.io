@@ -1,10 +1,16 @@
-import { ExpandLess, ExpandMore, WineBar } from "@mui/icons-material";
+import {
+  DinnerDining,
+  ExpandLess,
+  ExpandMore,
+  WineBar,
+} from "@mui/icons-material";
 import {
   Card,
   CardContent,
   CardHeader,
   CardMedia,
   Collapse,
+  ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
@@ -41,10 +47,12 @@ function PairedMenuCard({ menu, menus }) {
         </Typography>
       </CardContent>
       <ListItemButton onClick={handleClick}>
-        <ListItemIcon>
-          <WineBar />
-        </ListItemIcon>
-        <ListItemText primary="Best Paired With" />
+        <ListItem secondaryAction={<ListItemText primary="Best Paired With" />}>
+          <ListItemIcon>
+            <WineBar />
+            <DinnerDining />
+          </ListItemIcon>
+        </ListItem>
         {expanded ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
