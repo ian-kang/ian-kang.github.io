@@ -29,7 +29,7 @@ function PairedMenuCard({ menu, menus }) {
       {menu.img && (
         <CardMedia
           component="img"
-          height="130"
+          height="150"
           image={menu.img}
           alt="No Image"
         />
