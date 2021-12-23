@@ -109,11 +109,12 @@ function MenuEditDialog({
               alignItems="center"
             >
               <Grid item>
-                <ImageList cols={1}>
-                  <ImageListItem>
-                    <img src={imageUrlOnEdit} alt="No Iamge" loading="lazy" />
-                  </ImageListItem>
-                </ImageList>
+                <img
+                  src={imageUrlOnEdit}
+                  alt=""
+                  loading="lazy"
+                  style={{ width: "100%", height: "100%" }}
+                />
               </Grid>
             </Grid>
           )}

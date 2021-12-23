@@ -66,7 +66,7 @@ function NavBar({ logo, name }) {
               <Paper variant="outlined">
                 <img
                   src={logo}
-                  alt="No Iamge"
+                  alt=""
                   loading="lazy"
                   style={{ width: "50px", height: "50px" }}
                 />
