@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { Edit, Save } from "@mui/icons-material";
 
-function CategoryAddForm({ customerId, category, editCategory }) {
+function CategoryEditCard({ customerId, category, editCategory }) {
   const [open, setOpen] = useState();
   const [categoryOnEdit, setCategoryOnEdit] = useState(category);
   const handleOnChange = (event) => {
@@ -78,4 +78,4 @@ function CategoryAddForm({ customerId, category, editCategory }) {
   );
 }
 
-export default CategoryAddForm;
+export default CategoryEditCard;

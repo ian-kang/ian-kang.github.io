@@ -1,9 +1,9 @@
 import { Divider, Grid, Box, Typography } from "@mui/material";
 import React from "react";
-import CategoryAddForm from "../CategoryEditForm/CategoryEditForm";
+import CategoryEditCard from "../CategoryEditForm/CategoryEditForm";
 import MenuCard from "../MenuCard/MenuCard";
-import MenuInputAddForm from "../MenuInputAddForm/MenuInputAddForm";
-import MenuInputEditForm from "../MenuInputEditForm/MenuInputEditForm";
+import MenuEditForm from "../MenuEditForm/MenuEditForm";
+import MenuAddCard from "../MenuAddCard/MenuAddCard";
 
 function MenuEditorListView({
   data,
@@ -38,7 +38,7 @@ function MenuEditorListView({
                 </Grid>
               </Grid>
               <Grid item xs={12} md={6}>
-                <CategoryAddForm
+                <CategoryEditCard
                   customerId={customerId}
                   category={category}
                   editCategory={editCategory}
@@ -53,7 +53,7 @@ function MenuEditorListView({
                       <MenuCard menu={menu} />
                     </Grid>
                     <Grid item xs={12} md={6}>
-                      <MenuInputEditForm
+                      <MenuEditForm
                         cloudinary={cloudinary}
                         customerId={customerId}
                         menu={menu}
@@ -67,9 +67,8 @@ function MenuEditorListView({
                   </Grid>
                 ))}
               <Grid item xs={12} md={6}>
-                <MenuInputAddForm
+                <MenuAddCard
                   cloudinary={cloudinary}
-                  buttonName="Add"
                   customerId={customerId}
                   category={category}
                   addMenu={addMenu}

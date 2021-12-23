@@ -11,13 +11,7 @@ import {
 } from "@mui/material";
 import { Add, PhotoCamera } from "@mui/icons-material";
 
-function MenuInputAddForm({
-  cloudinary,
-  buttonName,
-  customerId,
-  category,
-  addMenu,
-}) {
+function MenuAddCard({ cloudinary, customerId, category, addMenu }) {
   const [newMenu, setNewMenu] = useState({
     menuId: Date.now(),
     category,
@@ -187,7 +181,7 @@ function MenuInputAddForm({
             startIcon={<Add />}
             onClick={handleAddButtonOnClick}
           >
-            {buttonName}
+            Add
           </Button>
         </Grid>
       </Grid>
@@ -195,4 +189,4 @@ function MenuInputAddForm({
   );
 }
 
-export default MenuInputAddForm;
+export default MenuAddCard;
