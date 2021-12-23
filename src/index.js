@@ -7,14 +7,22 @@ import Cloudinary from "./Service/Cloudinary/cloudinary";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import Home from "./Components/Home/Home";
 import BaseLayout from "./Components/BaseLayout/BaseLayout";
+import AuthService from "./Service/Auth/auth";
 
 const cloudinary = new Cloudinary();
-
+const authService = new AuthService();
 ReactDOM.render(
   <React.StrictMode>
     <HashRouter>
       <Routes>
-        <Route path="/" element={<BaseLayout component={<Home />} />} />
+        <Route
+          path="/"
+          element={
+            <BaseLayout
+              component={<Home authService={authService} user={user} />}
+            />
+          }
+        />
         <Route
           path="/editor"
           element={
