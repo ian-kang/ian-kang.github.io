@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import MenuEditorHomeView2 from "./MenuEditorHomeView2";
+import MenuEditorHomeView from "./Components/MenuEditorHomeView/MenuEditorHomeView";
 import MenuHomeView from "./Components/MenuHomeView/MenuHomeView";
 import FirebaseDatabase from "./Repository/realtimeDatabase";
 import Cloudinary from "./Service/Cloudinary/cloudinary";
@@ -22,7 +22,7 @@ ReactDOM.render(
           element={
             <BaseLayout
               component={
-                <MenuEditorHomeView2
+                <MenuEditorHomeView
                   fireBaseDatabase={fireBaseDatabase}
                   cloudinary={cloudinary}
                 />

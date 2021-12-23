@@ -1,9 +1,9 @@
 import { Divider, Grid, Box, Typography } from "@mui/material";
 import React from "react";
 import CategoryEditCard from "../CategoryEditForm/CategoryEditForm";
-import MenuCard from "../MenuCard/MenuCard";
 import MenuEditForm from "../MenuEditForm/MenuEditForm";
 import MenuAddCard from "../MenuAddCard/MenuAddCard";
+import PairedMenuCard from "../PairedMenuCard/PairedMenuCard";
 
 function MenuEditorListView({
   data,
@@ -50,7 +50,7 @@ function MenuEditorListView({
                 .map((menu) => (
                   <Grid container item xs={12} alignItems="center" spacing={4}>
                     <Grid item xs={12} md={6}>
-                      <MenuCard menu={menu} />
+                      <PairedMenuCard menu={menu} menus={data.menus} />
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <MenuEditForm
