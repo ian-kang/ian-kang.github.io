@@ -8,9 +8,12 @@ import { HashRouter, Route, Routes } from "react-router-dom";
 import Home from "./Components/Home/Home";
 import BaseLayout from "./Components/BaseLayout/BaseLayout";
 import AuthService from "./Service/Auth/auth";
+import initializeFirebaseApp from "./Service/Firebase/firebase";
+import Login from "./Components/Login/Login";
 
 const cloudinary = new Cloudinary();
 const authService = new AuthService();
+initializeFirebaseApp();
 ReactDOM.render(
   <React.StrictMode>
     <HashRouter>
@@ -18,11 +21,10 @@ ReactDOM.render(
         <Route
           path="/"
           element={
-            <BaseLayout
-              component={<Home authService={authService} user={user} />}
-            />
+            <BaseLayout component={<Home authService={authService} />} />
           }
         />
+        <Route path="/login" element={<Login authService={authService} />} />
         <Route
           path="/editor"
           element={

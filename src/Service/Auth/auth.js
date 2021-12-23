@@ -11,8 +11,7 @@ export default class AuthService {
   login() {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
-
-    return signInWithRedirect(auth, provider);
+    signInWithRedirect(auth, provider);
   }
 
   logout() {
@@ -20,7 +19,7 @@ export default class AuthService {
     return signOut(auth);
   }
 
-  getResult() {
+  getRedirectResult() {
     const auth = getAuth();
     return getRedirectResult(auth);
   }
