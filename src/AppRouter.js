@@ -6,7 +6,7 @@ function AppRouter() {
   return (
     <HashRouter>
       <Routes>
-        <Route path="/" element={<Home navBar={<NavBar customerId={customerId} />/>} />
+        <Route path="/" element={<Home navBar={<NavBar />} />} />
         {/* <Route
           path={`${customerId}/editor`}
           element={
