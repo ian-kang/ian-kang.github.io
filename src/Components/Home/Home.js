@@ -1,17 +1,7 @@
-import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Grid,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material";
-import { Google } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { Box } from "@mui/material";
 
-function Home({ navBar, authService, user }) {
-  return <Box>{navBar}</Box>;
+function Home() {
+  return <Box>Home</Box>;
 }
 export default Home;

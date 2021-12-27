@@ -8,23 +8,27 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../App";
 
 function Login({ authService }) {
   const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext);
 
-  authService
-    .getRedirectResult()
-    .then((result) => {
-      console.log("result", result);
-    })
-    .catch((error) => {
-      console.log("error", error);
+  useEffect(() => {
+    authService.onAuthChange((user) => {
+      if (user) {
+        setUser(user);
+        navigate("/");
+      } else {
+        console.log("user is signed out");
+      }
     });
+  });
 
   const handleOnClick = () => {
-    authService.login();
+    setUser("second");
   };
   return (
     <Dialog open>

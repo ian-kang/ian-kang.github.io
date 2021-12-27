@@ -1,6 +1,7 @@
 import { Menu } from "@mui/icons-material";
 import {
   Box,
+  Button,
   IconButton,
   Paper,
   Stack,
@@ -11,20 +12,27 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { UserContext } from "../../App";
+import NavBarTabs from "../NavBarTabs/NavBarTabs";
 import NavBarToggleList from "../NavbarToggleList/NavBarToggleList";
 
-function NavBar({ logo, name }) {
+function NavBar() {
   const [navValue, setNavValue] = useState();
   const [open, setOpen] = useState(false);
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("lg"));
+  const { user } = useContext(UserContext);
+  const logo =
+    "https://res.cloudinary.com/db7ss52zt/image/upload/v1639668058/Menu%20Creator/Logo/Pour_Haus_Wine_Bar_Logo_uhxovp.jpg";
+
   const handleNavOnChange = (event, newValue) => {
     setNavValue(newValue);
   };
   const toggleDrawer = (status) => (event) => {
     setOpen(status);
   };
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up("lg"));
   return (
     <div>
       <Box
@@ -43,14 +51,7 @@ function NavBar({ logo, name }) {
         </Box>
         {matches && (
           <Box>
-            <Tabs
-              value={navValue}
-              onChange={handleNavOnChange}
-              aria-label="nav tabs example"
-            >
-              <Tab label="Menu Editor" href="/#/editor" value="design" />
-              <Tab label="Your Menu" href="/#/menu" value="menu" />
-            </Tabs>
+            <NavBarTabs value={navValue} handleChange={handleNavOnChange} />
           </Box>
         )}
         {matches ? (
@@ -62,17 +63,20 @@ function NavBar({ logo, name }) {
               alignItems: "center",
             }}
           >
+            <Link to="/login" style={{ textDecoration: "none" }}>
+              <Button>Sign in</Button>
+            </Link>
             <Stack direction="row" spacing={2} alignItems="center">
               <Paper variant="outlined">
                 <img
-                  src={logo}
+                  src={logo} //TODO: insert business logo img source after login
                   alt=""
                   loading="lazy"
                   style={{ width: "50px", height: "50px" }}
                 />
               </Paper>
               <Typography sx={{ mt: 2, mb: 2 }} variant="h7" component="div">
-                {name}
+                {user.displayName}
               </Typography>
             </Stack>
           </Box>
@@ -93,7 +97,7 @@ function NavBar({ logo, name }) {
               open={open}
               onClose={toggleDrawer(false)}
             >
-              {open && <NavBarToggleList logo={logo} name={name} />}
+              {open && <NavBarToggleList logo={logo} name={user.displayName} />}
             </SwipeableDrawer>
           </Box>
         )}
