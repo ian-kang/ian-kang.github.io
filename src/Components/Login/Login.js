@@ -68,6 +68,7 @@ function Login({ authService }) {
           </Grid>
           <Grid item>
             <TextField
+              autoFocus
               fullWidth
               variant="outlined"
               label="Email"
