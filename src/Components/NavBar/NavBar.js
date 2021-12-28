@@ -29,8 +29,14 @@ function NavBar({ authService }) {
     setAnchorElUser(null);
   };
   const handleSignOut = () => {
-    authService.logout();
-    navigate("/login");
+    authService
+      .logout()
+      .then(() => {
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <div>
