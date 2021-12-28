@@ -5,6 +5,7 @@ import MenuEditorHomeView from "./Components/MenuEditorHomeView/MenuEditorHomeVi
 import MenuHomeView from "./Components/MenuHomeView/MenuHomeView";
 import Login from "./Components/Login/Login";
 import { UserContext } from "./App";
+import PublicMenuHomeView from "./Components/PublickMenuHomeView/PublicMenuHomeView";
 
 function AppRouter({ authService, menuRepository, imageRepository }) {
   const { user } = useContext(UserContext);
@@ -49,7 +50,10 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
                 <BaseLayout
                   authService={authService}
                   component={
-                    <MenuHomeView customerId={user.uid} menus={menus} />
+                    <MenuHomeView
+                      customerId={user.uid}
+                      menuRepository={menuRepository}
+                    />
                   }
                 />
               }
@@ -60,15 +64,12 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
           database &&
           customerIds.map((customerId) => (
             <Route
-              path={`/${customerId}/menu`}
+              path={`/menu/${customerId}`}
               element={
                 <BaseLayout
                   authService={authService}
                   component={
-                    <MenuHomeView
-                      customerId={customerId}
-                      menus={database[customerId].menus}
-                    />
+                    <PublicMenuHomeView menus={database[customerId].menus} />
                   }
                 />
               }
