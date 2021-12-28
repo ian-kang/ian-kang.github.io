@@ -18,19 +18,87 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import { LoadingButton } from "@mui/lab";
 function MenuEditDialog({
   open,
-  menuOnEdit,
-  handleCancel,
-  handleOnChange,
-  imageUrlOnEdit,
-  handleImageDeleteButton,
-  handleSave,
+  setOpen,
+  // menuOnEdit,
+  // handleCancel,
+  // handleOnChange,
+  // imageUrlOnEdit,
+  // handleImageDeleteButton,
+  // handleSave,
+  menu,
   menus,
   menusArray,
+  imageRepository,
+  updateMenu,
+  customerId,
 }) {
+  const [menuOnEdit, setMenuOnEdit] = useState(menu);
+  const [imageUrlOnEdit, setImageUrlOnEdit] = useState(menu.img);
+  const [imageFileOnEdit, setImageFileOnEdit] = useState();
+  const [loading, setLoading] = useState();
+
+  useEffect(() => {
+    if (menu !== menuOnEdit) {
+      setMenuOnEdit(menu);
+    }
+  }, [menu]);
+
+  const handleOnChange = (event) => {
+    if (event.target.name === "img") {
+      const file = event.target.files[0];
+      if (file) {
+        const url = URL.createObjectURL(file);
+        setImageUrlOnEdit(url);
+        setImageFileOnEdit(file);
+        return;
+      }
+    } else if (event.target.name === "pairs") {
+      const value = event.target.value;
+      const pairs = typeof value === "string" ? value.split(",") : value;
+      setMenuOnEdit({ ...menuOnEdit, pairs });
+      return;
+    }
+    const target = event.target.name;
+    const value = event.target.value;
+    setMenuOnEdit({ ...menuOnEdit, [target]: value });
+  };
+  const handleCancel = () => {
+    setOpen(false);
+    setMenuOnEdit(menu);
+    setImageUrlOnEdit(menu.img);
+    setImageFileOnEdit();
+  };
+  const handleSave = async () => {
+    if (imageFileOnEdit) {
+      setLoading(true);
+      const result = await imageRepository.imageUpload(imageFileOnEdit, [
+        menuOnEdit.menuId,
+        menuOnEdit.category,
+        menuOnEdit.name,
+      ]);
+      updateMenu(customerId, menu.menuId, {
+        ...menuOnEdit,
+        img: result.url,
+      });
+      setMenuOnEdit(menu);
+      setOpen(false);
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    updateMenu(customerId, menu.menuId, { ...menuOnEdit, img: imageUrlOnEdit });
+    setMenuOnEdit(menuOnEdit);
+    setOpen(false);
+    setLoading(false);
+  };
+  const handleImageDeleteButton = () => {
+    setImageUrlOnEdit("");
+    setImageFileOnEdit(null);
+  };
   return (
     <Dialog open={open} onClose={handleCancel}>
       <DialogTitle>Edit</DialogTitle>
@@ -47,6 +115,7 @@ function MenuEditDialog({
               value={menuOnEdit.category}
               fullWidth
               onChange={handleOnChange}
+              disabled={loading}
             />
           </Grid>
           <Grid item xs={6}>
@@ -58,6 +127,7 @@ function MenuEditDialog({
               value={menuOnEdit.name}
               fullWidth
               onChange={handleOnChange}
+              disabled={loading}
             />
           </Grid>
           <Grid item xs={3}>
@@ -68,6 +138,7 @@ function MenuEditDialog({
               value={menuOnEdit.rate}
               fullWidth
               onChange={handleOnChange}
+              disabled={loading}
             >
               <MenuItem key="None" value="none">
                 None
@@ -96,6 +167,7 @@ function MenuEditDialog({
                 ),
               }}
               onChange={handleOnChange}
+              disabled={loading}
             />
           </Grid>
           {imageUrlOnEdit && (
@@ -131,6 +203,7 @@ function MenuEditDialog({
                 component="span"
                 startIcon={<Delete />}
                 onClick={handleImageDeleteButton}
+                disabled={loading}
               >
                 Delete Image
               </Button>
@@ -140,15 +213,17 @@ function MenuEditDialog({
                 <Input
                   sx={{ display: "none" }}
                   type="file"
-                  accept="image/*"
+                  inputProps={{ accept: "image/*" }}
                   id={`contained-button-file-${menuOnEdit.menuId}`}
                   name="img"
                   onChange={handleOnChange}
+                  disabled={loading}
                 />
                 <Button
                   variant="contained"
                   component="span"
                   startIcon={<PhotoCamera />}
+                  disabled={loading}
                 >
                   Upload
                 </Button>
@@ -163,6 +238,7 @@ function MenuEditDialog({
               fullWidth
               multiline
               onChange={handleOnChange}
+              disabled={loading}
             />
           </Grid>
           <Grid item xs={12}>
@@ -177,6 +253,7 @@ function MenuEditDialog({
                 name="pairs"
                 label="Best Paired With"
                 onChange={handleOnChange}
+                disabled={loading}
                 input={<OutlinedInput />}
                 renderValue={(selected) => (
                   <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
@@ -195,10 +272,16 @@ function MenuEditDialog({
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleCancel}>Cancel</Button>
-        <Button onClick={handleSave} startIcon={<Save />}>
-          Save
+        <Button onClick={handleCancel} disabled={loading}>
+          Cancel
         </Button>
+        <LoadingButton
+          loading={loading}
+          onClick={handleSave}
+          startIcon={<Save />}
+        >
+          Save
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );
