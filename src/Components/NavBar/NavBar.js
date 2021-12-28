@@ -28,6 +28,14 @@ function NavBar({ authService }) {
   const handleCloseUserMenu = (event) => {
     setAnchorElUser(null);
   };
+  const handleMenuEditorClick = (event) => {
+    navigate("/editor");
+    setAnchorElUser(null);
+  };
+  const handleYourMenuClick = (event) => {
+    navigate("/menu");
+    setAnchorElUser(null);
+  };
   const handleSignOut = () => {
     authService
       .logout()
@@ -69,19 +77,17 @@ function NavBar({ authService }) {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem>
-                <LinkButton
-                  path="/editor"
-                  text="Menu Editor"
-                  startIcon={<Edit />}
-                />
+              <MenuItem onClick={handleMenuEditorClick}>
+                <IconButton>
+                  <Edit />
+                </IconButton>
+                <Typography>Menu Editor</Typography>
               </MenuItem>
-              <MenuItem>
-                <LinkButton
-                  path="/menu"
-                  text="Your Menu"
-                  startIcon={<WineBar />}
-                />
+              <MenuItem onClick={handleYourMenuClick}>
+                <IconButton>
+                  <WineBar />
+                </IconButton>
+                <Typography>Your Menu</Typography>
               </MenuItem>
               <MenuItem onClick={handleSignOut}>
                 <IconButton>
