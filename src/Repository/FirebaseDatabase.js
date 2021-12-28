@@ -7,6 +7,7 @@ import {
   get,
   child,
   remove,
+  onValue,
 } from "firebase/database";
 
 export default class FirebaseDatabase {
@@ -38,5 +39,23 @@ export default class FirebaseDatabase {
   }
   updateCategory(customerId, menusWithNewCategory) {
     update(ref(this.database, customerId + "/menus/"), menusWithNewCategory);
+  }
+  getDatabase(callbackFn) {
+    const dbRef = ref(this.database);
+    get(dbRef).then((snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        callbackFn(data);
+      } else {
+        callbackFn(null);
+      }
+    });
+  }
+  onDatabaseChange(callbackFn) {
+    const dbRef = ref(this.database);
+    onValue(dbRef, (snapshot) => {
+      const data = snapshot.val();
+      callbackFn(data);
+    });
   }
 }

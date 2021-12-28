@@ -4,10 +4,9 @@ import PairedMenuCard from "../PairedMenuCard/PairedMenuCard";
 import MenuCategoryTabBar from "../MenuCategoryTabBar/MenuCategoryTabBar";
 import { Box } from "@mui/system";
 
-function MenuListView({ data }) {
+function MenuListView({ menus }) {
   const [category, setCategory] = useState();
-
-  const menusArray = Object.values(data.menus);
+  const menusArray = Object.values(menus);
   const categories = [...new Set(menusArray.map((menu) => menu.category))];
   useEffect(() => {
     setCategory(menusArray[0].category);
@@ -54,7 +53,7 @@ function MenuListView({ data }) {
                     <PairedMenuCard
                       key={menu.menuId}
                       menu={menu}
-                      menus={data.menus}
+                      menus={menus}
                     />
                   </Grid>
                 ))}

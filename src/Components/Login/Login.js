@@ -16,7 +16,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
 
-function Login({ authService, menuRepository }) {
+function Login({ authService }) {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
