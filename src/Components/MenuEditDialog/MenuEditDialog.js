@@ -10,8 +10,6 @@ import {
   DialogTitle,
   FormControl,
   Grid,
-  ImageList,
-  ImageListItem,
   Input,
   InputAdornment,
   InputLabel,

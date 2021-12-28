@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AppRouter from "./AppRouter";
 
 export const UserContext = React.createContext();

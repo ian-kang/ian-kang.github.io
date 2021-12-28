@@ -4,7 +4,10 @@ import { CircleLoader } from "react-spinners";
 import CategoryAddForm from "../CategoryAddForm/CategoryAddForm";
 import MenuEditorListView from "../MenuEditorListView/MenuEditorListView";
 
-export default function MenuEditorHomeView({ menuRepository, cloudinary }) {
+export default function MenuEditorHomeView({
+  menuRepository,
+  imageRepository,
+}) {
   const customerId = "restaurant1";
   const [database, setDatabase] = useState({});
   const [loading, setLoading] = useState(true);
@@ -89,7 +92,7 @@ export default function MenuEditorHomeView({ menuRepository, cloudinary }) {
                 <Grid container item xs={12}>
                   <MenuEditorListView
                     data={database}
-                    cloudinary={cloudinary}
+                    imageRepository={imageRepository}
                     customerId={customerId}
                     updateMenu={updateMenu}
                     deleteMenu={deleteMenu}

@@ -1,31 +1,11 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Chip,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  FormControl,
-  Grid,
-  ImageList,
-  ImageListItem,
-  Input,
-  InputAdornment,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  TextField,
-} from "@mui/material";
-import { Delete, Edit, PhotoCamera, Save } from "@mui/icons-material";
-import { Box } from "@mui/system";
+import { Grid } from "@mui/material";
 import MenuEditCard from "../MenuEditCard/MenuEditCard";
 import MenuEditDialog from "../MenuEditDialog/MenuEditDialog";
+import { CircleLoader } from "react-spinners";
 
 function MenuEditForm({
-  cloudinary,
+  imageRepository,
   customerId,
   menu,
   menus,
@@ -37,6 +17,7 @@ function MenuEditForm({
   const [menuOnEdit, setMenuOnEdit] = useState(menu);
   const [imageUrlOnEdit, setImageUrlOnEdit] = useState(menu.img);
   const [imageFileOnEdit, setImageFileOnEdit] = useState();
+  const [loading, setLoading] = useState();
 
   const handleEdit = (event) => {
     setOpen(true);
@@ -73,7 +54,8 @@ function MenuEditForm({
   };
   const handleSave = async () => {
     if (imageFileOnEdit) {
-      const result = await cloudinary.imageUpload(imageFileOnEdit, [
+      setLoading(true);
+      const result = await imageRepository.imageUpload(imageFileOnEdit, [
         menuOnEdit.menuId,
         menuOnEdit.category,
         menuOnEdit.name,
@@ -84,6 +66,7 @@ function MenuEditForm({
       });
       setMenuOnEdit(menu);
       setOpen(false);
+      setLoading(false);
       return;
     }
     updateMenu(customerId, menu.menuId, { ...menuOnEdit, img: imageUrlOnEdit });
@@ -91,25 +74,35 @@ function MenuEditForm({
     setOpen(false);
   };
   return (
-    <Grid container item spacing={2}>
-      <MenuEditCard
-        menu={menu}
-        menus={menus}
-        handleEdit={handleEdit}
-        handleDelete={handleDelete}
-      />
-      <MenuEditDialog
-        open={open}
-        menuOnEdit={menuOnEdit}
-        handleCancel={handleCancel}
-        handleOnChange={handleOnChange}
-        imageUrlOnEdit={imageUrlOnEdit}
-        handleImageDeleteButton={handleImageDeleteButton}
-        handleSave={handleSave}
-        menus={menus}
-        menusArray={menusArray}
-      />
-    </Grid>
+    <>
+      {loading ? (
+        <Grid container justifyContent="center">
+          <Grid item>
+            <CircleLoader loading={loading} />
+          </Grid>
+        </Grid>
+      ) : (
+        <Grid container item spacing={2}>
+          <MenuEditCard
+            menu={menu}
+            menus={menus}
+            handleEdit={handleEdit}
+            handleDelete={handleDelete}
+          />
+          <MenuEditDialog
+            open={open}
+            menuOnEdit={menuOnEdit}
+            handleCancel={handleCancel}
+            handleOnChange={handleOnChange}
+            imageUrlOnEdit={imageUrlOnEdit}
+            handleImageDeleteButton={handleImageDeleteButton}
+            handleSave={handleSave}
+            menus={menus}
+            menusArray={menusArray}
+          />
+        </Grid>
+      )}
+    </>
   );
 }
 

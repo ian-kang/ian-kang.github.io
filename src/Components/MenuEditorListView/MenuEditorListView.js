@@ -7,7 +7,7 @@ import PairedMenuCard from "../PairedMenuCard/PairedMenuCard";
 
 function MenuEditorListView({
   data,
-  cloudinary,
+  imageRepository,
   customerId,
   updateMenu,
   deleteMenu,
@@ -54,7 +54,7 @@ function MenuEditorListView({
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <MenuEditForm
-                        cloudinary={cloudinary}
+                        imageRepository={imageRepository}
                         customerId={customerId}
                         menu={menu}
                         menus={data.menus}
@@ -68,7 +68,7 @@ function MenuEditorListView({
                 ))}
               <Grid item xs={12} md={6}>
                 <MenuAddCard
-                  cloudinary={cloudinary}
+                  imageRepository={imageRepository}
                   customerId={customerId}
                   category={category}
                   addMenu={addMenu}
