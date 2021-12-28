@@ -36,6 +36,7 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
         setNewMenu({ ...newMenu, category, [targetInput]: url });
         return;
       }
+      setImageFileOnAdd("");
     }
     const value = event.target.value;
     setNewMenu({ ...newMenu, category, [targetInput]: value });
