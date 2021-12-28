@@ -26,7 +26,7 @@ function Login({ authService }) {
         console.log("user is signed out");
       }
     });
-  }, [user, setUser, authService]);
+  }, [user, setUser, authService, navigate]);
 
   const handleOnClick = () => {
     authService.login();
