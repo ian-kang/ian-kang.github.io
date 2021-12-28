@@ -16,7 +16,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
 
-function Login({ authService }) {
+function Login({ authService, menuRepository }) {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
@@ -29,7 +29,6 @@ function Login({ authService }) {
         navigate("/menu");
       } else {
         setUser(undefined);
-        console.log("user is signed out");
       }
     });
   }, [user, setUser, authService, navigate]);
@@ -52,7 +51,9 @@ function Login({ authService }) {
   };
   return (
     <Dialog open maxWidth="xs" fullWidth>
-      <DialogTitle sx={{ textAlign: "center" }}>Log in</DialogTitle>
+      <DialogTitle sx={{ textAlign: "center" }}>
+        <Typography variant="h5">Log in</Typography>
+      </DialogTitle>
       <Grid container justifyContent="center">
         <Grid
           container

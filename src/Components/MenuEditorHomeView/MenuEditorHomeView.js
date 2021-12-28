@@ -10,10 +10,9 @@ export default function MenuEditorHomeView({
   imageRepository,
 }) {
   const [database, setDatabase] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
     menuRepository.getMenus(customerId, (data) => {
       if (data) {
         setDatabase(data);
@@ -22,7 +21,6 @@ export default function MenuEditorHomeView({
       }
       setLoading(false);
     });
-    setLoading(false);
   }, []);
 
   const updateMenu = (customerId, menuId, updatedMenu) => {

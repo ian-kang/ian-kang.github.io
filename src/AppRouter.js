@@ -12,7 +12,12 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
   return (
     <HashRouter>
       <Routes>
-        <Route path="/login" element={<Login authService={authService} />} />
+        <Route
+          path="/login"
+          element={
+            <Login authService={authService} menuRepository={menuRepository} />
+          }
+        />
         {user && (
           <>
             <Route
