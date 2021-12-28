@@ -6,20 +6,35 @@ import MenuEditorHomeView from "./Components/MenuEditorHomeView/MenuEditorHomeVi
 import MenuHomeView from "./Components/MenuHomeView/MenuHomeView";
 import Login from "./Components/Login/Login";
 
-function AppRouter({ authService }) {
+function AppRouter({ authService, menuRepository, imageRepository }) {
   return (
     <HashRouter>
       <Routes>
-        <Route path="/" element={<BaseLayout component={<Home />} />} />
         <Route path="/login" element={<Login authService={authService} />} />
         <Route
           path="/editor"
-          element={<BaseLayout component={<MenuEditorHomeView />} />}
+          element={
+            <BaseLayout
+              authService={authService}
+              component={
+                <MenuEditorHomeView
+                  menuRepository={menuRepository}
+                  imageRepository={imageRepository}
+                />
+              }
+            />
+          }
         ></Route>
         <Route
           path="/menu"
-          element={<BaseLayout component={<MenuHomeView />} />}
+          element={
+            <BaseLayout
+              authService={authService}
+              component={<MenuHomeView menuRepository={menuRepository} />}
+            />
+          }
         ></Route>
+        <Route path="*" element={<Login authService={authService} />} />
       </Routes>
     </HashRouter>
   );

@@ -1,11 +1,11 @@
 import { Box } from "@mui/material";
 import React from "react";
 import NavBar from "../NavBar/NavBar";
-function BaseLayout({ component }) {
+function BaseLayout({ authService, component }) {
   return (
     <Box>
       <Box>
-        <NavBar />
+        <NavBar authService={authService} />
       </Box>
       <Box>{component}</Box>
     </Box>

@@ -1,37 +1,36 @@
-import { Menu } from "@mui/icons-material";
+import { Edit, Logout, WineBar } from "@mui/icons-material";
 import {
+  Avatar,
   Box,
-  Button,
   IconButton,
-  Paper,
-  Stack,
-  SwipeableDrawer,
-  Tab,
-  Tabs,
+  Menu,
+  MenuItem,
+  Tooltip,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
-import NavBarTabs from "../NavBarTabs/NavBarTabs";
-import NavBarToggleList from "../NavbarToggleList/NavBarToggleList";
+import LinkButton from "../LinkButton/LinkButton";
 
-function NavBar() {
-  const [navValue, setNavValue] = useState();
-  const [open, setOpen] = useState(false);
+function NavBar({ authService }) {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("lg"));
-  const { user } = useContext(UserContext);
-  const logo =
-    "https://res.cloudinary.com/db7ss52zt/image/upload/v1639668058/Menu%20Creator/Logo/Pour_Haus_Wine_Bar_Logo_uhxovp.jpg";
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext);
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
-  const handleNavOnChange = (event, newValue) => {
-    setNavValue(newValue);
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
   };
-  const toggleDrawer = (status) => (event) => {
-    setOpen(status);
+  const handleCloseUserMenu = (event) => {
+    setAnchorElUser(null);
+  };
+  const handleSignOut = () => {
+    authService.logout();
+    navigate("/login");
   };
   return (
     <div>
@@ -49,56 +48,46 @@ function NavBar() {
         <Box>
           <Typography variant="h5">Pairable</Typography>
         </Box>
-        {matches && (
+        {user && user ? (
           <Box>
-            <NavBarTabs value={navValue} handleChange={handleNavOnChange} />
-          </Box>
-        )}
-        {matches ? (
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Link to="/login" style={{ textDecoration: "none" }}>
-              <Button>Sign in</Button>
-            </Link>
-            <Stack direction="row" spacing={2} alignItems="center">
-              <Paper variant="outlined">
-                <img
-                  src={logo} //TODO: insert business logo img source after login
-                  alt=""
-                  loading="lazy"
-                  style={{ width: "50px", height: "50px" }}
+            <Tooltip title="Open Setting">
+              <IconButton onClick={handleOpenUserMenu}>
+                <Avatar
+                  variant="rounded"
+                  src="https://res.cloudinary.com/db7ss52zt/image/upload/v1639668058/Menu%20Creator/Logo/Pour_Haus_Wine_Bar_Logo_uhxovp.jpg"
                 />
-              </Paper>
-              <Typography sx={{ mt: 2, mb: 2 }} variant="h7" component="div">
-                {user.displayName}
-              </Typography>
-            </Stack>
+              </IconButton>
+            </Tooltip>
+            <Menu
+              anchorEl={anchorElUser}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              <MenuItem>
+                <LinkButton
+                  path="/editor"
+                  text="Menu Editor"
+                  startIcon={<Edit />}
+                />
+              </MenuItem>
+              <MenuItem>
+                <LinkButton
+                  path="/menu"
+                  text="Your Menu"
+                  startIcon={<WineBar />}
+                />
+              </MenuItem>
+              <MenuItem onClick={handleSignOut}>
+                <IconButton>
+                  <Logout />
+                </IconButton>
+                <Typography>Sign Out</Typography>
+              </MenuItem>
+            </Menu>
           </Box>
         ) : (
           <Box>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-              onClick={toggleDrawer(true)}
-            >
-              <Menu />
-            </IconButton>
-            <SwipeableDrawer
-              anchor="right"
-              open={open}
-              onClose={toggleDrawer(false)}
-            >
-              {open && <NavBarToggleList logo={logo} name={user.displayName} />}
-            </SwipeableDrawer>
+            <LinkButton path="/login" text="Sign In" />
           </Box>
         )}
       </Box>

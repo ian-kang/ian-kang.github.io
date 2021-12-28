@@ -20,15 +20,16 @@ function Login({ authService }) {
     authService.onAuthChange((user) => {
       if (user) {
         setUser(user);
-        navigate("/");
+        navigate("/menu");
       } else {
+        setUser(undefined);
         console.log("user is signed out");
       }
     });
-  });
+  }, [user, setUser, authService]);
 
   const handleOnClick = () => {
-    setUser("second");
+    authService.login();
   };
   return (
     <Dialog open>

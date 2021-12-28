@@ -3,37 +3,37 @@ import { useEffect, useState } from "react";
 import CategoryAddForm from "../CategoryAddForm/CategoryAddForm";
 import MenuEditorListView from "../MenuEditorListView/MenuEditorListView";
 
-export default function MenuEditorHomeView({ fireBaseDatabase, cloudinary }) {
+export default function MenuEditorHomeView({ menuRepository, cloudinary }) {
   const customerId = "restaurant1";
   const [database, setDatabase] = useState({});
 
   useEffect(() => {
-    fireBaseDatabase.getMenus(customerId, (data) => {
+    menuRepository.getMenus(customerId, (data) => {
       setDatabase(data);
     });
   }, []);
 
   const updateMenu = (customerId, menuId, updatedMenu) => {
-    fireBaseDatabase.updateMenu(customerId, menuId, updatedMenu);
-    fireBaseDatabase.getMenus(customerId, (data) => {
+    menuRepository.updateMenu(customerId, menuId, updatedMenu);
+    menuRepository.getMenus(customerId, (data) => {
       setDatabase(data);
     });
   };
   const deleteMenu = (customerId, menuId) => {
-    fireBaseDatabase.deleteMenu(customerId, menuId);
-    fireBaseDatabase.getMenus(customerId, (data) => {
+    menuRepository.deleteMenu(customerId, menuId);
+    menuRepository.getMenus(customerId, (data) => {
       setDatabase(data);
     });
   };
   const addMenu = (customerId, newMenu, newMenuId) => {
-    fireBaseDatabase.addMenu(customerId, newMenu, newMenuId);
-    fireBaseDatabase.getMenus(customerId, (data) => {
+    menuRepository.addMenu(customerId, newMenu, newMenuId);
+    menuRepository.getMenus(customerId, (data) => {
       setDatabase(data);
     });
   };
   const addCategory = (customerId, category) => {
     const newId = Date.now();
-    fireBaseDatabase.addMenu(
+    menuRepository.addMenu(
       customerId,
       {
         menuId: newId,
@@ -47,7 +47,7 @@ export default function MenuEditorHomeView({ fireBaseDatabase, cloudinary }) {
       },
       newId
     );
-    fireBaseDatabase.getMenus(customerId, (data) => {
+    menuRepository.getMenus(customerId, (data) => {
       setDatabase(data);
     });
   };
@@ -59,9 +59,9 @@ export default function MenuEditorHomeView({ fireBaseDatabase, cloudinary }) {
         return;
       }
     });
-    fireBaseDatabase.updateCategory(customerId, copied);
+    menuRepository.updateCategory(customerId, copied);
 
-    fireBaseDatabase.getMenus(customerId, (data) => {
+    menuRepository.getMenus(customerId, (data) => {
       setDatabase(data);
     });
   };

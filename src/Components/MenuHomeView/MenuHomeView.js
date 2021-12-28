@@ -1,14 +1,13 @@
 import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
-
 import MenuListView from "../MenuListView/MenuListView";
 
-function MenuHomeView({ fireBaseDatabase }) {
+function MenuHomeView({ menuRepository }) {
   const customerId = "restaurant1";
   const [database, setDatabase] = useState({});
 
   useEffect(() => {
-    fireBaseDatabase.getMenus(customerId, (data) => {
+    menuRepository.getMenus(customerId, (data) => {
       setDatabase(data);
     });
   }, []);
