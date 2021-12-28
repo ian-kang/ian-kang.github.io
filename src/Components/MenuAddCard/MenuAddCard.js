@@ -8,6 +8,7 @@ import {
   TextField,
 } from "@mui/material";
 import { Add, PhotoCamera } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 
 function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
   const [newMenu, setNewMenu] = useState({
@@ -21,6 +22,7 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
     pairs: [],
   });
   const [imageFileOnEdit, setImageFileOnAdd] = useState();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setNewMenu({ ...newMenu, category });
@@ -43,11 +45,12 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
   };
   const handleAddButtonOnClick = async () => {
     if (imageFileOnEdit) {
-      const result = await imageRepository.imageUpload(imageFileOnEdit, [
-        newMenu.menuId,
-        newMenu.category,
-        newMenu.name,
-      ]);
+      setLoading(true);
+      const result = await imageRepository.imageUpload(
+        customerId,
+        imageFileOnEdit,
+        [newMenu.menuId, newMenu.category, newMenu.name]
+      );
       addMenu(customerId, { ...newMenu, img: result.url }, newMenu.menuId);
       setNewMenu({
         menuId: Date.now(),
@@ -60,8 +63,10 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
         pairs: [],
       });
       setImageFileOnAdd();
+      setLoading(false);
       return;
     }
+    setLoading(true);
     addMenu(customerId, newMenu, newMenu.menuId);
     setNewMenu({
       menuId: Date.now(),
@@ -73,6 +78,7 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
       img: "",
       pairs: [],
     });
+    setLoading(false);
   };
 
   return (
@@ -86,6 +92,7 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
             value={newMenu.name}
             onChange={handleInputOnChange}
             fullWidth
+            disabled={loading}
           />
         </Grid>
         <Grid item xs={3}>
@@ -96,6 +103,7 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
             value={newMenu.rate}
             onChange={handleInputOnChange}
             fullWidth
+            disabled={loading}
           >
             <MenuItem key="None" value="none">
               None
@@ -118,6 +126,7 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
             name="price"
             value={newMenu.price}
             onChange={handleInputOnChange}
+            disabled={loading}
             fullWidth
             InputProps={{
               startAdornment: (
@@ -151,15 +160,17 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
               <Input
                 sx={{ display: "none" }}
                 type="file"
-                accept="image/*"
+                inputProps={{ accept: "image/*" }}
                 id={`contained-button-file-${category}`}
                 name="img"
                 onChange={handleInputOnChange}
+                disabled={loading}
               />
               <Button
                 variant="contained"
                 component="span"
                 startIcon={<PhotoCamera />}
+                disabled={loading}
               >
                 Image Upload
               </Button>
@@ -174,17 +185,19 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
             onChange={handleInputOnChange}
             fullWidth
             multiline
+            disabled={loading}
           />
         </Grid>
         <Grid item xs={12}>
-          <Button
+          <LoadingButton
+            loading={loading}
             fullWidth
             variant="outlined"
             startIcon={<Add />}
             onClick={handleAddButtonOnClick}
           >
             Add
-          </Button>
+          </LoadingButton>
         </Grid>
       </Grid>
     </div>

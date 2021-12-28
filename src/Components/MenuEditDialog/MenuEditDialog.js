@@ -23,12 +23,6 @@ import { LoadingButton } from "@mui/lab";
 function MenuEditDialog({
   open,
   setOpen,
-  // menuOnEdit,
-  // handleCancel,
-  // handleOnChange,
-  // imageUrlOnEdit,
-  // handleImageDeleteButton,
-  // handleSave,
   menu,
   menus,
   menusArray,
@@ -75,11 +69,11 @@ function MenuEditDialog({
   const handleSave = async () => {
     if (imageFileOnEdit) {
       setLoading(true);
-      const result = await imageRepository.imageUpload(imageFileOnEdit, [
-        menuOnEdit.menuId,
-        menuOnEdit.category,
-        menuOnEdit.name,
-      ]);
+      const result = await imageRepository.imageUpload(
+        customerId,
+        imageFileOnEdit,
+        [menuOnEdit.menuId, menuOnEdit.category, menuOnEdit.name]
+      );
       updateMenu(customerId, menu.menuId, {
         ...menuOnEdit,
         img: result.url,
