@@ -1,33 +1,23 @@
-import {
-  getAuth,
-  getRedirectResult,
-  GoogleAuthProvider,
-  onAuthStateChanged,
-  signInWithRedirect,
-  signOut,
-} from "firebase/auth";
-
 export default class AuthService {
-  login() {
-    const auth = getAuth();
-    const provider = new GoogleAuthProvider();
-    signInWithRedirect(auth, provider);
+  constructor(authProvider) {
+    this.authProvider = authProvider;
+  }
+  googleSignInWithRedirect() {
+    this.authProvider.logInWithRedirect();
+  }
+  signInWithEmailPassword(email, password) {
+    return this.authProvider.signInWithEmailAndPassword(email, password);
   }
 
   logout() {
-    const auth = getAuth();
-    return signOut(auth);
+    return this.authProvider.signOut();
   }
 
   getRedirectResult() {
-    const auth = getAuth();
-    return getRedirectResult(auth);
+    return this.authProvider.getRedirectResult();
   }
 
   onAuthChange(onUserChange) {
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      onUserChange(user);
-    });
+    this.authProvider.onAuthStateChanged(onUserChange);
   }
 }

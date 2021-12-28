@@ -1,14 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import initializeFirebaseApp from "./Service/Firebase/firebase";
 import { App } from "./App";
 import AuthService from "./Service/Auth/auth";
 import FirebaseDatabase from "./Repository/FirebaseDatabase";
 import Cloudinary from "./Service/Cloudinary/cloudinary";
+import FirebaseAuth from "./Service/Firebase/firebase";
 
-const firebaseApp = initializeFirebaseApp();
-const authService = new AuthService();
+const firebaseAuth = new FirebaseAuth();
+const firebaseApp = firebaseAuth.initializeFirebaseApp();
+const authService = new AuthService(firebaseAuth);
 const menuRepository = new FirebaseDatabase(firebaseApp);
 const imageRepository = new Cloudinary();
 
