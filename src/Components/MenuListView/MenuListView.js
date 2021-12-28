@@ -17,7 +17,7 @@ function MenuListView({ data }) {
     setCategory(newCategory);
   };
   return (
-    <Grid container justifyContent="center">
+    <Grid container item justifyContent="center">
       <Grid container item justifyContent="center">
         <Grid item>
           <Typography variant="h5">Your Menu</Typography>

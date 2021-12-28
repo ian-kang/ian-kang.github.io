@@ -22,6 +22,7 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
                   authService={authService}
                   component={
                     <MenuEditorHomeView
+                      customerId={user.uid}
                       menuRepository={menuRepository}
                       imageRepository={imageRepository}
                     />
@@ -34,7 +35,12 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
               element={
                 <BaseLayout
                   authService={authService}
-                  component={<MenuHomeView menuRepository={menuRepository} />}
+                  component={
+                    <MenuHomeView
+                      customerId={user.uid}
+                      menuRepository={menuRepository}
+                    />
+                  }
                 />
               }
             ></Route>

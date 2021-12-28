@@ -4,7 +4,7 @@ import "./index.css";
 import initializeFirebaseApp from "./Service/Firebase/firebase";
 import { App } from "./App";
 import AuthService from "./Service/Auth/auth";
-import FirebaseDatabase from "./Repository/realtimeDatabase";
+import FirebaseDatabase from "./Repository/FirebaseDatabase";
 import Cloudinary from "./Service/Cloudinary/cloudinary";
 
 const firebaseApp = initializeFirebaseApp();

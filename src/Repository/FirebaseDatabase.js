@@ -1,5 +1,4 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
 import {
   getDatabase,
   ref,
@@ -9,7 +8,6 @@ import {
   child,
   remove,
 } from "firebase/database";
-import initializeFirebaseApp from "../Service/Firebase/firebase";
 
 export default class FirebaseDatabase {
   constructor(app) {
@@ -31,7 +29,7 @@ export default class FirebaseDatabase {
         if (snapshot.exists()) {
           callbackfn(snapshot.val());
         } else {
-          console.log("No data available");
+          callbackfn(null);
         }
       })
       .catch((error) => {

@@ -1,23 +1,27 @@
-import { Box } from "@mui/material";
+import { Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import MenuListView from "../MenuListView/MenuListView";
 
-function MenuHomeView({ menuRepository }) {
-  const customerId = "restaurant1";
+function MenuHomeView({ customerId, menuRepository }) {
   const [database, setDatabase] = useState({});
 
   useEffect(() => {
     menuRepository.getMenus(customerId, (data) => {
-      setDatabase(data);
+      if (data) {
+        setDatabase(data);
+        return;
+      }
     });
   }, []);
 
   return (
-    <Box>
-      {Object.keys(database).find((key) => key === "menus") && (
+    <Grid container justifyContent="center">
+      {Object.keys(database).find((key) => key === "menus") ? (
         <MenuListView key={Date.now()} data={database} />
+      ) : (
+        <Grid item>No Data Available</Grid>
       )}
-    </Box>
+    </Grid>
   );
 }
 

@@ -5,18 +5,24 @@ import CategoryAddForm from "../CategoryAddForm/CategoryAddForm";
 import MenuEditorListView from "../MenuEditorListView/MenuEditorListView";
 
 export default function MenuEditorHomeView({
+  customerId,
   menuRepository,
   imageRepository,
 }) {
-  const customerId = "restaurant1";
   const [database, setDatabase] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     menuRepository.getMenus(customerId, (data) => {
-      setDatabase(data);
+      if (data) {
+        setDatabase(data);
+        setLoading(false);
+        return;
+      }
       setLoading(false);
     });
+    setLoading(false);
   }, []);
 
   const updateMenu = (customerId, menuId, updatedMenu) => {
@@ -28,7 +34,11 @@ export default function MenuEditorHomeView({
   const deleteMenu = (customerId, menuId) => {
     menuRepository.deleteMenu(customerId, menuId);
     menuRepository.getMenus(customerId, (data) => {
-      setDatabase(data);
+      if (data) {
+        setDatabase(data);
+        return;
+      }
+      setDatabase({});
     });
   };
   const addMenu = (customerId, newMenu, newMenuId) => {
@@ -88,7 +98,7 @@ export default function MenuEditorHomeView({
           </Grid>
           <Grid container item justifyContent="center">
             <Grid container item xs={10} spacing={4}>
-              {Object.keys(database).find((key) => key === "menus") && (
+              {Object.keys(database).find((key) => key === "menus") ? (
                 <Grid container item xs={12}>
                   <MenuEditorListView
                     data={database}
@@ -100,7 +110,7 @@ export default function MenuEditorHomeView({
                     editCategory={editCategory}
                   />
                 </Grid>
-              )}
+              ) : null}
 
               <Grid container item xs={12}>
                 <CategoryAddForm
