@@ -30,10 +30,12 @@ function MenuAddCard({ cloudinary, customerId, category, addMenu }) {
     const targetInput = event.target.name;
     if (targetInput === "img") {
       const file = event.target.files[0];
-      const url = URL.createObjectURL(file);
-      setImageFileOnAdd(file);
-      setNewMenu({ ...newMenu, category, [targetInput]: url });
-      return;
+      if (file) {
+        const url = URL.createObjectURL(file);
+        setImageFileOnAdd(file);
+        setNewMenu({ ...newMenu, category, [targetInput]: url });
+        return;
+      }
     }
     const value = event.target.value;
     setNewMenu({ ...newMenu, category, [targetInput]: value });
