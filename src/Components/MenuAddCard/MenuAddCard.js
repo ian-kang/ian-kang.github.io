@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Add, PhotoCamera } from "@mui/icons-material";
 
-function MenuAddCard({ cloudinary, customerId, category, addMenu }) {
+function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
   const [newMenu, setNewMenu] = useState({
     menuId: Date.now(),
     category,
@@ -42,7 +42,7 @@ function MenuAddCard({ cloudinary, customerId, category, addMenu }) {
   };
   const handleAddButtonOnClick = async () => {
     if (imageFileOnEdit) {
-      const result = await cloudinary.imageUpload(imageFileOnEdit, [
+      const result = await imageRepository.imageUpload(imageFileOnEdit, [
         newMenu.menuId,
         newMenu.category,
         newMenu.name,
