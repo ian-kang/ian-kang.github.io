@@ -14,7 +14,7 @@ function CategoryAddForm({ customerId, addCategory }) {
   };
 
   return (
-    <Grid container item xs={6} spacing={2} alignItems="center">
+    <Grid container item xs={12} spacing={2} alignItems="center">
       <Divider />
       <Grid item xs={9}>
         <TextField
