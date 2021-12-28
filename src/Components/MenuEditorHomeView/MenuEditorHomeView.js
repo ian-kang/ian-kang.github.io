@@ -1,15 +1,18 @@
 import { Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { CircleLoader } from "react-spinners";
 import CategoryAddForm from "../CategoryAddForm/CategoryAddForm";
 import MenuEditorListView from "../MenuEditorListView/MenuEditorListView";
 
 export default function MenuEditorHomeView({ menuRepository, cloudinary }) {
   const customerId = "restaurant1";
   const [database, setDatabase] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     menuRepository.getMenus(customerId, (data) => {
       setDatabase(data);
+      setLoading(false);
     });
   }, []);
 
@@ -66,36 +69,46 @@ export default function MenuEditorHomeView({ menuRepository, cloudinary }) {
     });
   };
   return (
-    <Grid container>
-      <Grid container item justifyContent="center">
-        <Grid item>
-          <Typography variant="h5">Menu Editor</Typography>
-        </Grid>
-      </Grid>
-      <Grid container item justifyContent="center">
-        <Grid container item xs={10} spacing={4}>
-          {Object.keys(database).find((key) => key === "menus") && (
-            <Grid container item xs={12}>
-              <MenuEditorListView
-                data={database}
-                cloudinary={cloudinary}
-                customerId={customerId}
-                updateMenu={updateMenu}
-                deleteMenu={deleteMenu}
-                addMenu={addMenu}
-                editCategory={editCategory}
-              />
-            </Grid>
-          )}
-
-          <Grid container item xs={12}>
-            <CategoryAddForm
-              customerId={customerId}
-              addCategory={addCategory}
-            />
+    <>
+      {loading ? (
+        <Grid container justifyContent="center">
+          <Grid item>
+            <CircleLoader loading={loading} />
           </Grid>
         </Grid>
-      </Grid>
-    </Grid>
+      ) : (
+        <Grid container>
+          <Grid container item justifyContent="center">
+            <Grid item>
+              <Typography variant="h5">Menu Editor</Typography>
+            </Grid>
+          </Grid>
+          <Grid container item justifyContent="center">
+            <Grid container item xs={10} spacing={4}>
+              {Object.keys(database).find((key) => key === "menus") && (
+                <Grid container item xs={12}>
+                  <MenuEditorListView
+                    data={database}
+                    cloudinary={cloudinary}
+                    customerId={customerId}
+                    updateMenu={updateMenu}
+                    deleteMenu={deleteMenu}
+                    addMenu={addMenu}
+                    editCategory={editCategory}
+                  />
+                </Grid>
+              )}
+
+              <Grid container item xs={12}>
+                <CategoryAddForm
+                  customerId={customerId}
+                  addCategory={addCategory}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      )}
+    </>
   );
 }
