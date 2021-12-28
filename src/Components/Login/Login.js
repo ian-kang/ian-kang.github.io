@@ -83,6 +83,7 @@ function Login({ authService }) {
               fullWidth
               variant="outlined"
               label="Password"
+              type="password"
               name="password"
               onChange={handleOnChange}
             />
