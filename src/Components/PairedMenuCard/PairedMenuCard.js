@@ -1,5 +1,4 @@
 import {
-  Delete,
   DinnerDining,
   ExpandLess,
   ExpandMore,
@@ -11,11 +10,9 @@ import {
   CardHeader,
   CardMedia,
   Collapse,
-  IconButton,
   ListItem,
   ListItemButton,
   ListItemIcon,
-  ListItemText,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
@@ -32,7 +29,11 @@ function PairedMenuCard({ menu, menus }) {
     <Card>
       <CardHeader
         title={menu.name}
-        subheader={<Typography variant="subtitle2">${menu.price}</Typography>}
+        action={
+          <Typography sx={{ mt: 1 }} variant="subtitle2">
+            ${menu.price}
+          </Typography>
+        }
       />
       {menu.img && (
         <CardMedia
