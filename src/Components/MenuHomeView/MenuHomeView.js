@@ -22,7 +22,7 @@ function MenuHomeView({ customerId, menuRepository }) {
   };
 
   return (
-    <Grid container item alignItems="center" direction="column">
+    <Grid container item alignItems="center" direction="column" spacing={4}>
       <Grid item>
         <Typography variant="h5">Your Menu</Typography>
       </Grid>

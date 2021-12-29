@@ -31,30 +31,34 @@ export default function CategoryMenuListItem({ menu, menus }) {
       >
         <ListItemText primary={menu.name} secondary={menu.desc} />
       </ListItem>
-      <ListItemButton onClick={handleClick}>
-        <ListItem
-          secondaryAction={
-            <Typography variant="body2">Best Paired With</Typography>
-          }
-        >
-          <ListItemIcon>
-            <WineBar />
-            <DinnerDining />
-          </ListItemIcon>
-        </ListItem>
-        {expanded ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse
-        sx={{ borderBottom: "1px solid", borderRadius: 4 }}
-        in={expanded}
-        timeout="auto"
-        unmountOnExit
-      >
-        {menu.pairs &&
-          menu.pairs.map((menuId) => (
-            <MenuEditorPreviewListItem key={menuId} menu={menus[menuId]} />
-          ))}
-      </Collapse>
+      {menu.pairs ? (
+        <>
+          <ListItemButton onClick={handleClick}>
+            <ListItem
+              secondaryAction={
+                <Typography variant="body2">Best Paired With</Typography>
+              }
+            >
+              <ListItemIcon>
+                <WineBar />
+                <DinnerDining />
+              </ListItemIcon>
+            </ListItem>
+            {expanded ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+          <Collapse
+            sx={{ borderBottom: "1px solid", borderRadius: 4 }}
+            in={expanded}
+            timeout="auto"
+            unmountOnExit
+          >
+            {menu.pairs &&
+              menu.pairs.map((menuId) => (
+                <MenuEditorPreviewListItem key={menuId} menu={menus[menuId]} />
+              ))}
+          </Collapse>
+        </>
+      ) : null}
     </List>
   );
 }

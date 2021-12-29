@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import PairedMenuCard from "../PairedMenuCard/PairedMenuCard";
 import MenuCategoryTabBar from "../MenuCategoryTabBar/MenuCategoryTabBar";
@@ -17,10 +17,8 @@ function MenuCardView({ menus }) {
   };
   return (
     <Grid container item justifyContent="center" xs={10}>
-      <Grid item xs={12} sx={{ mb: 4, mt: 4 }}>
-        <Box
-          sx={{ display: "flex", justifyContent: "center", borderBottom: 1 }}
-        >
+      <Grid item xs={12} sx={{ mb: 4 }}>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
           <MenuCategoryTabBar
             category={category}
             categories={categories}

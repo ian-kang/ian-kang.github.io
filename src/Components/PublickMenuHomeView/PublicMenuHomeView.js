@@ -1,14 +1,5 @@
 import { Dashboard, ViewList } from "@mui/icons-material";
-import {
-  Avatar,
-  CardMedia,
-  Grid,
-  ListItem,
-  ListItemAvatar,
-  Paper,
-  Switch,
-  Typography,
-} from "@mui/material";
+import { Grid, Switch, Typography } from "@mui/material";
 import React, { useState } from "react";
 import MenuCardView from "../MenuCardView/MenuCardView";
 import MenuListView from "../MenuListView/MenuListView";
@@ -20,7 +11,7 @@ function PublicMenuHomeView({ menus, logo, name }) {
     setToggle(!toggle);
   };
   return (
-    <Grid container alignItems="center" direction="column" spacing={2}>
+    <Grid container alignItems="center" direction="column" spacing={4}>
       <Grid item>
         <Typography variant="h5">{name}</Typography>
       </Grid>
