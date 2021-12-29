@@ -5,7 +5,7 @@ import NavBar from "../NavBar/NavBar";
 function BaseLayout({ authService, component }) {
   return (
     <Box>
-      <Box>
+      <Box sx={{ mb: 4 }}>
         <NavBar authService={authService} />
       </Box>
       <Box>{component}</Box>

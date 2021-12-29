@@ -1,22 +1,28 @@
 import { Dashboard, ViewList } from "@mui/icons-material";
-import { CardMedia, Grid, Switch, Typography } from "@mui/material";
+import {
+  Avatar,
+  CardMedia,
+  Grid,
+  ListItem,
+  ListItemAvatar,
+  Paper,
+  Switch,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
 import MenuCardView from "../MenuCardView/MenuCardView";
 import MenuListView from "../MenuListView/MenuListView";
 
-function PublicMenuHomeView({ menus, logo }) {
+function PublicMenuHomeView({ menus, logo, name }) {
   const [toggle, setToggle] = useState(true);
 
   const handleSwitch = (event) => {
     setToggle(!toggle);
   };
   return (
-    <Grid container alignItems="center" direction="column">
+    <Grid container alignItems="center" direction="column" spacing={2}>
       <Grid item>
-        <Typography variant="h5">Menu</Typography>
-      </Grid>
-      <Grid item xs={2} lg={1}>
-        <CardMedia component="img" image={logo} alt="Logo" />
+        <Typography variant="h5">{name}</Typography>
       </Grid>
       <Grid item container justifyContent="center" alignItems="center">
         <Grid item>

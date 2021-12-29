@@ -70,6 +70,7 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
                       logo={
                         database[customerId].logo && database[customerId].logo
                       }
+                      name={database[customerId].name}
                     />
                   }
                 />
