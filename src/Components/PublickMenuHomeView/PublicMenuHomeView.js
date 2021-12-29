@@ -4,9 +4,9 @@ import MenuListView from "../MenuListView/MenuListView";
 
 function PublicMenuHomeView({ menus, logo }) {
   return (
-    <Grid container justifyContent="center">
-      <Grid item>
-        <CardMedia component="img" height="140" image={logo} alt="Logo" />
+    <Grid container justifyContent="center" xs={12}>
+      <Grid item xs={4}>
+        <CardMedia component="img" image={logo} alt="Logo" />
       </Grid>
       {menus ? (
         <MenuListView key={Date.now()} menus={menus} />
