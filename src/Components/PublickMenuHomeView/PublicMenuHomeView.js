@@ -1,18 +1,44 @@
-import { CardMedia, Grid } from "@mui/material";
-import React from "react";
+import { CardMedia, Grid, Switch, Typography } from "@mui/material";
+import React, { useState } from "react";
+import MenuCardView from "../MenuCardView/MenuCardView";
 import MenuListView from "../MenuListView/MenuListView";
 
 function PublicMenuHomeView({ menus, logo }) {
+  const [toggle, setToggle] = useState(true);
+
+  const handleSwitch = (event) => {
+    setToggle(!toggle);
+  };
   return (
-    <Grid container justifyContent="center" xs={12}>
+    <Grid container alignItems="center" direction="column">
+      <Grid item>
+        <Typography variant="h5">Menu</Typography>
+      </Grid>
       <Grid item xs={2} lg={1}>
         <CardMedia component="img" image={logo} alt="Logo" />
       </Grid>
-      {menus ? (
-        <MenuListView key={Date.now()} menus={menus} />
-      ) : (
-        <Grid item>No Data Available</Grid>
-      )}
+      <Grid item container justifyContent="center" alignItems="center">
+        <Grid item>
+          <Typography>List Menu</Typography>
+        </Grid>
+        <Grid item>
+          <Switch checked={toggle} onChange={handleSwitch} />
+        </Grid>
+        <Grid item>
+          <Typography>Card Menu</Typography>
+        </Grid>
+      </Grid>
+      <Grid container item justifyContent="center" xs={10}>
+        {menus ? (
+          toggle ? (
+            <MenuCardView key={Date.now()} menus={menus} />
+          ) : (
+            <MenuListView menus={menus} />
+          )
+        ) : (
+          <Grid item>No Data Available</Grid>
+        )}
+      </Grid>
     </Grid>
   );
 }

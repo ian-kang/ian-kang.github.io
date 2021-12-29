@@ -10,7 +10,7 @@ import {
 
 function MenuEditorPreviewListItem({ menu }) {
   return (
-    <List sx={{ p: 1 }}>
+    <List sx={{ pl: 4 }} dense>
       <ListItem
         secondaryAction={
           <Typography variant="subtitle2">${menu.price}</Typography>

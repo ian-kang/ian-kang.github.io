@@ -1,53 +1,36 @@
+import React, { useState } from "react";
 import {
-  Delete,
   DinnerDining,
   ExpandLess,
   ExpandMore,
   WineBar,
 } from "@mui/icons-material";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardMedia,
   Collapse,
-  IconButton,
+  List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
 import MenuEditorPreviewListItem from "../MenuEditorPreviewListItem/MenuEditorPreviewListItem";
 
-function PairedMenuCard({ menu, menus }) {
+export default function CategoryMenuListItem({ menu, menus }) {
   const [expanded, setExpanded] = useState(false);
 
   const handleClick = () => {
     setExpanded(!expanded);
   };
-
   return (
-    <Card>
-      <CardHeader
-        title={menu.name}
-        action={<Typography variant="caption">${menu.price}</Typography>}
-      />
-      {menu.img && (
-        <CardMedia
-          component="img"
-          height="150"
-          image={menu.img}
-          alt="No Image"
-        />
-      )}
-
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          {menu.desc}
-        </Typography>
-      </CardContent>
+    <List>
+      <ListItem
+        secondaryAction={
+          <Typography variant="caption">{menu.price}</Typography>
+        }
+      >
+        <ListItemText primary={menu.name} secondary={menu.desc} />
+      </ListItem>
       <ListItemButton onClick={handleClick}>
         <ListItem
           secondaryAction={
@@ -59,17 +42,19 @@ function PairedMenuCard({ menu, menus }) {
             <DinnerDining />
           </ListItemIcon>
         </ListItem>
-
         {expanded ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      <Collapse
+        sx={{ borderBottom: "1px solid", borderRadius: 4 }}
+        in={expanded}
+        timeout="auto"
+        unmountOnExit
+      >
         {menu.pairs &&
           menu.pairs.map((menuId) => (
             <MenuEditorPreviewListItem key={menuId} menu={menus[menuId]} />
           ))}
       </Collapse>
-    </Card>
+    </List>
   );
 }
-
-export default PairedMenuCard;
