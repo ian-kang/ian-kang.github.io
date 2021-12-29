@@ -69,7 +69,12 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
                 <BaseLayout
                   authService={authService}
                   component={
-                    <PublicMenuHomeView menus={database[customerId].menus} />
+                    <PublicMenuHomeView
+                      menus={database[customerId].menus}
+                      logo={
+                        database[customerId].logo && database[customerId].logo
+                      }
+                    />
                   }
                 />
               }
