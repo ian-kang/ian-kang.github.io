@@ -26,7 +26,7 @@ export default function CategoryMenuListItem({ menu, menus }) {
     <List>
       <ListItem
         secondaryAction={
-          <Typography variant="caption">{menu.price}</Typography>
+          <Typography variant="subtitle2">{menu.price}</Typography>
         }
       >
         <ListItemText primary={menu.name} secondary={menu.desc} />

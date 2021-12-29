@@ -32,7 +32,7 @@ function PairedMenuCard({ menu, menus }) {
     <Card>
       <CardHeader
         title={menu.name}
-        action={<Typography variant="caption">${menu.price}</Typography>}
+        subheader={<Typography variant="subtitle2">${menu.price}</Typography>}
       />
       {menu.img && (
         <CardMedia
