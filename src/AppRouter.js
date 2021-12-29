@@ -10,16 +10,12 @@ import PublicMenuHomeView from "./Components/PublickMenuHomeView/PublicMenuHomeV
 function AppRouter({ authService, menuRepository, imageRepository }) {
   const { user } = useContext(UserContext);
   const [customerIds, setCustomerIds] = useState();
-  const [menus, SetMenus] = useState();
   const [database, setDatabase] = useState();
   useEffect(() => {
     menuRepository.getDatabase((data) => {
       const customerIdArray = Object.keys(data);
       setCustomerIds(customerIdArray);
       setDatabase(data);
-      if (user) {
-        SetMenus(data[user.uid].menus);
-      }
     });
   }, [menuRepository, user]);
 

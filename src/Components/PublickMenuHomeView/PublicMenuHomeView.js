@@ -1,11 +1,11 @@
 import { CardMedia, Grid } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import MenuListView from "../MenuListView/MenuListView";
 
 function PublicMenuHomeView({ menus, logo }) {
   return (
     <Grid container justifyContent="center" xs={12}>
-      <Grid item xs={4}>
+      <Grid item xs={2} lg={1}>
         <CardMedia component="img" image={logo} alt="Logo" />
       </Grid>
       {menus ? (
