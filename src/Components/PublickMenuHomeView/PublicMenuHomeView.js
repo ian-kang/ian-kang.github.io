@@ -1,3 +1,4 @@
+import { Dashboard, ViewList } from "@mui/icons-material";
 import { CardMedia, Grid, Switch, Typography } from "@mui/material";
 import React, { useState } from "react";
 import MenuCardView from "../MenuCardView/MenuCardView";
@@ -19,13 +20,13 @@ function PublicMenuHomeView({ menus, logo }) {
       </Grid>
       <Grid item container justifyContent="center" alignItems="center">
         <Grid item>
-          <Typography>List Menu</Typography>
+          <ViewList />
         </Grid>
         <Grid item>
           <Switch checked={toggle} onChange={handleSwitch} />
         </Grid>
         <Grid item>
-          <Typography>Card Menu</Typography>
+          <Dashboard />
         </Grid>
       </Grid>
       <Grid container item justifyContent="center" xs={10}>
