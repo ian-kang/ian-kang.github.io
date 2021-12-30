@@ -1,4 +1,4 @@
-import { Edit, Logout, WineBar } from "@mui/icons-material";
+import { AssignmentInd, Edit, Logout, WineBar } from "@mui/icons-material";
 import {
   Avatar,
   Box,
@@ -26,6 +26,10 @@ function NavBar({ authService }) {
     setAnchorElUser(event.currentTarget);
   };
   const handleCloseUserMenu = (event) => {
+    setAnchorElUser(null);
+  };
+  const handleProfileClick = (event) => {
+    navigate("/profile");
     setAnchorElUser(null);
   };
   const handleMenuEditorClick = (event) => {
@@ -77,6 +81,12 @@ function NavBar({ authService }) {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
+              <MenuItem onClick={handleProfileClick}>
+                <IconButton>
+                  <AssignmentInd />
+                </IconButton>
+                <Typography>Profile</Typography>
+              </MenuItem>
               <MenuItem onClick={handleMenuEditorClick}>
                 <IconButton>
                   <Edit />

@@ -6,6 +6,7 @@ import MenuHomeView from "./Components/MenuHomeView/MenuHomeView";
 import Login from "./Components/Login/Login";
 import { UserContext } from "./App";
 import PublicMenuHomeView from "./Components/PublickMenuHomeView/PublicMenuHomeView";
+import Profile from "./Components/Profile/Profile";
 
 function AppRouter({ authService, menuRepository, imageRepository }) {
   const { user } = useContext(UserContext);
@@ -51,6 +52,15 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
                       menuRepository={menuRepository}
                     />
                   }
+                />
+              }
+            ></Route>
+            <Route
+              path="/profile"
+              element={
+                <BaseLayout
+                  authService={authService}
+                  component={<Profile user={user} />}
                 />
               }
             ></Route>

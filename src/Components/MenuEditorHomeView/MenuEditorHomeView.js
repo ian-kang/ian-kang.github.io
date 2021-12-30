@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { CircleLoader } from "react-spinners";
 import CategoryAddForm from "../CategoryAddForm/CategoryAddForm";
@@ -82,11 +82,27 @@ export default function MenuEditorHomeView({
   return (
     <>
       {loading ? (
-        <Grid container justifyContent="center">
-          <Grid item>
-            <CircleLoader loading={loading} />
-          </Grid>
-        </Grid>
+        <Box
+          sx={{
+            display: "flex",
+            width: "100vw",
+            height: "500px",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <Box>
+            <CircleLoader
+              loading={loading}
+              css={{ display: "block" }}
+              size={100}
+            />
+          </Box>
+          <Box>
+            <Typography variant="h5">Loading Editor...</Typography>
+          </Box>
+        </Box>
       ) : (
         <Grid container>
           <Grid container item justifyContent="center">
