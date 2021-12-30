@@ -2,6 +2,7 @@ import { AssignmentInd, Edit, Logout, WineBar } from "@mui/icons-material";
 import {
   Avatar,
   Box,
+  Button,
   IconButton,
   Menu,
   MenuItem,
@@ -64,13 +65,16 @@ function NavBar({ customerId, authService, menuRepository }) {
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
-          height: "80px",
-          m: "16px",
+          height: "50px",
+          m: 2,
+          ml: 3,
           flexWrap: "wrap",
         }}
       >
         <Box>
-          <Typography variant="h5">Pairable</Typography>
+          <Button sx={{ color: "black" }} startIcon={<WineBar />}>
+            <Typography>Pairable</Typography>
+          </Button>
         </Box>
         {user && user ? (
           <Box>
