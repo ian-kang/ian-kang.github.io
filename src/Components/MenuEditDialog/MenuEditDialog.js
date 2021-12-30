@@ -235,21 +235,26 @@ function MenuEditDialog({
                 Best Paired With
               </InputLabel>
               <Select
+                autoWidth
                 labelId={`best-paired-with-${menuOnEdit.menuId}`}
                 multiple
                 value={menuOnEdit.pairs ? menuOnEdit.pairs : []}
                 name="pairs"
-                label="Best Paired With"
                 onChange={handleOnChange}
                 disabled={loading}
-                input={<OutlinedInput />}
+                input={<OutlinedInput label="Best Paired With" />}
                 renderValue={(selected) => (
                   <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                     {selected.map((value) => (
-                      <Chip key={value} label={menus[value].name} />
+                      <Chip
+                        key={value}
+                        label={menus[value].name}
+                        onClick={() => {}}
+                      />
                     ))}
                   </Box>
                 )}
+                MenuProps={{ PaperProps: { style: { maxHeight: "400px" } } }}
               >
                 {menusArray.map((menu) => (
                   <MenuItem key={menu.menuId} value={menu.menuId}>
