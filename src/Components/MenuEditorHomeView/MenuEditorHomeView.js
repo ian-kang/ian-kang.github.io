@@ -2,6 +2,7 @@ import { Box, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { CircleLoader } from "react-spinners";
 import CategoryAddForm from "../CategoryAddForm/CategoryAddForm";
+import LoadingView from "../LoadingView/LoadingView";
 import MenuEditorListView from "../MenuEditorListView/MenuEditorListView";
 
 export default function MenuEditorHomeView({
@@ -82,27 +83,7 @@ export default function MenuEditorHomeView({
   return (
     <>
       {loading ? (
-        <Box
-          sx={{
-            display: "flex",
-            width: "100vw",
-            height: "500px",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-          }}
-        >
-          <Box>
-            <CircleLoader
-              loading={loading}
-              css={{ display: "block" }}
-              size={100}
-            />
-          </Box>
-          <Box>
-            <Typography variant="h5">Loading Editor...</Typography>
-          </Box>
-        </Box>
+        <LoadingView loading={loading} text="Loading Editor..." />
       ) : (
         <Grid container>
           <Grid container item justifyContent="center">
