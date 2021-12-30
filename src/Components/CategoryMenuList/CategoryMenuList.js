@@ -7,7 +7,7 @@ function CategoryMenuList({ menus, menusArray, category }) {
       {menusArray
         .filter((menu) => menu.category === category)
         .map((menu) => (
-          <CategoryMenuListItem menus={menus} menu={menu} />
+          <CategoryMenuListItem key={menu.menuId} menus={menus} menu={menu} />
         ))}
     </>
   );

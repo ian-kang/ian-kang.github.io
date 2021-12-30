@@ -17,7 +17,7 @@ export default function MenuListView({ menus }) {
       xl={4}
     >
       {categories.map((category) => (
-        <Grid item container direction="column">
+        <Grid key={category} item container direction="column">
           <Grid item>
             <Typography variant="h5">{category}</Typography>
           </Grid>

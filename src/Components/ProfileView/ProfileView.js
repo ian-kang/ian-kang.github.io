@@ -57,13 +57,14 @@ export default function ProfileView({
     setLoading(false);
     setDisabled(true);
   };
+  console.log(customerInfoOnEdit);
   const handleOnChange = (event) => {
     setDisabled(false);
     const target = event.target.name;
     const value = event.target.value;
     switch (target) {
       case "businessName":
-        const publicUrl = value.replace(" ", "-").toLowerCase();
+        const publicUrl = value.replace(/\s/g, "-").toLowerCase();
         setCustomerInfoOnEdit({
           ...customerInfoOnEdit,
           name: value,

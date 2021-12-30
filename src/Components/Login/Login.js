@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   Dialog,
   DialogTitle,
@@ -15,6 +16,8 @@ function Login({ authService }) {
   const { user, setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState();
 
   useEffect(() => {
     authService.onAuthChange((user) => {
@@ -41,12 +44,32 @@ function Login({ authService }) {
     }
   };
   const handleOnClick = () => {
-    authService.signInWithEmailPassword(email, password);
+    authService
+      .signInWithEmailPassword(email, password)
+      .then()
+      .catch((error) => {
+        if (error.code === "auth/user-not-found") {
+          setError("email");
+          setErrorMsg("User is not found");
+        } else if (error.code === "auth/wrong-password") {
+          setError("password");
+          setErrorMsg("Incorrect password");
+        } else if (error.code === "auth/too-many-requests") {
+          setError("tooManyRequest");
+          setErrorMsg(
+            "Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later."
+          );
+        } else {
+          console.log(error);
+        }
+      });
   };
   return (
     <Dialog open maxWidth="xs" fullWidth>
-      <DialogTitle sx={{ textAlign: "center" }}>
-        <Typography variant="h5">Log in</Typography>
+      <DialogTitle
+        sx={{ textAlign: "center", fontSize: 24, fontWeight: "bold" }}
+      >
+        Log in
       </DialogTitle>
       <Grid container justifyContent="center">
         <Grid
@@ -57,11 +80,19 @@ function Login({ authService }) {
           spacing={2}
           sx={{ p: 4, maxWidth: "400px" }}
         >
+          {errorMsg && (
+            <Grid item>
+              <Alert severity="error">{errorMsg}</Alert>
+            </Grid>
+          )}
+
           <Grid item>
             <Typography>Email</Typography>
           </Grid>
           <Grid item>
             <TextField
+              error={error === "email" && true}
+              helperText={error === "email" && "Incorrect entry"}
               autoFocus
               fullWidth
               type="email"
@@ -76,6 +107,8 @@ function Login({ authService }) {
           </Grid>
           <Grid item>
             <TextField
+              error={error === "password" && true}
+              helperText={error === "password" && "Incorrect entry"}
               fullWidth
               variant="outlined"
               label="Password"

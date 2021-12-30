@@ -1,6 +1,7 @@
 import { Dashboard, ViewList } from "@mui/icons-material";
 import { Grid, Switch, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import MenuCardView from "../MenuCardView/MenuCardView";
 import MenuListView from "../MenuListView/MenuListView";
 
@@ -25,6 +26,9 @@ function MenuHomeView({ customerId, menuRepository }) {
     <Grid container item alignItems="center" direction="column" spacing={4}>
       <Grid item>
         <Typography variant="h5">Your Menu</Typography>
+      </Grid>
+      <Grid item>
+        <Link to={`/menu/${database.publicUrl}`}>Public Menu URL</Link>
       </Grid>
       <Grid item container justifyContent="center" alignItems="center">
         <Grid item>
