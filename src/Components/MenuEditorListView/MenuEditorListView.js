@@ -19,7 +19,7 @@ function MenuEditorListView({
   return (
     <>
       {categories.map((category) => (
-        <Box>
+        <Box key={category}>
           <Box sx={{ mt: 4 }}>
             <Divider />
           </Box>
@@ -39,6 +39,7 @@ function MenuEditorListView({
               </Grid>
               <Grid item xs={12} md={6}>
                 <CategoryEditCard
+                  key={category}
                   customerId={customerId}
                   category={category}
                   editCategory={editCategory}
@@ -48,7 +49,13 @@ function MenuEditorListView({
               {menusArray
                 .filter((menu) => menu.category === category)
                 .map((menu) => (
-                  <Grid container item alignItems="center" spacing={4}>
+                  <Grid
+                    key={menu.menuId}
+                    container
+                    item
+                    alignItems="center"
+                    spacing={4}
+                  >
                     <Grid item xs={12} md={6}>
                       <PairedMenuCard menu={menu} menus={data.menus} />
                     </Grid>

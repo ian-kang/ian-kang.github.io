@@ -7,8 +7,7 @@ import Login from "./Components/Login/Login";
 import { UserContext } from "./App";
 import PublicMenuHomeView from "./Components/PublickMenuHomeView/PublicMenuHomeView";
 import ProfileView from "./Components/ProfileView/ProfileView";
-import LoadingView from "./Components/LoadingView/LoadingView";
-
+import LoadingViewWithAuth from "./Components/LoadingViewWithAuth/LoadingViewAuth";
 function AppRouter({ authService, menuRepository, imageRepository }) {
   const { user } = useContext(UserContext);
   const [customerIds, setCustomerIds] = useState();
@@ -70,6 +69,7 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
                   authService={authService}
                   component={
                     <ProfileView
+                      user={user}
                       customerId={user.uid}
                       menuRepository={menuRepository}
                       imageRepository={imageRepository}
@@ -84,6 +84,7 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
           database &&
           customerIds.map((customerId) => (
             <Route
+              key={customerId}
               path={`/menu/${database[customerId].publicUrl}`}
               element={
                 <PublicMenuHomeView
@@ -97,7 +98,13 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
 
         <Route
           path="*"
-          element={<LoadingView loading={true} text="Loading..." />}
+          element={
+            <LoadingViewWithAuth
+              loading={true}
+              text="Loading..."
+              authService={authService}
+            />
+          }
         />
       </Routes>
     </HashRouter>

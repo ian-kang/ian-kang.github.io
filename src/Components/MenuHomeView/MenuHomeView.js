@@ -15,7 +15,7 @@ function MenuHomeView({ customerId, menuRepository }) {
         return;
       }
     });
-  }, []);
+  }, [customerId, menuRepository]);
 
   const handleSwitch = (event) => {
     setToggle(!toggle);

@@ -7,8 +7,6 @@ import {
   MenuItem,
   Tooltip,
   Typography,
-  useMediaQuery,
-  useTheme,
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -16,10 +14,8 @@ import { UserContext } from "../../App";
 import LinkButton from "../LinkButton/LinkButton";
 
 function NavBar({ customerId, authService, menuRepository }) {
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up("lg"));
   const navigate = useNavigate();
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [database, setDatabase] = useState({});
 
@@ -30,23 +26,23 @@ function NavBar({ customerId, authService, menuRepository }) {
         return;
       }
     });
-  }, []);
+  }, [customerId, menuRepository]);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-  const handleCloseUserMenu = (event) => {
+  const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  const handleProfileClick = (event) => {
+  const handleProfileClick = () => {
     navigate("/profile");
     setAnchorElUser(null);
   };
-  const handleMenuEditorClick = (event) => {
+  const handleMenuEditorClick = () => {
     navigate("/editor");
     setAnchorElUser(null);
   };
-  const handleYourMenuClick = (event) => {
+  const handleYourMenuClick = () => {
     navigate("/menu");
     setAnchorElUser(null);
   };

@@ -1,16 +1,13 @@
 import { Grid } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PairedMenuCard from "../PairedMenuCard/PairedMenuCard";
 import MenuCategoryTabBar from "../MenuCategoryTabBar/MenuCategoryTabBar";
 import { Box } from "@mui/system";
 
 function MenuCardView({ menus }) {
-  const [category, setCategory] = useState();
   const menusArray = Object.values(menus);
   const categories = [...new Set(menusArray.map((menu) => menu.category))];
-  useEffect(() => {
-    setCategory(menusArray[0].category);
-  }, []);
+  const [category, setCategory] = useState(categories[0]);
 
   const handleTabChange = (event, newCategory) => {
     setCategory(newCategory);
@@ -40,7 +37,7 @@ function MenuCardView({ menus }) {
             menusArray
               .filter((menu) => menu.category === category)
               .map((menu) => (
-                <Grid item xs={12} md={6} lg={4} xl={3}>
+                <Grid key={menu.menuId} item xs={12} md={6} lg={4} xl={3}>
                   <PairedMenuCard key={menu.menuId} menu={menu} menus={menus} />
                 </Grid>
               ))}

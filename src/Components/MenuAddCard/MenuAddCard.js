@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Grid,
@@ -23,10 +23,6 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
   });
   const [imageFileOnEdit, setImageFileOnAdd] = useState();
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setNewMenu({ ...newMenu, category });
-  }, [category]);
 
   const handleInputOnChange = (event) => {
     const targetInput = event.target.name;

@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import CategoryAddForm from "../CategoryAddForm/CategoryAddForm";
 import LoadingView from "../LoadingView/LoadingView";
@@ -21,7 +21,7 @@ export default function MenuEditorHomeView({
       }
       setLoading(false);
     });
-  }, []);
+  }, [customerId, menuRepository]);
 
   const updateMenu = (customerId, menuId, updatedMenu) => {
     menuRepository.updateMenu(customerId, menuId, updatedMenu);
@@ -91,7 +91,7 @@ export default function MenuEditorHomeView({
             </Grid>
           </Grid>
           <Grid container item justifyContent="center">
-            <Grid container item xs={10}>
+            <Grid container item xs={10} spacing={8}>
               {Object.keys(database).find((key) => key === "menus") ? (
                 <Grid container item>
                   <MenuEditorListView

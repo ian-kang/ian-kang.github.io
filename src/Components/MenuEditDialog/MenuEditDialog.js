@@ -18,7 +18,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { LoadingButton } from "@mui/lab";
 function MenuEditDialog({
   open,
@@ -34,12 +34,6 @@ function MenuEditDialog({
   const [imageUrlOnEdit, setImageUrlOnEdit] = useState(menu.img);
   const [imageFileOnEdit, setImageFileOnEdit] = useState();
   const [loading, setLoading] = useState();
-
-  useEffect(() => {
-    if (menu !== menuOnEdit) {
-      setMenuOnEdit(menu);
-    }
-  }, [menu]);
 
   const handleOnChange = (event) => {
     if (event.target.name === "img") {
@@ -258,7 +252,9 @@ function MenuEditDialog({
                 )}
               >
                 {menusArray.map((menu) => (
-                  <MenuItem value={menu.menuId}>{menu.name}</MenuItem>
+                  <MenuItem key={menu.menuId} value={menu.menuId}>
+                    {menu.name}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>

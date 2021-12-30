@@ -12,7 +12,7 @@ function MenuEditForm({
   updateMenu,
   deleteMenu,
 }) {
-  const [open, setOpen] = useState();
+  const [open, setOpen] = useState(false);
 
   const handleEdit = (event) => {
     setOpen(true);

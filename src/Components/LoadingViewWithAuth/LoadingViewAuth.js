@@ -1,8 +1,21 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { CircleLoader } from "react-spinners";
+import { UserContext } from "../../App";
 
-export default function LoadingView({ loading, text }) {
+export default function LoadingViewWithAuth({ loading, text, authService }) {
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext);
+  useEffect(() => {
+    authService.onAuthChange((user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(undefined);
+      }
+    });
+  }, [user, setUser, authService, navigate]);
   return (
     <Box
       sx={{

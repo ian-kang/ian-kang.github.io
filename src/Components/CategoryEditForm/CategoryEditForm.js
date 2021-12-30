@@ -12,7 +12,7 @@ import {
 import { Edit, Save } from "@mui/icons-material";
 
 function CategoryEditCard({ customerId, category, editCategory }) {
-  const [open, setOpen] = useState();
+  const [open, setOpen] = useState(false);
   const [categoryOnEdit, setCategoryOnEdit] = useState(category);
   const handleOnChange = (event) => {
     const value = event.target.value;

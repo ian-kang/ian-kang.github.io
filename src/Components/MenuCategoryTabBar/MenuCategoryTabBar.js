@@ -10,7 +10,7 @@ function MenuCategoryTabBar({ category, categories, handleTabChange }) {
       scrollButtons="auto"
     >
       {categories.map((category) => (
-        <Tab label={category} value={category} />
+        <Tab key={category} label={category} value={category} />
       ))}
     </Tabs>
   );

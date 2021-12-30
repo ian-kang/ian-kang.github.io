@@ -1,4 +1,4 @@
-import { Add, Save, TungstenRounded } from "@mui/icons-material";
+import { Add, Save } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Button, Grid, Input, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -24,9 +24,8 @@ export default function ProfileView({
       }
       setLoading(false);
     });
-  }, []);
+  }, [menuRepository, customerId]);
 
-  console.log(customerInfo);
   const handleLogoOnChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -129,7 +128,7 @@ export default function ProfileView({
   return (
     <>
       {customerInfo && (
-        <Grid container xs={12} justifyContent="center">
+        <Grid container justifyContent="center">
           <Grid item xs={10} sx={{ textAlign: "center" }}>
             <Typography variant="h5">Profile</Typography>
           </Grid>
