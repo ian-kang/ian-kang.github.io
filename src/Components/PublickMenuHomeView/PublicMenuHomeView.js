@@ -1,5 +1,5 @@
 import { Dashboard, ViewList } from "@mui/icons-material";
-import { Grid, Switch, Typography } from "@mui/material";
+import { Box, Grid, Switch, Typography } from "@mui/material";
 import React, { useState } from "react";
 import MenuCardView from "../MenuCardView/MenuCardView";
 import MenuListView from "../MenuListView/MenuListView";
@@ -11,33 +11,35 @@ function PublicMenuHomeView({ menus, logo, name }) {
     setToggle(!toggle);
   };
   return (
-    <Grid container alignItems="center" direction="column" spacing={4}>
-      <Grid item>
-        <Typography variant="h5">{name}</Typography>
-      </Grid>
-      <Grid item container justifyContent="center" alignItems="center">
+    <Box sx={{ mt: 4, mb: 8 }}>
+      <Grid container alignItems="center" direction="column" spacing={4}>
         <Grid item>
-          <ViewList />
+          <Typography variant="h5">{name}</Typography>
         </Grid>
-        <Grid item>
-          <Switch checked={toggle} onChange={handleSwitch} />
+        <Grid item container justifyContent="center" alignItems="center">
+          <Grid item>
+            <ViewList />
+          </Grid>
+          <Grid item>
+            <Switch checked={toggle} onChange={handleSwitch} />
+          </Grid>
+          <Grid item>
+            <Dashboard />
+          </Grid>
         </Grid>
-        <Grid item>
-          <Dashboard />
-        </Grid>
-      </Grid>
-      <Grid container item justifyContent="center" xs={10}>
-        {menus ? (
-          toggle ? (
-            <MenuCardView key={Date.now()} menus={menus} />
+        <Grid container item justifyContent="center" xs={10}>
+          {menus ? (
+            toggle ? (
+              <MenuCardView key={Date.now()} menus={menus} />
+            ) : (
+              <MenuListView menus={menus} />
+            )
           ) : (
-            <MenuListView menus={menus} />
-          )
-        ) : (
-          <Grid item>No Data Available</Grid>
-        )}
+            <Grid item>No Data Available</Grid>
+          )}
+        </Grid>
       </Grid>
-    </Grid>
+    </Box>
   );
 }
 

@@ -48,7 +48,7 @@ function MenuEditorListView({
               {menusArray
                 .filter((menu) => menu.category === category)
                 .map((menu) => (
-                  <Grid container item xs={12} alignItems="center" spacing={4}>
+                  <Grid container item alignItems="center" spacing={4}>
                     <Grid item xs={12} md={6}>
                       <PairedMenuCard menu={menu} menus={data.menus} />
                     </Grid>

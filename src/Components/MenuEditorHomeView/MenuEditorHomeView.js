@@ -111,7 +111,7 @@ export default function MenuEditorHomeView({
             </Grid>
           </Grid>
           <Grid container item justifyContent="center">
-            <Grid container item xs={10} spacing={4}>
+            <Grid container item xs={10}>
               {Object.keys(database).find((key) => key === "menus") ? (
                 <Grid container item>
                   <MenuEditorListView
