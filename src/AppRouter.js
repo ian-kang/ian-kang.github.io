@@ -6,7 +6,7 @@ import MenuHomeView from "./Components/MenuHomeView/MenuHomeView";
 import Login from "./Components/Login/Login";
 import { UserContext } from "./App";
 import PublicMenuHomeView from "./Components/PublickMenuHomeView/PublicMenuHomeView";
-import Profile from "./Components/Profile/Profile";
+import ProfileView from "./Components/ProfileView/ProfileView";
 import LoadingView from "./Components/LoadingView/LoadingView";
 
 function AppRouter({ authService, menuRepository, imageRepository }) {
@@ -31,6 +31,8 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
               path="/editor"
               element={
                 <BaseLayout
+                  customerId={user.uid}
+                  menuRepository={menuRepository}
                   authService={authService}
                   component={
                     <MenuEditorHomeView
@@ -46,9 +48,12 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
               path="/menu"
               element={
                 <BaseLayout
+                  customerId={user.uid}
+                  menuRepository={menuRepository}
                   authService={authService}
                   component={
                     <MenuHomeView
+                      user={user}
                       customerId={user.uid}
                       menuRepository={menuRepository}
                     />
@@ -60,8 +65,16 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
               path="/profile"
               element={
                 <BaseLayout
+                  customerId={user.uid}
+                  menuRepository={menuRepository}
                   authService={authService}
-                  component={<Profile user={user} />}
+                  component={
+                    <ProfileView
+                      customerId={user.uid}
+                      menuRepository={menuRepository}
+                      imageRepository={imageRepository}
+                    />
+                  }
                 />
               }
             ></Route>

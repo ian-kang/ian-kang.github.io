@@ -1,6 +1,5 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { CircleLoader } from "react-spinners";
 import CategoryAddForm from "../CategoryAddForm/CategoryAddForm";
 import LoadingView from "../LoadingView/LoadingView";
 import MenuEditorListView from "../MenuEditorListView/MenuEditorListView";

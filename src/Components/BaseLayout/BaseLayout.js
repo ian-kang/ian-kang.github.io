@@ -2,11 +2,15 @@ import { Box } from "@mui/material";
 import React from "react";
 import Footer from "../Footer/Footer";
 import NavBar from "../NavBar/NavBar";
-function BaseLayout({ authService, component }) {
+function BaseLayout({ customerId, menuRepository, authService, component }) {
   return (
     <Box>
       <Box sx={{ mb: 4 }}>
-        <NavBar authService={authService} />
+        <NavBar
+          customerId={customerId}
+          authService={authService}
+          menuRepository={menuRepository}
+        />
       </Box>
       <Box>{component}</Box>
       <Box sx={{ mb: 8 }}>

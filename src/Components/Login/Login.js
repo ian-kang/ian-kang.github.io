@@ -64,6 +64,7 @@ function Login({ authService }) {
             <TextField
               autoFocus
               fullWidth
+              type="email"
               variant="outlined"
               label="Email"
               name="email"

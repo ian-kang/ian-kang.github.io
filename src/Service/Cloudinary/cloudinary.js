@@ -13,4 +13,17 @@ export default class Cloudinary {
 
     return await response.json();
   }
+  async logoImageUpload(customerId, file) {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "wgjkx4in");
+    formData.append("folder", `Menu Creator/${customerId}/Logo`);
+
+    const response = await fetch(process.env.REACT_APP_CLOUDINARY_URL, {
+      method: "POST",
+      body: formData,
+    });
+
+    return await response.json();
+  }
 }

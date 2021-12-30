@@ -10,17 +10,27 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
 import LinkButton from "../LinkButton/LinkButton";
 
-function NavBar({ authService }) {
+function NavBar({ customerId, authService, menuRepository }) {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("lg"));
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [database, setDatabase] = useState({});
+
+  useEffect(() => {
+    menuRepository.getMenus(customerId, (data) => {
+      if (data) {
+        setDatabase(data);
+        return;
+      }
+    });
+  }, []);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -70,10 +80,7 @@ function NavBar({ authService }) {
           <Box>
             <Tooltip title="Open Setting">
               <IconButton onClick={handleOpenUserMenu}>
-                <Avatar
-                  variant="rounded"
-                  src="https://res.cloudinary.com/db7ss52zt/image/upload/v1639668058/Menu%20Creator/Logo/Pour_Haus_Wine_Bar_Logo_uhxovp.jpg"
-                />
+                <Avatar variant="rounded" src={database && database.logo} />
               </IconButton>
             </Tooltip>
             <Menu
