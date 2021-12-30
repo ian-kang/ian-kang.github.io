@@ -2,6 +2,7 @@ import { Add, Save } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Button, Grid, Input, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function ProfileView({
   user,
@@ -57,7 +58,6 @@ export default function ProfileView({
     setLoading(false);
     setDisabled(true);
   };
-  console.log(customerInfoOnEdit);
   const handleOnChange = (event) => {
     setDisabled(false);
     const target = event.target.name;
@@ -134,6 +134,13 @@ export default function ProfileView({
             <Typography variant="h5">Profile</Typography>
           </Grid>
           <Grid container item spacing={2} sx={{ p: 4, maxWidth: "800px" }}>
+            <Grid item container xs={12} justifyContent="center">
+              <Grid item>
+                <Link to={`/menu/${customerInfo.publicUrl}`} target="_blank">
+                  Public Menu URL
+                </Link>
+              </Grid>
+            </Grid>
             <Grid item xs={12}>
               <Typography>Business Name</Typography>
             </Grid>
