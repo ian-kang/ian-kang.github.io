@@ -1,4 +1,4 @@
-import { Add, Save } from "@mui/icons-material";
+import { Add, Save, TungstenRounded } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Button, Grid, Input, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -13,7 +13,9 @@ export default function ProfileView({
   const [customerInfoOnEdit, setCustomerInfoOnEdit] = useState();
   const [imageFileOnEdit, setImageFileOnEdit] = useState();
   const [loading, setLoading] = useState();
+  const [disabled, setDisabled] = useState(true);
   useEffect(() => {
+    setLoading(true);
     menuRepository.getMenus(customerId, (data) => {
       if (data) {
         setCustomerInfo(data);
@@ -23,7 +25,8 @@ export default function ProfileView({
       setLoading(false);
     });
   }, []);
-  console.log(customerInfoOnEdit);
+
+  console.log(customerInfo);
   const handleLogoOnChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -47,13 +50,16 @@ export default function ProfileView({
       });
       setCustomerInfoOnEdit();
       setLoading(false);
+      setDisabled(true);
       return;
     }
     menuRepository.updateCustomerInfo(customerId, customerInfoOnEdit);
     setCustomerInfoOnEdit();
     setLoading(false);
+    setDisabled(true);
   };
   const handleOnChange = (event) => {
+    setDisabled(false);
     const target = event.target.name;
     const value = event.target.value;
     switch (target) {
@@ -121,205 +127,224 @@ export default function ProfileView({
     }
   };
   return (
-    <Grid container xs={12} justifyContent="center">
-      <Grid item xs={10} sx={{ textAlign: "center" }}>
-        <Typography variant="h5">Profile</Typography>
-      </Grid>
-      <Grid container item spacing={2} sx={{ p: 4, maxWidth: "800px" }}>
-        <Grid item xs={12}>
-          <Typography>Business Name</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            disabled={loading}
-            fullWidth
-            variant="outlined"
-            label="Business Name"
-            name="businessName"
-            onChange={handleOnChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography>Business Description (Bio)</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            disabled={loading}
-            fullWidth
-            variant="outlined"
-            label="Business Description (Bio)"
-            name="businessDesc"
-            onChange={handleOnChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography>Location</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            disabled={loading}
-            fullWidth
-            variant="outlined"
-            label="Address Line1"
-            name="addressLine1"
-            onChange={handleOnChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            disabled={loading}
-            fullWidth
-            variant="outlined"
-            label="Address Line2"
-            name="addressLine2"
-            onChange={handleOnChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            disabled={loading}
-            fullWidth
-            variant="outlined"
-            label="City"
-            name="city"
-            onChange={handleOnChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            disabled={loading}
-            fullWidth
-            variant="outlined"
-            label="State"
-            name="state"
-            onChange={handleOnChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            disabled={loading}
-            fullWidth
-            variant="outlined"
-            label="ZIP Code"
-            name="zipCode"
-            onChange={handleOnChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography>Phone</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            disabled={loading}
-            fullWidth
-            type="tel"
-            variant="outlined"
-            label="Phone"
-            name="phone"
-            onChange={handleOnChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography>Logo</Typography>
-        </Grid>
-        {imageFileOnEdit && (
-          <Grid
-            container
-            item
-            xs={12}
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Grid item>
-              <img
-                src={imageFileOnEdit}
-                alt=""
-                loading="lazy"
-                style={{ width: "100%", height: "100%" }}
+    <>
+      {customerInfo && (
+        <Grid container xs={12} justifyContent="center">
+          <Grid item xs={10} sx={{ textAlign: "center" }}>
+            <Typography variant="h5">Profile</Typography>
+          </Grid>
+          <Grid container item spacing={2} sx={{ p: 4, maxWidth: "800px" }}>
+            <Grid item xs={12}>
+              <Typography>Business Name</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                disabled={loading}
+                fullWidth
+                variant="outlined"
+                label="Business Name"
+                name="businessName"
+                onChange={handleOnChange}
+                defaultValue={customerInfo.name}
               />
             </Grid>
+            <Grid item xs={12}>
+              <Typography>Business Description (Bio)</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                disabled={loading}
+                fullWidth
+                variant="outlined"
+                label="Business Description (Bio)"
+                name="businessDesc"
+                onChange={handleOnChange}
+                defaultValue={customerInfo.desc}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>Location</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                disabled={loading}
+                fullWidth
+                variant="outlined"
+                label="Address Line1"
+                name="addressLine1"
+                onChange={handleOnChange}
+                defaultValue={customerInfo.address.addressLine1}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                disabled={loading}
+                fullWidth
+                variant="outlined"
+                label="Address Line2"
+                name="addressLine2"
+                onChange={handleOnChange}
+                defaultValue={customerInfo.address.addressLine2}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                disabled={loading}
+                fullWidth
+                variant="outlined"
+                label="City"
+                name="city"
+                onChange={handleOnChange}
+                defaultValue={customerInfo.address.city}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                disabled={loading}
+                fullWidth
+                variant="outlined"
+                label="State"
+                name="state"
+                onChange={handleOnChange}
+                defaultValue={customerInfo.address.state}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                disabled={loading}
+                fullWidth
+                variant="outlined"
+                label="ZIP Code"
+                name="zipCode"
+                onChange={handleOnChange}
+                defaultValue={customerInfo.address.zipCode}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>Phone</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                disabled={loading}
+                fullWidth
+                type="tel"
+                variant="outlined"
+                label="Phone"
+                name="phone"
+                onChange={handleOnChange}
+                defaultValue={customerInfo.phone}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>Logo</Typography>
+            </Grid>
+            {(imageFileOnEdit || customerInfo.logo) && (
+              <Grid
+                container
+                item
+                xs={12}
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Grid item>
+                  <img
+                    src={imageFileOnEdit || customerInfo.logo}
+                    alt=""
+                    loading="lazy"
+                    style={{ width: "100%", height: "100%" }}
+                  />
+                </Grid>
+              </Grid>
+            )}
+            <Grid item xs={12}>
+              <label htmlFor={`contained-button-file-logo`}>
+                <Input
+                  sx={{ display: "none" }}
+                  type="file"
+                  inputProps={{ accept: "image/*" }}
+                  id={`contained-button-file-logo`}
+                  name="img"
+                  onChange={handleLogoOnChange}
+                  disabled={loading}
+                />
+                <Button
+                  variant="contained"
+                  component="span"
+                  startIcon={<Add />}
+                  disabled={loading}
+                >
+                  Upload Logo
+                </Button>
+              </label>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>Business Hours</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              business hours settings
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>Website</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                type="url"
+                variant="outlined"
+                label="Website"
+                name="website"
+                onChange={handleOnChange}
+                disabled={loading}
+                defaultValue={customerInfo.website}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>Email</Typography>
+            </Grid>
+            {user && (
+              <>
+                <Grid item xs={12}>
+                  <TextField
+                    disabled
+                    fullWidth
+                    variant="outlined"
+                    type="email"
+                    label="Email"
+                    name="email"
+                    defaultValue={user.email}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography>Password</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    disabled
+                    fullWidth
+                    variant="outlined"
+                    label="Password"
+                    type="password"
+                    name="password"
+                  />
+                </Grid>
+              </>
+            )}
+
+            <Grid item xs={12}>
+              <LoadingButton
+                disabled={disabled}
+                loading={loading}
+                fullWidth
+                variant="contained"
+                startIcon={<Save />}
+                onClick={handleSaveButtonOnClick}
+              >
+                Save
+              </LoadingButton>
+            </Grid>
           </Grid>
-        )}
-        <Grid item xs={12}>
-          <label htmlFor={`contained-button-file-logo`}>
-            <Input
-              sx={{ display: "none" }}
-              type="file"
-              inputProps={{ accept: "image/*" }}
-              id={`contained-button-file-logo`}
-              name="img"
-              onChange={handleLogoOnChange}
-              disabled={loading}
-            />
-            <Button
-              variant="contained"
-              component="span"
-              startIcon={<Add />}
-              disabled={loading}
-            >
-              Upload Logo
-            </Button>
-          </label>
         </Grid>
-        <Grid item xs={12}>
-          <Typography>Business Hours</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          business hours settings
-        </Grid>
-        <Grid item xs={12}>
-          <Typography>Website</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            type="url"
-            variant="outlined"
-            label="Website"
-            name="website"
-            onChange={handleOnChange}
-            disabled={loading}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography>Email</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            disabled
-            fullWidth
-            variant="outlined"
-            type="email"
-            label="Email"
-            name="email"
-            defaultValue={user && user.email}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography>Password</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            disabled
-            fullWidth
-            variant="outlined"
-            label="Password"
-            type="password"
-            name="password"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <LoadingButton
-            loading={loading}
-            fullWidth
-            variant="contained"
-            startIcon={<Save />}
-            onClick={handleSaveButtonOnClick}
-          >
-            Save
-          </LoadingButton>
-        </Grid>
-      </Grid>
-    </Grid>
+      )}
+    </>
   );
 }
