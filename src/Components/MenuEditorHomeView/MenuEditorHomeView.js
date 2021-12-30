@@ -91,7 +91,13 @@ export default function MenuEditorHomeView({
             </Grid>
           </Grid>
           <Grid container item justifyContent="center">
-            <Grid container item xs={10} spacing={8}>
+            <Grid
+              container
+              item
+              xs={10}
+              spacing={8}
+              sx={{ maxWidth: "1500px" }}
+            >
               {Object.keys(database).find((key) => key === "menus") ? (
                 <Grid container item>
                   <MenuEditorListView
