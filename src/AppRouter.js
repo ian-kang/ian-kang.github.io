@@ -70,7 +70,7 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
           database &&
           customerIds.map((customerId) => (
             <Route
-              path={`/menu/${customerId}`}
+              path={`/menu/${database[customerId].publicUrl}`}
               element={
                 <BaseLayout
                   authService={authService}

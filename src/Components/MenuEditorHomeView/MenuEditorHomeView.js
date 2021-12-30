@@ -113,7 +113,7 @@ export default function MenuEditorHomeView({
           <Grid container item justifyContent="center">
             <Grid container item xs={10} spacing={4}>
               {Object.keys(database).find((key) => key === "menus") ? (
-                <Grid container item xs={12}>
+                <Grid container item>
                   <MenuEditorListView
                     data={database}
                     imageRepository={imageRepository}
