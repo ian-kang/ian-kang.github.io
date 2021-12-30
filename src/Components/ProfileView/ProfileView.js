@@ -173,7 +173,9 @@ export default function ProfileView({
                 label="Address Line1"
                 name="addressLine1"
                 onChange={handleOnChange}
-                defaultValue={customerInfo.address.addressLine1}
+                defaultValue={
+                  customerInfo.address && customerInfo.address.addressLine1
+                }
               />
             </Grid>
             <Grid item xs={12}>
@@ -184,7 +186,9 @@ export default function ProfileView({
                 label="Address Line2"
                 name="addressLine2"
                 onChange={handleOnChange}
-                defaultValue={customerInfo.address.addressLine2}
+                defaultValue={
+                  customerInfo.address && customerInfo.address.addressLine2
+                }
               />
             </Grid>
             <Grid item xs={12}>
@@ -195,7 +199,7 @@ export default function ProfileView({
                 label="City"
                 name="city"
                 onChange={handleOnChange}
-                defaultValue={customerInfo.address.city}
+                defaultValue={customerInfo.address && customerInfo.address.city}
               />
             </Grid>
             <Grid item xs={12}>
@@ -206,7 +210,9 @@ export default function ProfileView({
                 label="State"
                 name="state"
                 onChange={handleOnChange}
-                defaultValue={customerInfo.address.state}
+                defaultValue={
+                  customerInfo.address && customerInfo.address.state
+                }
               />
             </Grid>
             <Grid item xs={12}>
@@ -217,7 +223,9 @@ export default function ProfileView({
                 label="ZIP Code"
                 name="zipCode"
                 onChange={handleOnChange}
-                defaultValue={customerInfo.address.zipCode}
+                defaultValue={
+                  customerInfo.address && customerInfo.address.zipCode
+                }
               />
             </Grid>
             <Grid item xs={12}>
@@ -298,11 +306,12 @@ export default function ProfileView({
                 defaultValue={customerInfo.website}
               />
             </Grid>
-            <Grid item xs={12}>
-              <Typography>Email</Typography>
-            </Grid>
+
             {user && (
               <>
+                <Grid item xs={12}>
+                  <Typography>Email</Typography>
+                </Grid>
                 <Grid item xs={12}>
                   <TextField
                     disabled
