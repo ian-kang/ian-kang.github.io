@@ -30,9 +30,11 @@ export default function ProfileView({
   const handleLogoOnChange = (event) => {
     const file = event.target.files[0];
     if (file) {
+      setDisabled(true);
       const url = URL.createObjectURL(file);
       setImageFileOnEdit(url);
       setCustomerInfoOnEdit({ ...customerInfoOnEdit, logo: file });
+      setDisabled(false);
       return;
     }
     setCustomerInfoOnEdit({ ...customerInfoOnEdit, logo: "" });
