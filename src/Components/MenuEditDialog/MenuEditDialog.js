@@ -106,7 +106,7 @@ function MenuEditDialog({
               disabled={loading}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={5}>
             <TextField
               required
               autoFocus
@@ -142,12 +142,28 @@ function MenuEditDialog({
               </MenuItem>
             </TextField>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={2}>
             <TextField
               type="number"
               label="Price"
               name="price"
               value={menuOnEdit.price}
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">$</InputAdornment>
+                ),
+              }}
+              onChange={handleOnChange}
+              disabled={loading}
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <TextField
+              type="number"
+              label="Price(B)"
+              name="priceB"
+              value={menuOnEdit.priceB}
               fullWidth
               InputProps={{
                 startAdornment: (

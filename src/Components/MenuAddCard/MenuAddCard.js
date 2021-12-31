@@ -54,6 +54,7 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
         name: "",
         rate: "none",
         price: "",
+        priceB: "",
         desc: "",
         img: "",
         pairs: [],
@@ -70,6 +71,7 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
       name: "",
       rate: "none",
       price: "",
+      priceB: "",
       desc: "",
       img: "",
       pairs: [],
@@ -80,7 +82,7 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
   return (
     <div>
       <Grid container item spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={5}>
           <TextField
             required
             label="Menu name"
@@ -115,12 +117,28 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
             </MenuItem>
           </TextField>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={2}>
           <TextField
             type="number"
             label="Price"
             name="price"
             value={newMenu.price}
+            onChange={handleInputOnChange}
+            disabled={loading}
+            fullWidth
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">$</InputAdornment>
+              ),
+            }}
+          />
+        </Grid>
+        <Grid item xs={2}>
+          <TextField
+            type="number"
+            label="Price(B)"
+            name="priceB"
+            value={newMenu.priceB}
             onChange={handleInputOnChange}
             disabled={loading}
             fullWidth

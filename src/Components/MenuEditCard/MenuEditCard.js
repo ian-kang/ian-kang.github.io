@@ -11,7 +11,7 @@ import React from "react";
 function MenuEditCard({ menu, menus, handleEdit, handleDelete }) {
   return (
     <Grid container spacing={2}>
-      <Grid item xs={6}>
+      <Grid item xs={5}>
         <TextField
           disabled
           required
@@ -44,13 +44,26 @@ function MenuEditCard({ menu, menus, handleEdit, handleDelete }) {
           </MenuItem>
         </TextField>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={2}>
         <TextField
           disabled
           type="number"
           label="Price"
           name="price"
           value={menu.price}
+          fullWidth
+          InputProps={{
+            startAdornment: <InputAdornment position="start">$</InputAdornment>,
+          }}
+        />
+      </Grid>
+      <Grid item xs={2}>
+        <TextField
+          disabled
+          type="number"
+          label="Price(B)"
+          name="priceB"
+          value={menu.priceB}
           fullWidth
           InputProps={{
             startAdornment: <InputAdornment position="start">$</InputAdornment>,

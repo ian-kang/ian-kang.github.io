@@ -13,7 +13,10 @@ function MenuEditorPreviewListItem({ menu }) {
     <List sx={{ pl: 4 }} dense>
       <ListItem
         secondaryAction={
-          <Typography variant="subtitle2">${menu.price}</Typography>
+          <Typography variant="subtitle2">
+            ${menu.price}
+            {menu.priceB && ` / ${menu.priceB}`}
+          </Typography>
         }
       >
         {menu.rate === "high" ? (
