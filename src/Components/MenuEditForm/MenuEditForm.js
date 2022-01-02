@@ -18,7 +18,7 @@ function MenuEditForm({
     setOpen(true);
   };
   const handleDelete = (event) => {
-    deleteMenu(customerId, menu.menuId);
+    deleteMenu(customerId, menus, menu.menuId);
   };
   return (
     <Grid container item spacing={2}>

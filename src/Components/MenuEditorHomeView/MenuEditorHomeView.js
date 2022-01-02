@@ -29,8 +29,24 @@ export default function MenuEditorHomeView({
       setDatabase(data);
     });
   };
-  const deleteMenu = (customerId, menuId) => {
+  const deleteMenu = (customerId, menus, menuId) => {
+    // Delete this menu from the pairs of all the menus
+    const updatedMenus = { ...menus };
+    delete updatedMenus[menuId];
+    const menuIds = Object.keys(updatedMenus);
+
+    menuIds.forEach((id) => {
+      const pairs = updatedMenus[id].pairs;
+      if (pairs) {
+        const index = pairs.indexOf(menuId);
+        if (index > -1) {
+          updatedMenus[id].pairs.splice(index, 1);
+        }
+        return;
+      }
+    });
     menuRepository.deleteMenu(customerId, menuId);
+    menuRepository.updateMenus(customerId, updatedMenus);
     menuRepository.getMenus(customerId, (data) => {
       if (data) {
         setDatabase(data);
