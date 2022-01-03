@@ -80,7 +80,7 @@ function MenuEditCard({ menu, menus, handleEdit, handleDelete }) {
           multiline
         />
       </Grid>
-      {menu.pairs && (
+      {menu.pairs && menu.pairs.length > 0 && (
         <Grid item xs={12}>
           <TextField
             disabled

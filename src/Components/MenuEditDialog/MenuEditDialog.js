@@ -73,7 +73,7 @@ function MenuEditDialog({
         imageFileOnEdit,
         [menuOnEdit.menuId, menuOnEdit.category, menuOnEdit.name]
       );
-      updateMenu(customerId, menu.menuId, {
+      updateMenu(customerId, menu, {
         ...menuOnEdit,
         img: result.url,
       });
@@ -83,7 +83,7 @@ function MenuEditDialog({
       return;
     }
     setLoading(true);
-    updateMenu(customerId, menu.menuId, { ...menuOnEdit, img: imageUrlOnEdit });
+    updateMenu(customerId, menu, { ...menuOnEdit, img: imageUrlOnEdit });
     setMenuOnEdit(menuOnEdit);
     setOpen(false);
     setLoading(false);

@@ -22,32 +22,54 @@ export default function MenuEditorHomeView({
       setLoading(false);
     });
   }, [customerId, menuRepository]);
+  function difference(oldArray, newArray) {
+    return oldArray.filter((x) => !newArray.includes(x));
+  }
 
-  const updateMenu = (customerId, menuId, updatedMenu) => {
-    menuRepository.updateMenu(customerId, menuId, updatedMenu);
-    menuRepository.getCustomerInfo(customerId, (data) => {
-      const menuIds = Object.keys(data.menus).map((id) => parseInt(id));
-      menuIds.forEach((id) => {
-        const pairs = data.menus[id].pairs;
-        if (pairs) {
-          pairs.forEach((pairedMenuId) => {
-            if (data.menus[pairedMenuId].pairs) {
-              const index = data.menus[pairedMenuId].pairs.indexOf(id);
-              console.log("index: ", index);
-
-              if (index === -1) {
-                data.menus[pairedMenuId].pairs.push(id);
-                return;
-              }
+  const updateMenu = (customerId, oldMenu, updatedMenu) => {
+    if (!oldMenu.pairs && !updatedMenu.pairs) {
+      menuRepository.updateMenu(customerId, oldMenu.menuId, updatedMenu);
+      menuRepository.getCustomerInfo(customerId, (data) => {
+        setDatabase(data);
+      });
+    } else {
+      menuRepository.updateMenu(customerId, oldMenu.menuId, updatedMenu);
+      let addedPairs;
+      let removedPairs;
+      if (!oldMenu.pairs) {
+        addedPairs = updatedMenu.pairs;
+      } else if (!updatedMenu.pairs) {
+        removedPairs = oldMenu.pairs;
+      } else {
+        removedPairs = difference(oldMenu.pairs, updatedMenu.pairs);
+        addedPairs = difference(updatedMenu.pairs, oldMenu.pairs);
+      }
+      menuRepository.getCustomerInfo(customerId, (data) => {
+        if (addedPairs && addedPairs.length > 0) {
+          addedPairs.forEach((id) => {
+            const pairs = data.menus[id].pairs;
+            if (pairs) {
+              pairs.push(updatedMenu.menuId);
             } else {
-              data.menus[pairedMenuId]["pairs"] = [id];
+              data.menus[id]["pairs"] = [updatedMenu.menuId];
             }
           });
         }
+        if (removedPairs && removedPairs.length > 0) {
+          removedPairs.forEach((id) => {
+            const pairs = data.menus[id].pairs;
+            if (pairs) {
+              const index = pairs.indexOf(updatedMenu.menuId);
+              if (index > -1) {
+                data.menus[id].pairs.splice(index, 1);
+              }
+            }
+          });
+        }
+        menuRepository.updateMenus(customerId, data.menus);
+        setDatabase(data);
       });
-      menuRepository.updateMenus(customerId, data.menus);
-      setDatabase(data);
-    });
+    }
   };
   const deleteMenu = (customerId, menus, menuId) => {
     // Delete this menu from the pairs of all the menus
