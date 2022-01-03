@@ -52,8 +52,7 @@ function MenuEditDialog({
       }
     } else if (event.target.name === "pairs") {
       const value = event.target.value;
-      const pairs = typeof value === "string" ? value.split(",") : value;
-      setMenuOnEdit({ ...menuOnEdit, pairs });
+      setMenuOnEdit({ ...menuOnEdit, pairs: value });
       return;
     }
     const target = event.target.name;
@@ -278,11 +277,13 @@ function MenuEditDialog({
                 )}
                 MenuProps={{ PaperProps: { style: { maxHeight: "400px" } } }}
               >
-                {menusArray.map((menu) => (
-                  <MenuItem key={menu.menuId} value={menu.menuId}>
-                    {menu.name}
-                  </MenuItem>
-                ))}
+                {menusArray
+                  .filter((each) => each.menuId !== menu.menuId)
+                  .map((menu) => (
+                    <MenuItem key={menu.menuId} value={menu.menuId}>
+                      {menu.name}
+                    </MenuItem>
+                  ))}
               </Select>
             </FormControl>
           </Grid>

@@ -26,6 +26,26 @@ export default function MenuEditorHomeView({
   const updateMenu = (customerId, menuId, updatedMenu) => {
     menuRepository.updateMenu(customerId, menuId, updatedMenu);
     menuRepository.getCustomerInfo(customerId, (data) => {
+      const menuIds = Object.keys(data.menus).map((id) => parseInt(id));
+      menuIds.forEach((id) => {
+        const pairs = data.menus[id].pairs;
+        if (pairs) {
+          pairs.forEach((pairedMenuId) => {
+            if (data.menus[pairedMenuId].pairs) {
+              const index = data.menus[pairedMenuId].pairs.indexOf(id);
+              console.log("index: ", index);
+
+              if (index === -1) {
+                data.menus[pairedMenuId].pairs.push(id);
+                return;
+              }
+            } else {
+              data.menus[pairedMenuId]["pairs"] = [id];
+            }
+          });
+        }
+      });
+      menuRepository.updateMenus(customerId, data.menus);
       setDatabase(data);
     });
   };
