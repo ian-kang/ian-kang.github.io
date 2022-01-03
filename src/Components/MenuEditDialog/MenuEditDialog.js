@@ -38,7 +38,8 @@ function MenuEditDialog({
 
   useEffect(() => {
     setMenusOnEdit(menus);
-  }, [menus]);
+    setMenuOnEdit(menu);
+  }, [menus, menu]);
 
   const handleOnChange = (event) => {
     if (event.target.name === "img") {
