@@ -13,7 +13,7 @@ export default function MenuEditorHomeView({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    menuRepository.getMenus(customerId, (data) => {
+    menuRepository.getCustomerInfo(customerId, (data) => {
       if (data) {
         setDatabase(data);
         setLoading(false);
@@ -25,7 +25,7 @@ export default function MenuEditorHomeView({
 
   const updateMenu = (customerId, menuId, updatedMenu) => {
     menuRepository.updateMenu(customerId, menuId, updatedMenu);
-    menuRepository.getMenus(customerId, (data) => {
+    menuRepository.getCustomerInfo(customerId, (data) => {
       setDatabase(data);
     });
   };
@@ -47,7 +47,7 @@ export default function MenuEditorHomeView({
     });
     menuRepository.deleteMenu(customerId, menuId);
     menuRepository.updateMenus(customerId, updatedMenus);
-    menuRepository.getMenus(customerId, (data) => {
+    menuRepository.getCustomerInfo(customerId, (data) => {
       if (data) {
         setDatabase(data);
         return;
@@ -57,7 +57,7 @@ export default function MenuEditorHomeView({
   };
   const addMenu = (customerId, newMenu, newMenuId) => {
     menuRepository.addMenu(customerId, newMenu, newMenuId);
-    menuRepository.getMenus(customerId, (data) => {
+    menuRepository.getCustomerInfo(customerId, (data) => {
       setDatabase(data);
     });
   };
@@ -77,7 +77,7 @@ export default function MenuEditorHomeView({
       },
       newId
     );
-    menuRepository.getMenus(customerId, (data) => {
+    menuRepository.getCustomerInfo(customerId, (data) => {
       setDatabase(data);
     });
   };
@@ -91,7 +91,7 @@ export default function MenuEditorHomeView({
     });
     menuRepository.updateCategory(customerId, copied);
 
-    menuRepository.getMenus(customerId, (data) => {
+    menuRepository.getCustomerInfo(customerId, (data) => {
       setDatabase(data);
     });
   };

@@ -9,7 +9,7 @@ function MenuHomeView({ customerId, menuRepository }) {
   const [toggle, setToggle] = useState(true);
 
   useEffect(() => {
-    menuRepository.getMenus(customerId, (data) => {
+    menuRepository.getCustomerInfo(customerId, (data) => {
       if (data) {
         setDatabase(data);
         return;

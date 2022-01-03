@@ -21,7 +21,7 @@ function NavBar({ customerId, authService, menuRepository }) {
   const [database, setDatabase] = useState({});
 
   useEffect(() => {
-    menuRepository.getMenus(customerId, (data) => {
+    menuRepository.getCustomerInfo(customerId, (data) => {
       if (data) {
         setDatabase(data);
         return;

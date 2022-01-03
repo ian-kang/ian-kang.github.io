@@ -27,7 +27,7 @@ export default class FirebaseDatabase {
   updateMenus(customerId, updatedMenus) {
     update(ref(this.database, customerId + "/menus/"), updatedMenus);
   }
-  getMenus(customerId, callbackfn) {
+  getCustomerInfo(customerId, callbackfn) {
     const dbRef = ref(this.database);
     get(child(dbRef, customerId))
       .then((snapshot) => {

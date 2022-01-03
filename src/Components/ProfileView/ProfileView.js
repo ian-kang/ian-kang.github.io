@@ -17,7 +17,7 @@ export default function ProfileView({
   const [disabled, setDisabled] = useState(true);
   useEffect(() => {
     setLoading(true);
-    menuRepository.getMenus(customerId, (data) => {
+    menuRepository.getCustomerInfo(customerId, (data) => {
       if (data) {
         setCustomerInfo(data);
         setLoading(false);
