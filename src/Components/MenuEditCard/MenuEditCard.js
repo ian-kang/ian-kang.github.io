@@ -11,7 +11,7 @@ import React from "react";
 function MenuEditCard({ menu, menus, handleEdit, handleDelete }) {
   return (
     <Grid container spacing={2}>
-      <Grid item xs={5}>
+      <Grid item xs={8} lg={5}>
         <TextField
           disabled
           required
@@ -21,7 +21,7 @@ function MenuEditCard({ menu, menus, handleEdit, handleDelete }) {
           fullWidth
         />
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={4} lg={3}>
         <TextField
           disabled
           select
@@ -44,7 +44,7 @@ function MenuEditCard({ menu, menus, handleEdit, handleDelete }) {
           </MenuItem>
         </TextField>
       </Grid>
-      <Grid item xs={2}>
+      <Grid item xs={6} lg={2}>
         <TextField
           disabled
           type="number"
@@ -57,7 +57,7 @@ function MenuEditCard({ menu, menus, handleEdit, handleDelete }) {
           }}
         />
       </Grid>
-      <Grid item xs={2}>
+      <Grid item xs={6} lg={2}>
         <TextField
           disabled
           type="number"

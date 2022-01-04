@@ -15,7 +15,7 @@ function MenuEditorPreviewListItem({ menu }) {
         secondaryAction={
           <Typography variant="subtitle2">
             ${menu.price}
-            {menu.priceB && ` / ${menu.priceB}`}
+            {menu.priceB && ` / $${menu.priceB}`}
           </Typography>
         }
       >
