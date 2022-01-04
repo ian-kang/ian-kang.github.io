@@ -17,6 +17,7 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
     name: "",
     rate: "none",
     price: "",
+    priceB: "",
     desc: "",
     img: "",
     pairs: [],
