@@ -1,4 +1,10 @@
-import { AssignmentInd, Edit, Logout, WineBar } from "@mui/icons-material";
+import {
+  AssignmentInd,
+  Edit,
+  FeaturedPlayList,
+  Logout,
+  WineBar,
+} from "@mui/icons-material";
 import {
   Avatar,
   Box,
@@ -43,6 +49,11 @@ function NavBar({ customerId, authService, menuRepository }) {
     navigate("/editor");
     setAnchorElUser(null);
   };
+  const handleMenuOrderEditorClick = () => {
+    navigate("/order-editor");
+    setAnchorElUser(null);
+  };
+
   const handleYourMenuClick = () => {
     navigate("/menu");
     setAnchorElUser(null);
@@ -99,6 +110,12 @@ function NavBar({ customerId, authService, menuRepository }) {
                   <Edit />
                 </IconButton>
                 <Typography>Menu Editor</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleMenuOrderEditorClick}>
+                <IconButton>
+                  <FeaturedPlayList />
+                </IconButton>
+                <Typography>Menu Order Editor</Typography>
               </MenuItem>
               <MenuItem onClick={handleYourMenuClick}>
                 <IconButton>

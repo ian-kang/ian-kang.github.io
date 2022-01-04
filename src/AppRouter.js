@@ -8,6 +8,7 @@ import { UserContext } from "./App";
 import PublicMenuHomeView from "./Components/PublickMenuHomeView/PublicMenuHomeView";
 import ProfileView from "./Components/ProfileView/ProfileView";
 import LoadingViewWithAuth from "./Components/LoadingViewWithAuth/LoadingViewAuth";
+import MenuOrderEditorHomeView from "./Components/MenuOrderEditorHomeView/MenuOrderEditorHomeView";
 function AppRouter({ authService, menuRepository, imageRepository }) {
   const { user } = useContext(UserContext);
   const [customerIds, setCustomerIds] = useState();
@@ -39,6 +40,22 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
                       customerId={user.uid}
                       menuRepository={menuRepository}
                       imageRepository={imageRepository}
+                    />
+                  }
+                />
+              }
+            ></Route>
+            <Route
+              path="/order-editor"
+              element={
+                <BaseLayout
+                  customerId={user.uid}
+                  menuRepository={menuRepository}
+                  authService={authService}
+                  component={
+                    <MenuOrderEditorHomeView
+                      customerId={user.uid}
+                      menuRepository={menuRepository}
                     />
                   }
                 />

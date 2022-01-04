@@ -26,7 +26,7 @@ function PairedMenuCard({ menu, menus }) {
   };
 
   return (
-    <Card>
+    <Card sx={{ width: "100%" }}>
       <CardHeader
         title={menu.name}
         action={
