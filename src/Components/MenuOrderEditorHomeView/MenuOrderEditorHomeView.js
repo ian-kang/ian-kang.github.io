@@ -2,6 +2,9 @@ import { Save } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { Droppable } from "react-beautiful-dnd";
+import { Draggable } from "react-beautiful-dnd";
+import { DragDropContext } from "react-beautiful-dnd";
 import LoadingView from "../LoadingView/LoadingView";
 import PairedMenuCard from "../PairedMenuCard/PairedMenuCard";
 
@@ -29,13 +32,13 @@ export default function MenuOrderEditorHomeView({
       setLoading(false);
     });
   }, [customerId, menuRepository]);
-  console.log(categories);
 
   function handleSave() {
     setSaveLoading(true);
   }
+  function handleOnDragEnd() {}
   return (
-    <>
+    <DragDropContext onDragEnd={handleOnDragEnd}>
       {loading ? (
         <LoadingView loading={loading} text="Loading Editor..." />
       ) : (
@@ -64,57 +67,63 @@ export default function MenuOrderEditorHomeView({
                 p: 2,
                 boxSizing: "border-box",
                 gap: 2,
+                justifyContent: "center",
               }}
             >
               {categories && categories.length > 0 ? (
                 categories.map((category) => (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      width: "300px",
-                      height: "100%",
-                      backgroundColor: "#f5f5f5",
-                      borderRadius: 1,
-                      gap: 1,
-                      p: 1,
-                      alignItems: "center",
-                    }}
-                  >
-                    <Typography>{category}</Typography>
-                    {Object.values(database.menus)
-                      .filter((menu) => menu.category === category)
-                      .map((menu) => (
-                        <PairedMenuCard menu={menu} menus={database.menus} />
-                      ))}
-                  </Box>
+                  <Droppable key={category} droppableId={category}>
+                    {(provided) => (
+                      <Box
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          width: "300px",
+                          height: "100%",
+                          backgroundColor: "#f5f5f5",
+                          borderRadius: 1,
+                          gap: 1,
+                          p: 1,
+                          alignItems: "center",
+                        }}
+                      >
+                        <Typography>{category}</Typography>
+                        {Object.values(database.menus)
+                          .filter((menu) => menu.category === category)
+                          .map((menu, index) => (
+                            <Draggable
+                              key={menu.menuId}
+                              draggableId={menu.menuId.toString()}
+                              index={index}
+                            >
+                              {(provided) => (
+                                <div
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                >
+                                  <PairedMenuCard
+                                    menu={menu}
+                                    menus={database.menus}
+                                  />
+                                </div>
+                              )}
+                            </Draggable>
+                          ))}
+                        {/* {provided.placeholder} */}
+                      </Box>
+                    )}
+                  </Droppable>
                 ))
               ) : (
                 <Grid item>No Data Available</Grid>
               )}
             </Box>
           </Grid>
-
-          <Grid
-            item
-            container
-            direction="column"
-            alignItems="center"
-            xs={10}
-            spacing={2}
-          >
-            {Object.keys(database).find((key) => key === "menus") ? (
-              Object.values(database.menus).map((menu) => (
-                <Grid item>
-                  <PairedMenuCard menu={menu} menus={database.menus} />
-                </Grid>
-              ))
-            ) : (
-              <Grid item>No Data Available</Grid>
-            )}
-          </Grid>
         </Grid>
       )}
-    </>
+    </DragDropContext>
   );
 }
