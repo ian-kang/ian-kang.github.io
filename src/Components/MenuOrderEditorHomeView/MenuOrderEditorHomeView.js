@@ -1,4 +1,4 @@
-import { Save } from "@mui/icons-material";
+import { Add, Save } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -12,20 +12,15 @@ export default function MenuOrderEditorHomeView({
   customerId,
   menuRepository,
 }) {
-  const [database, setDatabase] = useState({});
+  const [menus, setMenus] = useState();
   const [loading, setLoading] = useState(true);
   const [saveLoading, setSaveLoading] = useState(false);
-  const [categories, setCategories] = useState();
 
   useEffect(() => {
     menuRepository.getCustomerInfo(customerId, (data) => {
       if (data) {
-        setDatabase(data);
-        if (Object.keys(data).find((key) => key === "menus")) {
-          setCategories([
-            ...new Set(Object.values(data.menus).map((menu) => menu.category)),
-          ]);
-        }
+        setMenus(data.menus);
+
         setLoading(false);
         return;
       }
@@ -33,10 +28,57 @@ export default function MenuOrderEditorHomeView({
     });
   }, [customerId, menuRepository]);
 
-  function handleSave() {
-    setSaveLoading(true);
+  function handleAddButtonOnClick() {}
+  function handleOnDragEnd(result) {
+    const { source, destination, draggableId } = result;
+
+    if (!destination) return;
+    const start = source.droppableId;
+    const finish = destination.droppableId;
+    if (start === finish && source.index === destination.index) return;
+    if (start === finish) {
+      const category = menus.categories[source.droppableId];
+      const newMenuOrder = Array.from(category.menuOrder);
+      newMenuOrder.splice(source.index, 1);
+      newMenuOrder.splice(destination.index, 0, draggableId);
+      const newMenus = {
+        ...menus,
+        categories: {
+          ...menus.categories,
+          [source.droppableId]: {
+            ...menus.categories[source.droppableId],
+            menuOrder: newMenuOrder,
+          },
+        },
+      };
+      setMenus(newMenus);
+      menuRepository.updateMenus(customerId, newMenus);
+      return;
+    } else if (start !== finish) {
+      const startMenuOrder = Array.from(menus.categories[start].menuOrder);
+      startMenuOrder.splice(source.index, 1);
+
+      const finishMenuOrder = Array.from(menus.categories[finish].menuOrder);
+      finishMenuOrder.splice(destination.index, 0, draggableId);
+      const newMenus = {
+        ...menus,
+        categories: {
+          ...menus.categories,
+          [start]: {
+            ...menus.categories[start],
+            menuOrder: startMenuOrder,
+          },
+          [finish]: {
+            ...menus.categories[finish],
+            menuOrder: finishMenuOrder,
+          },
+        },
+      };
+      setMenus(newMenus);
+      menuRepository.updateMenus(customerId, newMenus);
+    }
   }
-  function handleOnDragEnd() {}
+
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       {loading ? (
@@ -46,18 +88,7 @@ export default function MenuOrderEditorHomeView({
           <Grid item>
             <Typography variant="h5">Menu Order Editor</Typography>
           </Grid>
-          <Grid item container justifyContent="right">
-            <Grid item sx={{ mr: 4 }}>
-              <LoadingButton
-                loading={saveLoading}
-                onClick={handleSave}
-                startIcon={<Save />}
-                variant="contained"
-              >
-                Save
-              </LoadingButton>
-            </Grid>
-          </Grid>
+
           <Grid item xs={12}>
             <Box
               sx={{
@@ -70,8 +101,8 @@ export default function MenuOrderEditorHomeView({
                 justifyContent: "center",
               }}
             >
-              {categories && categories.length > 0 ? (
-                categories.map((category) => (
+              {menus.categoryOrder && menus.categoryOrder.length > 0 ? (
+                menus.categoryOrder.map((category) => (
                   <Droppable key={category} droppableId={category}>
                     {(provided) => (
                       <Box
@@ -90,29 +121,39 @@ export default function MenuOrderEditorHomeView({
                         }}
                       >
                         <Typography>{category}</Typography>
-                        {Object.values(database.menus)
-                          .filter((menu) => menu.category === category)
-                          .map((menu, index) => (
+                        {menus.categories[category].menuOrder.map(
+                          (menuId, index) => (
                             <Draggable
-                              key={menu.menuId}
-                              draggableId={menu.menuId.toString()}
+                              key={menuId}
+                              draggableId={menuId.toString()}
                               index={index}
                             >
                               {(provided) => (
-                                <div
+                                <Box
+                                  sx={{ width: "100%" }}
                                   ref={provided.innerRef}
                                   {...provided.draggableProps}
                                   {...provided.dragHandleProps}
                                 >
                                   <PairedMenuCard
-                                    menu={menu}
-                                    menus={database.menus}
+                                    menu={menus.items[menuId]}
+                                    menus={menus.items}
                                   />
-                                </div>
+                                </Box>
                               )}
                             </Draggable>
-                          ))}
-                        {/* {provided.placeholder} */}
+                          )
+                        )}
+                        {provided.placeholder}
+                        <LoadingButton
+                          loading={loading}
+                          fullWidth
+                          variant="outlined"
+                          startIcon={<Add />}
+                          onClick={handleAddButtonOnClick}
+                        >
+                          Add
+                        </LoadingButton>
                       </Box>
                     )}
                   </Droppable>
