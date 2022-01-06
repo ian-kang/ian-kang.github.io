@@ -30,7 +30,7 @@ function PairedMenuCard({ menu, menus }) {
       <CardHeader
         title={menu.name}
         action={
-          <Typography sx={{ mt: 1.5 }} variant="subtitle2">
+          <Typography sx={{ mt: 1.5, ml: 2 }} variant="subtitle2">
             ${menu.price}
             {menu.priceB && ` / $${menu.priceB}`}
           </Typography>

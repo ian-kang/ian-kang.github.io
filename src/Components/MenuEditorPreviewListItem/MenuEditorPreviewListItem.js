@@ -10,15 +10,17 @@ import {
 
 function MenuEditorPreviewListItem({ menu }) {
   return (
-    <List sx={{ pl: 4 }} dense>
-      <ListItem
-        secondaryAction={
-          <Typography variant="subtitle2">
-            ${menu.price}
-            {menu.priceB && ` / $${menu.priceB}`}
-          </Typography>
-        }
-      >
+    <List
+      sx={{
+        pl: 4,
+        display: "flex",
+        justifyContent: "space-between",
+        width: "100%",
+        boxSizing: "border-box",
+      }}
+      dense
+    >
+      <ListItem>
         {menu.rate === "high" ? (
           <ListItemIcon>
             <Star />
@@ -34,6 +36,15 @@ function MenuEditorPreviewListItem({ menu }) {
         ) : null}
 
         <ListItemText primary={menu.name} secondary={menu.desc} />
+        <ListItemText
+          sx={{ width: "150px", textAlign: "right" }}
+          primary={
+            <Typography variant="subtitle2">
+              ${menu.price}
+              {menu.priceB && ` / $${menu.priceB}`}
+            </Typography>
+          }
+        />
       </ListItem>
     </List>
   );
