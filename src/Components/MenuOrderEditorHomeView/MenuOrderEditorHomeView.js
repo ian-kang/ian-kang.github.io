@@ -1,4 +1,4 @@
-import { Add, Save } from "@mui/icons-material";
+import { Add } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -6,15 +6,18 @@ import { Droppable } from "react-beautiful-dnd";
 import { Draggable } from "react-beautiful-dnd";
 import { DragDropContext } from "react-beautiful-dnd";
 import LoadingView from "../LoadingView/LoadingView";
+import MenuAddDialog from "../MenuAddDialog/MenuAddDialog";
 import PairedMenuCard from "../PairedMenuCard/PairedMenuCard";
 
 export default function MenuOrderEditorHomeView({
   customerId,
   menuRepository,
+  imageRepository,
 }) {
   const [menus, setMenus] = useState();
   const [loading, setLoading] = useState(true);
-  const [saveLoading, setSaveLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [clickedCategory, setClickedCategory] = useState();
 
   useEffect(() => {
     menuRepository.getCustomerInfo(customerId, (data) => {
@@ -28,7 +31,22 @@ export default function MenuOrderEditorHomeView({
     });
   }, [customerId, menuRepository]);
 
-  function handleAddButtonOnClick() {}
+  function handleAddButtonOnClick(event) {
+    setOpen(true);
+    setClickedCategory(event.target.name);
+  }
+  function saved() {
+    menuRepository.getCustomerInfo(customerId, (data) => {
+      if (data) {
+        setMenus(data.menus);
+
+        setLoading(false);
+        return;
+      }
+      setLoading(false);
+    });
+  }
+
   function handleOnDragEnd(result) {
     const { source, destination, draggableId } = result;
 
@@ -150,10 +168,21 @@ export default function MenuOrderEditorHomeView({
                           fullWidth
                           variant="outlined"
                           startIcon={<Add />}
+                          name={category}
                           onClick={handleAddButtonOnClick}
                         >
                           Add
                         </LoadingButton>
+                        <MenuAddDialog
+                          open={open}
+                          setOpen={setOpen}
+                          category={clickedCategory}
+                          customerId={customerId}
+                          imageRepository={imageRepository}
+                          menuRepository={menuRepository}
+                          menus={menus}
+                          saved={saved}
+                        />
                       </Box>
                     )}
                   </Droppable>

@@ -1,62 +1,64 @@
-import { Delete, PhotoCamera, Save } from "@mui/icons-material";
+import { PhotoCamera, Save } from "@mui/icons-material";
 import {
-  Box,
   Button,
-  Chip,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-  FormControl,
   Grid,
   Input,
   InputAdornment,
-  InputLabel,
   MenuItem,
-  OutlinedInput,
-  Select,
   TextField,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { LoadingButton } from "@mui/lab";
-function MenuEditDialog({
+
+export default function MenuAddDialog({
   open,
   setOpen,
-  menu,
-  menus,
+  category,
+  customerId,
   imageRepository,
   menuRepository,
-  customerId,
+  menus,
+  saved,
 }) {
-  const [menuOnEdit, setMenuOnEdit] = useState(menu);
+  const [menuOnEdit, setMenuOnEdit] = useState({
+    name: "",
+    rate: "none",
+    price: "",
+    priceB: "",
+    img: "",
+    desc: "",
+    pairs: [],
+  });
+  const [menusOnEdit, setMenusOnEdit] = useState(menus);
   const [loading, setLoading] = useState(false);
-  const [imageUrlOnEdit, setImageUrlOnEdit] = useState(menu.img);
-  const [imageFileOnEdit, setImageFileOnEdit] = useState();
+  const [imageFileOnEdit, setImageFileOnAdd] = useState();
 
-  useEffect(() => {});
+  useEffect(() => {
+    setMenusOnEdit(menus);
+  }, [menus]);
 
   function handleOnChange(event) {
-    if (event.target.name === "img") {
+    const targetInput = event.target.name;
+    if (targetInput === "img") {
       const file = event.target.files[0];
       if (file) {
         const url = URL.createObjectURL(file);
-        setImageUrlOnEdit(url);
-        setImageFileOnEdit(file);
-        return;
+        setImageFileOnAdd(file);
+        setMenuOnEdit({ ...menuOnEdit, [targetInput]: url });
       }
-    } else if (event.target.name === "pairs") {
-      const value = event.target.value;
-      setMenuOnEdit({ ...menuOnEdit, pairs: value });
+      setImageFileOnAdd("");
       return;
     }
-    const target = event.target.name;
     const value = event.target.value;
-    setMenuOnEdit({ ...menuOnEdit, [target]: value });
+    setMenuOnEdit({ ...menuOnEdit, [targetInput]: value });
   }
-  function handleImageDeleteButton() {
-    setImageUrlOnEdit("");
-    setImageFileOnEdit(null);
+  function handleCancel() {
+    setOpen(false);
   }
   async function handleSave() {
     setLoading(true);
@@ -64,48 +66,84 @@ function MenuEditDialog({
       const result = await imageRepository.imageUpload(
         customerId,
         imageFileOnEdit,
-        [menuOnEdit.menuId, menuOnEdit.name]
+        [menuOnEdit.menuId, menuOnEdit.category, menuOnEdit.name]
       );
-      menuRepository.updateMenu(customerId, menu, {
-        ...menuOnEdit,
-        img: result.url,
+      const menuId = Date.now().toString();
+      setMenuOnEdit({ ...menuOnEdit, img: result.url, menuId });
+      const newMenus = {
+        ...menusOnEdit,
+        categories: {
+          ...menusOnEdit.categories,
+          [category]: {
+            menuOrder: [...menusOnEdit.categories[category].menuOrder, menuId],
+          },
+        },
+        items: {
+          ...menusOnEdit.items,
+          [menuId]: menuOnEdit,
+        },
+      };
+      setMenusOnEdit(newMenus);
+      menuRepository.updateMenus(customerId, newMenus);
+      setMenuOnEdit({
+        name: "",
+        rate: "none",
+        price: "",
+        priceB: "",
+        desc: "",
+        img: "",
+        pairs: [],
       });
-      // setMenuOnEdit(menu);
-      setOpen(false);
+      setImageFileOnAdd();
       setLoading(false);
+      setOpen(false);
+      saved();
       return;
     }
-    menuRepository.updateMenu(customerId, menu.menuId, {
-      ...menuOnEdit,
-      img: imageUrlOnEdit,
+    const menuId = Date.now().toString();
+    setMenuOnEdit({ ...menuOnEdit, menuId });
+    const newMenus = {
+      ...menusOnEdit,
+      categories: {
+        ...menusOnEdit.categories,
+        [category]: {
+          menuOrder: [...menusOnEdit.categories[category].menuOrder, menuId],
+        },
+      },
+      items: {
+        ...menusOnEdit.items,
+        [menuId]: menuOnEdit,
+      },
+    };
+    setMenusOnEdit(newMenus);
+    menuRepository.updateMenus(customerId, newMenus);
+    setMenuOnEdit({
+      name: "",
+      rate: "none",
+      price: "",
+      priceB: "",
+      desc: "",
+      img: "",
+      pairs: [],
     });
-    // setMenuOnEdit(menuOnEdit);
-    setOpen(false);
     setLoading(false);
-  }
-  function handleCancel() {
     setOpen(false);
-    setMenuOnEdit(menu);
-    setImageUrlOnEdit(menu.img);
-    setImageFileOnEdit();
+    saved();
   }
-
   return (
     <Dialog open={open} onClose={handleCancel}>
-      <DialogTitle>Edit</DialogTitle>
+      <DialogTitle>Add New Menu</DialogTitle>
       <DialogContent>
         <DialogContentText></DialogContentText>
-
-        <Grid sx={{ mt: 1 }} container item spacing={2} alignItems="center">
+        <Grid sx={{ mt: 1 }} container item spacing={2}>
           <Grid item xs={5}>
             <TextField
               required
-              autoFocus
               label="Menu name"
               name="name"
               value={menuOnEdit.name}
-              fullWidth
               onChange={handleOnChange}
+              fullWidth
               disabled={loading}
             />
           </Grid>
@@ -115,8 +153,9 @@ function MenuEditDialog({
               label="Rate"
               name="rate"
               value={menuOnEdit.rate}
-              fullWidth
+              defaultValue="none"
               onChange={handleOnChange}
+              fullWidth
               disabled={loading}
             >
               <MenuItem key="None" value="none">
@@ -139,14 +178,14 @@ function MenuEditDialog({
               label="Price"
               name="price"
               value={menuOnEdit.price}
+              onChange={handleOnChange}
+              disabled={loading}
               fullWidth
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">$</InputAdornment>
                 ),
               }}
-              onChange={handleOnChange}
-              disabled={loading}
             />
           </Grid>
           <Grid item xs={2}>
@@ -155,17 +194,17 @@ function MenuEditDialog({
               label="Price(B)"
               name="priceB"
               value={menuOnEdit.priceB}
+              onChange={handleOnChange}
+              disabled={loading}
               fullWidth
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">$</InputAdornment>
                 ),
               }}
-              onChange={handleOnChange}
-              disabled={loading}
             />
           </Grid>
-          {imageUrlOnEdit && (
+          {menuOnEdit.img && (
             <Grid
               container
               item
@@ -175,7 +214,7 @@ function MenuEditDialog({
             >
               <Grid item>
                 <img
-                  src={imageUrlOnEdit}
+                  src={menuOnEdit.img}
                   alt=""
                   loading="lazy"
                   style={{ width: "100%", height: "100%" }}
@@ -184,32 +223,14 @@ function MenuEditDialog({
             </Grid>
           )}
 
-          <Grid
-            container
-            item
-            xs={12}
-            spacing={2}
-            justifyContent="center"
-            alignItems="center"
-          >
+          <Grid container item xs={12} justifyContent="right">
             <Grid item>
-              <Button
-                variant="contained"
-                component="span"
-                startIcon={<Delete />}
-                onClick={handleImageDeleteButton}
-                disabled={loading}
-              >
-                Delete Image
-              </Button>
-            </Grid>
-            <Grid item>
-              <label htmlFor={`contained-button-file-${menuOnEdit.menuId}`}>
+              <label htmlFor={`contained-button-file-${category}`}>
                 <Input
                   sx={{ display: "none" }}
                   type="file"
                   inputProps={{ accept: "image/*" }}
-                  id={`contained-button-file-${menuOnEdit.menuId}`}
+                  id={`contained-button-file-${category}`}
                   name="img"
                   onChange={handleOnChange}
                   disabled={loading}
@@ -220,7 +241,7 @@ function MenuEditDialog({
                   startIcon={<PhotoCamera />}
                   disabled={loading}
                 >
-                  Upload
+                  Image Upload
                 </Button>
               </label>
             </Grid>
@@ -230,48 +251,11 @@ function MenuEditDialog({
               label="Description"
               name="desc"
               value={menuOnEdit.desc}
+              onChange={handleOnChange}
               fullWidth
               multiline
-              onChange={handleOnChange}
               disabled={loading}
             />
-          </Grid>
-          <Grid item xs={12}>
-            <FormControl fullWidth>
-              <InputLabel id={`best-paired-with-${menuOnEdit.menuId}`}>
-                Best Paired With
-              </InputLabel>
-              <Select
-                autoWidth
-                labelId={`best-paired-with-${menuOnEdit.menuId}`}
-                multiple
-                value={menuOnEdit.pairs ? menuOnEdit.pairs : []}
-                name="pairs"
-                onChange={handleOnChange}
-                disabled={loading}
-                input={<OutlinedInput label="Best Paired With" />}
-                renderValue={(selected) => (
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                    {selected.map((value) => (
-                      <Chip
-                        key={value}
-                        label={menus[value].name}
-                        onClick={() => {}}
-                      />
-                    ))}
-                  </Box>
-                )}
-                MenuProps={{ PaperProps: { style: { maxHeight: "400px" } } }}
-              >
-                {Object.values(menus)
-                  .filter((each) => each.menuId !== menu.menuId)
-                  .map((menu) => (
-                    <MenuItem key={menu.menuId} value={menu.menuId}>
-                      {menu.name}
-                    </MenuItem>
-                  ))}
-              </Select>
-            </FormControl>
           </Grid>
         </Grid>
       </DialogContent>
@@ -290,5 +274,3 @@ function MenuEditDialog({
     </Dialog>
   );
 }
-
-export default MenuEditDialog;

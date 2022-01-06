@@ -56,6 +56,7 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
                     <MenuOrderEditorHomeView
                       customerId={user.uid}
                       menuRepository={menuRepository}
+                      imageRepository={imageRepository}
                     />
                   }
                 />
