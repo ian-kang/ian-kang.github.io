@@ -1,15 +1,19 @@
 import {
+  Delete,
   DinnerDining,
+  Edit,
   ExpandLess,
   ExpandMore,
   WineBar,
 } from "@mui/icons-material";
 import {
+  Box,
   Card,
   CardContent,
   CardHeader,
   CardMedia,
   Collapse,
+  IconButton,
   ListItem,
   ListItemButton,
   ListItemIcon,
@@ -18,7 +22,7 @@ import {
 import React, { useState } from "react";
 import MenuEditorPreviewListItem from "../MenuEditorPreviewListItem/MenuEditorPreviewListItem";
 
-function PairedMenuCard({ menu, menus }) {
+function PairedMenuCard({ menu, menus, type, editMenu, deleteMenu }) {
   const [expanded, setExpanded] = useState(false);
 
   const handleClick = () => {
@@ -27,15 +31,42 @@ function PairedMenuCard({ menu, menus }) {
 
   return (
     <Card sx={{ width: "100%" }}>
-      <CardHeader
-        title={menu.name}
-        action={
-          <Typography sx={{ mt: 1.5, ml: 1 }} variant="subtitle2">
-            ${menu.price}
-            {menu.priceB && ` / $${menu.priceB}`}
-          </Typography>
-        }
-      />
+      {type === "edit" ? (
+        <CardHeader
+          title={menu.name}
+          subheader={
+            <Typography sx={{ mt: 1 }} variant="subtitle2">
+              ${menu.price}
+              {menu.priceB && ` / $${menu.priceB}`}
+            </Typography>
+          }
+          action={
+            <Box sx={{ ml: 1 }}>
+              <IconButton onClick={editMenu}>
+                <Edit />
+              </IconButton>
+              <IconButton
+                onClick={() => {
+                  deleteMenu(menu.menuId);
+                }}
+              >
+                <Delete />
+              </IconButton>
+            </Box>
+          }
+        />
+      ) : (
+        <CardHeader
+          title={menu.name}
+          action={
+            <Typography sx={{ mt: 1.5, ml: 1 }} variant="subtitle2">
+              ${menu.price}
+              {menu.priceB && ` / $${menu.priceB}`}
+            </Typography>
+          }
+        />
+      )}
+
       {menu.img && (
         <CardMedia
           component="img"

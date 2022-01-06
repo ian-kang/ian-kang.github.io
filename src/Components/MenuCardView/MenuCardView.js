@@ -38,6 +38,7 @@ function MenuCardView({ menus }) {
                   key={menuId}
                   menu={menus.items[menuId]}
                   menus={menus.items}
+                  type="menu"
                 />
               </Grid>
             ))}

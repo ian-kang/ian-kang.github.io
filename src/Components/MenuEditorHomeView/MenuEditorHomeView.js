@@ -8,6 +8,7 @@ export default function MenuEditorHomeView({
   customerId,
   menuRepository,
   imageRepository,
+  addMenu,
 }) {
   const [database, setDatabase] = useState({});
   const [loading, setLoading] = useState(true);
@@ -171,7 +172,7 @@ export default function MenuEditorHomeView({
                     customerId={customerId}
                     updateMenu={updateMenu}
                     deleteMenu={deleteMenu}
-                    addMenu={addMenu}
+                    addMenu={updateMenu}
                     editCategory={editCategory}
                     saved={saved}
                   />

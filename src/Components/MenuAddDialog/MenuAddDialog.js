@@ -75,12 +75,13 @@ export default function MenuAddDialog({
         categories: {
           ...menusOnEdit.categories,
           [category]: {
+            ...menusOnEdit.categories[category],
             menuOrder: [...menusOnEdit.categories[category].menuOrder, menuId],
           },
         },
         items: {
           ...menusOnEdit.items,
-          [menuId]: menuOnEdit,
+          [menuId]: { ...menuOnEdit, menuId },
         },
       };
       setMenusOnEdit(newMenus);
@@ -107,12 +108,13 @@ export default function MenuAddDialog({
       categories: {
         ...menusOnEdit.categories,
         [category]: {
+          ...menusOnEdit.categories[category],
           menuOrder: [...menusOnEdit.categories[category].menuOrder, menuId],
         },
       },
       items: {
         ...menusOnEdit.items,
-        [menuId]: menuOnEdit,
+        [menuId]: { ...menuOnEdit, menuId },
       },
     };
     setMenusOnEdit(newMenus);

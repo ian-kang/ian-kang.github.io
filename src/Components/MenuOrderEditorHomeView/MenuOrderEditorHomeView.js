@@ -18,6 +18,7 @@ export default function MenuOrderEditorHomeView({
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [clickedCategory, setClickedCategory] = useState();
+  console.log(menus);
 
   useEffect(() => {
     menuRepository.getCustomerInfo(customerId, (data) => {
@@ -45,6 +46,19 @@ export default function MenuOrderEditorHomeView({
       }
       setLoading(false);
     });
+  }
+  function editMenu() {}
+  function deleteMenu(menuId) {
+    const newMenus = JSON.parse(JSON.stringify(menus));
+    newMenus.categoryOrder.forEach((category) => {
+      const index = newMenus.categories[category].menuOrder.indexOf(menuId);
+      if (index > -1) {
+        newMenus.categories[category].menuOrder.splice(index, 1);
+      }
+    });
+    delete newMenus.items[menuId];
+    setMenus(newMenus);
+    menuRepository.updateMenus(customerId, newMenus);
   }
 
   function handleOnDragEnd(result) {
@@ -156,6 +170,9 @@ export default function MenuOrderEditorHomeView({
                                   <PairedMenuCard
                                     menu={menus.items[menuId]}
                                     menus={menus.items}
+                                    type="edit"
+                                    editMenu={editMenu}
+                                    deleteMenu={deleteMenu}
                                   />
                                 </Box>
                               )}

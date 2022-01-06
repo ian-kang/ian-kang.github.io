@@ -57,6 +57,7 @@ function MenuEditorListView({
                     <PairedMenuCard
                       menu={data.menus.items[menuId]}
                       menus={data.menus.items}
+                      type="edit"
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
