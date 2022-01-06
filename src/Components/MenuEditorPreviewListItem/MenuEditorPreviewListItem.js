@@ -35,9 +35,13 @@ function MenuEditorPreviewListItem({ menu }) {
           </ListItemIcon>
         ) : null}
 
-        <ListItemText primary={menu.name} secondary={menu.desc} />
         <ListItemText
-          sx={{ width: "150px", textAlign: "right" }}
+          sx={{ width: "50%" }}
+          primary={menu.name}
+          secondary={menu.desc}
+        />
+        <ListItemText
+          sx={{ width: "50%", textAlign: "right" }}
           primary={
             <Typography variant="subtitle2">
               ${menu.price}
