@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Grid,
@@ -10,10 +10,16 @@ import {
 import { Add, PhotoCamera } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 
-function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
-  const [newMenu, setNewMenu] = useState({
+function MenuAddCard({
+  imageRepository,
+  menuRepository,
+  customerId,
+  category,
+  menus,
+  saved,
+}) {
+  const [menuOnEdit, setMenuOnEdit] = useState({
     menuId: Date.now(),
-    category,
     name: "",
     rate: "none",
     price: "",
@@ -22,8 +28,13 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
     img: "",
     pairs: [],
   });
-  const [imageFileOnEdit, setImageFileOnAdd] = useState();
+  const [menusOnEdit, setMenusOnEdit] = useState(menus);
   const [loading, setLoading] = useState(false);
+  const [imageFileOnEdit, setImageFileOnAdd] = useState();
+
+  useEffect(() => {
+    setMenusOnEdit(menus);
+  }, [menus]);
 
   const handleInputOnChange = (event) => {
     const targetInput = event.target.name;
@@ -32,26 +43,40 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
       if (file) {
         const url = URL.createObjectURL(file);
         setImageFileOnAdd(file);
-        setNewMenu({ ...newMenu, category, [targetInput]: url });
-        return;
+        setMenuOnEdit({ ...menuOnEdit, [targetInput]: url });
       }
       setImageFileOnAdd("");
+      return;
     }
     const value = event.target.value;
-    setNewMenu({ ...newMenu, category, [targetInput]: value });
+    setMenuOnEdit({ ...menuOnEdit, [targetInput]: value });
   };
   const handleAddButtonOnClick = async () => {
+    setLoading(true);
     if (imageFileOnEdit) {
-      setLoading(true);
       const result = await imageRepository.imageUpload(
         customerId,
         imageFileOnEdit,
-        [newMenu.menuId, newMenu.category, newMenu.name]
+        [menuOnEdit.menuId, menuOnEdit.category, menuOnEdit.name]
       );
-      addMenu(customerId, { ...newMenu, img: result.url }, newMenu.menuId);
-      setNewMenu({
-        menuId: Date.now(),
-        category,
+      const menuId = Date.now().toString();
+      setMenuOnEdit({ ...menuOnEdit, img: result.url, menuId });
+      const newMenus = {
+        ...menusOnEdit,
+        categories: {
+          ...menusOnEdit.categories,
+          [category]: {
+            menuOrder: [...menusOnEdit.categories[category].menuOrder, menuId],
+          },
+        },
+        items: {
+          ...menusOnEdit.items,
+          [menuId]: menuOnEdit,
+        },
+      };
+      setMenusOnEdit(newMenus);
+      menuRepository.updateMenus(customerId, newMenus);
+      setMenuOnEdit({
         name: "",
         rate: "none",
         price: "",
@@ -62,13 +87,27 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
       });
       setImageFileOnAdd();
       setLoading(false);
+      saved();
       return;
     }
-    setLoading(true);
-    addMenu(customerId, newMenu, newMenu.menuId);
-    setNewMenu({
-      menuId: Date.now(),
-      category,
+    const menuId = Date.now().toString();
+    setMenuOnEdit({ ...menuOnEdit, menuId });
+    const newMenus = {
+      ...menusOnEdit,
+      categories: {
+        ...menusOnEdit.categories,
+        [category]: {
+          menuOrder: [...menusOnEdit.categories[category].menuOrder, menuId],
+        },
+      },
+      items: {
+        ...menusOnEdit.items,
+        [menuId]: menuOnEdit,
+      },
+    };
+    setMenusOnEdit(newMenus);
+    menuRepository.updateMenus(customerId, newMenus);
+    setMenuOnEdit({
       name: "",
       rate: "none",
       price: "",
@@ -78,6 +117,7 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
       pairs: [],
     });
     setLoading(false);
+    saved();
   };
 
   return (
@@ -88,7 +128,7 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
             required
             label="Menu name"
             name="name"
-            value={newMenu.name}
+            value={menuOnEdit.name}
             onChange={handleInputOnChange}
             fullWidth
             disabled={loading}
@@ -99,7 +139,7 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
             select
             label="Rate"
             name="rate"
-            value={newMenu.rate}
+            value={menuOnEdit.rate}
             onChange={handleInputOnChange}
             fullWidth
             disabled={loading}
@@ -123,7 +163,7 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
             type="number"
             label="Price"
             name="price"
-            value={newMenu.price}
+            value={menuOnEdit.price}
             onChange={handleInputOnChange}
             disabled={loading}
             fullWidth
@@ -139,7 +179,7 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
             type="number"
             label="Price(B)"
             name="priceB"
-            value={newMenu.priceB}
+            value={menuOnEdit.priceB}
             onChange={handleInputOnChange}
             disabled={loading}
             fullWidth
@@ -150,7 +190,7 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
             }}
           />
         </Grid>
-        {newMenu.img && (
+        {menuOnEdit.img && (
           <Grid
             container
             item
@@ -160,7 +200,7 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
           >
             <Grid item>
               <img
-                src={newMenu.img}
+                src={menuOnEdit.img}
                 alt=""
                 loading="lazy"
                 style={{ width: "100%", height: "100%" }}
@@ -196,7 +236,7 @@ function MenuAddCard({ imageRepository, customerId, category, addMenu }) {
           <TextField
             label="Description"
             name="desc"
-            value={newMenu.desc}
+            value={menuOnEdit.desc}
             onChange={handleInputOnChange}
             fullWidth
             multiline

@@ -5,9 +5,7 @@ import MenuCategoryTabBar from "../MenuCategoryTabBar/MenuCategoryTabBar";
 import { Box } from "@mui/system";
 
 function MenuCardView({ menus }) {
-  const menusArray = Object.values(menus);
-  const categories = [...new Set(menusArray.map((menu) => menu.category))];
-  const [category, setCategory] = useState(categories[0]);
+  const [category, setCategory] = useState(menus.categoryOrder[0]);
 
   const handleTabChange = (event, newCategory) => {
     setCategory(newCategory);
@@ -18,7 +16,7 @@ function MenuCardView({ menus }) {
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <MenuCategoryTabBar
             category={category}
-            categories={categories}
+            categories={menus.categoryOrder}
             handleTabChange={handleTabChange}
           />
         </Box>
@@ -34,13 +32,15 @@ function MenuCardView({ menus }) {
           alignItems="flex-start"
         >
           {category &&
-            menusArray
-              .filter((menu) => menu.category === category)
-              .map((menu) => (
-                <Grid key={menu.menuId} item xs={12} md={6} lg={4} xl={3}>
-                  <PairedMenuCard key={menu.menuId} menu={menu} menus={menus} />
-                </Grid>
-              ))}
+            menus.categories[category].menuOrder.map((menuId) => (
+              <Grid key={menuId} item xs={12} md={6} lg={4} xl={3}>
+                <PairedMenuCard
+                  key={menuId}
+                  menu={menus.items[menuId]}
+                  menus={menus.items}
+                />
+              </Grid>
+            ))}
         </Grid>
       </Grid>
     </Grid>

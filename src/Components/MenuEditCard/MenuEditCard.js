@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
-function MenuEditCard({ menu, menus, handleEdit, handleDelete }) {
+function MenuEditCard({ menu, menuItems, handleEdit, handleDelete }) {
   return (
     <Grid container spacing={2}>
       <Grid item xs={8} lg={5}>
@@ -86,7 +86,7 @@ function MenuEditCard({ menu, menus, handleEdit, handleDelete }) {
             disabled
             label="Best Paired With"
             name="pairs"
-            value={menu.pairs.map((menuId) => menus[menuId].name)}
+            value={menu.pairs.map((menuId) => menuItems[menuId].name)}
             fullWidth
             multiline
           />

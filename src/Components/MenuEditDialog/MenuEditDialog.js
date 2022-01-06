@@ -24,7 +24,7 @@ function MenuEditDialog({
   open,
   setOpen,
   menu,
-  menus,
+  menuItems,
   imageRepository,
   menuRepository,
   customerId,
@@ -255,7 +255,7 @@ function MenuEditDialog({
                     {selected.map((value) => (
                       <Chip
                         key={value}
-                        label={menus[value].name}
+                        label={menuItems[value].name}
                         onClick={() => {}}
                       />
                     ))}
@@ -263,7 +263,7 @@ function MenuEditDialog({
                 )}
                 MenuProps={{ PaperProps: { style: { maxHeight: "400px" } } }}
               >
-                {Object.values(menus)
+                {Object.values(menuItems)
                   .filter((each) => each.menuId !== menu.menuId)
                   .map((menu) => (
                     <MenuItem key={menu.menuId} value={menu.menuId}>

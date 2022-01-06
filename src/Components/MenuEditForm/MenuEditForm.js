@@ -7,8 +7,7 @@ function MenuEditForm({
   imageRepository,
   customerId,
   menu,
-  menus,
-  menusArray,
+  menuItems,
   updateMenu,
   deleteMenu,
 }) {
@@ -18,13 +17,13 @@ function MenuEditForm({
     setOpen(true);
   };
   const handleDelete = (event) => {
-    deleteMenu(customerId, menus, menu.menuId);
+    deleteMenu(customerId, menuItems, menu.menuId);
   };
   return (
     <Grid container item spacing={2}>
       <MenuEditCard
         menu={menu}
-        menus={menus}
+        menuItems={menuItems}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
       />
@@ -32,8 +31,7 @@ function MenuEditForm({
         open={open}
         setOpen={setOpen}
         menu={menu}
-        menus={menus}
-        menusArray={menusArray}
+        menuItems={menuItems}
         imageRepository={imageRepository}
         updateMenu={updateMenu}
         customerId={customerId}

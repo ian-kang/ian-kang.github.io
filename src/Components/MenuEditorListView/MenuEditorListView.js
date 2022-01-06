@@ -8,17 +8,16 @@ import PairedMenuCard from "../PairedMenuCard/PairedMenuCard";
 function MenuEditorListView({
   data,
   imageRepository,
+  menuRepository,
   customerId,
   updateMenu,
   deleteMenu,
-  addMenu,
+  saved,
   editCategory,
 }) {
-  const menusArray = Object.values(data.menus);
-  const categories = [...new Set(menusArray.map((menu) => menu.category))];
   return (
     <>
-      {categories.map((category) => (
+      {data.menus.categoryOrder.map((category) => (
         <Box key={category}>
           <Box sx={{ mt: 4 }}>
             <Divider />
@@ -46,39 +45,41 @@ function MenuEditorListView({
                 />
               </Grid>
 
-              {menusArray
-                .filter((menu) => menu.category === category)
-                .map((menu) => (
-                  <Grid
-                    key={menu.menuId}
-                    container
-                    item
-                    alignItems="center"
-                    spacing={4}
-                  >
-                    <Grid item xs={12} md={6}>
-                      <PairedMenuCard menu={menu} menus={data.menus} />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <MenuEditForm
-                        imageRepository={imageRepository}
-                        customerId={customerId}
-                        menu={menu}
-                        menus={data.menus}
-                        menusArray={menusArray}
-                        categories={categories}
-                        updateMenu={updateMenu}
-                        deleteMenu={deleteMenu}
-                      />
-                    </Grid>
+              {data.menus.categories[category].menuOrder.map((menuId) => (
+                <Grid
+                  key={menuId}
+                  container
+                  item
+                  alignItems="center"
+                  spacing={4}
+                >
+                  <Grid item xs={12} md={6}>
+                    <PairedMenuCard
+                      menu={data.menus.items[menuId]}
+                      menus={data.menus.items}
+                    />
                   </Grid>
-                ))}
+                  <Grid item xs={12} md={6}>
+                    <MenuEditForm
+                      imageRepository={imageRepository}
+                      customerId={customerId}
+                      menu={data.menus.items[menuId]}
+                      menuItems={data.menus.items}
+                      categories={data.menus.categoryOrder}
+                      updateMenu={updateMenu}
+                      deleteMenu={deleteMenu}
+                    />
+                  </Grid>
+                </Grid>
+              ))}
               <Grid item xs={12} md={6}>
                 <MenuAddCard
                   imageRepository={imageRepository}
+                  menuRepository={menuRepository}
                   customerId={customerId}
                   category={category}
-                  addMenu={addMenu}
+                  menus={data.menus}
+                  saved={saved}
                 />
               </Grid>
             </Grid>

@@ -22,6 +22,18 @@ export default function MenuEditorHomeView({
       setLoading(false);
     });
   }, [customerId, menuRepository]);
+
+  function saved() {
+    menuRepository.getCustomerInfo(customerId, (data) => {
+      if (data) {
+        setDatabase(data);
+        setLoading(false);
+        return;
+      }
+      setLoading(false);
+    });
+  }
+
   function difference(oldArray, newArray) {
     return oldArray.filter((x) => !newArray.includes(x));
   }
@@ -97,12 +109,6 @@ export default function MenuEditorHomeView({
       setDatabase({});
     });
   };
-  const addMenu = (customerId, newMenu, newMenuId) => {
-    menuRepository.addMenu(customerId, newMenu, newMenuId);
-    menuRepository.getCustomerInfo(customerId, (data) => {
-      setDatabase(data);
-    });
-  };
   const addCategory = (customerId, category) => {
     const newId = Date.now();
     menuRepository.addMenu(
@@ -161,11 +167,13 @@ export default function MenuEditorHomeView({
                   <MenuEditorListView
                     data={database}
                     imageRepository={imageRepository}
+                    menuRepository={menuRepository}
                     customerId={customerId}
                     updateMenu={updateMenu}
                     deleteMenu={deleteMenu}
                     addMenu={addMenu}
                     editCategory={editCategory}
+                    saved={saved}
                   />
                 </Grid>
               ) : null}
