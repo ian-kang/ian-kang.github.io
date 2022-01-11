@@ -171,17 +171,42 @@ export default function MenuOrderEditorHomeView({
 
   function deleteCategory() {
     const newMenus = JSON.parse(JSON.stringify(menus));
+    if (newMenus.categories[clickedCategory].menuOrder) {
+      newMenus.categories[clickedCategory].menuOrder.forEach((menuId) => {
+        delete newMenus.items[menuId];
+      });
+    }
+
     delete newMenus.categories[clickedCategory];
 
     const index = newMenus.categoryOrder.indexOf(clickedCategory);
     if (index > -1) {
       newMenus.categoryOrder.splice(index, 1);
     }
+
     menuRepository.updateMenus(customerId, newMenus);
     setMenus(newMenus);
   }
   function addCategory(newCategory) {
-    const newMenus = JSON.parse(JSON.stringify(menus));
+    let newMenus;
+    if (!menus) {
+      newMenus = {};
+    } else {
+      newMenus = JSON.parse(JSON.stringify(menus));
+    }
+    if (!newMenus.categories && !newMenus.categoryOrder) {
+      newMenus["categories"] = {
+        [newCategory]: {
+          type: "category",
+          menuOrder: [],
+        },
+      };
+      newMenus["categoryOrder"] = [];
+      newMenus.categoryOrder.push(newCategory);
+      menuRepository.updateMenus(customerId, newMenus);
+      setMenus(newMenus);
+      return;
+    }
     newMenus.categories[newCategory] = { type: "category" };
     newMenus.categoryOrder.push(newCategory);
 
@@ -299,75 +324,78 @@ export default function MenuOrderEditorHomeView({
                       justifyContent: "flex-start",
                     }}
                   >
-                    {menus.categoryOrder && menus.categoryOrder.length > 0 ? (
-                      menus.categoryOrder.map((category, index) => (
-                        <Draggable
-                          key={category}
-                          draggableId={category}
-                          index={index}
-                        >
-                          {(provided) => (
-                            <Box
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              ref={provided.innerRef}
-                              sx={{ mb: 2 }}
-                            >
-                              <Droppable droppableId={category} type="menu">
-                                {(provided) => (
-                                  <Box
-                                    {...provided.droppableProps}
-                                    ref={provided.innerRef}
-                                    sx={{
-                                      display: "flex",
-                                      flexDirection: "column",
-                                      width: "300px",
-                                      height: "100%",
-                                      backgroundColor: "#f5f5f5",
-                                      borderRadius: 1,
-                                      gap: 1,
-                                      p: 1,
-                                      alignItems: "center",
-                                    }}
-                                  >
+                    {menus &&
+                    menus.categoryOrder &&
+                    menus.categoryOrder.length > 0
+                      ? menus.categoryOrder.map((category, index) => (
+                          <Draggable
+                            key={category}
+                            draggableId={category}
+                            index={index}
+                          >
+                            {(provided) => (
+                              <Box
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                ref={provided.innerRef}
+                                sx={{ mb: 2 }}
+                              >
+                                <Droppable droppableId={category} type="menu">
+                                  {(provided) => (
                                     <Box
+                                      {...provided.droppableProps}
+                                      ref={provided.innerRef}
                                       sx={{
-                                        width: "100%",
                                         display: "flex",
-                                        justifyContent: "space-between",
+                                        flexDirection: "column",
+                                        width: "300px",
+                                        height: "100%",
+                                        backgroundColor: "#f5f5f5",
+                                        borderRadius: 1,
+                                        gap: 1,
+                                        p: 1,
                                         alignItems: "center",
                                       }}
                                     >
-                                      <Box sx={{ ml: 1 }}>
-                                        <Typography>{category}</Typography>
+                                      <Box
+                                        sx={{
+                                          width: "100%",
+                                          display: "flex",
+                                          justifyContent: "space-between",
+                                          alignItems: "center",
+                                        }}
+                                      >
+                                        <Box sx={{ ml: 1 }}>
+                                          <Typography>{category}</Typography>
+                                        </Box>
+                                        <Box>
+                                          <IconButton
+                                            name={category}
+                                            onClick={() => {
+                                              handleCategoryEditButtonOnClick(
+                                                category
+                                              );
+                                            }}
+                                          >
+                                            <EditOutlined />
+                                          </IconButton>
+                                          <IconButton
+                                            name={category}
+                                            onClick={() => {
+                                              handleCategoryDeleteButtonOnClick(
+                                                category
+                                              );
+                                            }}
+                                          >
+                                            <DeleteOutlined />
+                                          </IconButton>
+                                        </Box>
                                       </Box>
-                                      <Box>
-                                        <IconButton
-                                          name={category}
-                                          onClick={() => {
-                                            handleCategoryEditButtonOnClick(
-                                              category
-                                            );
-                                          }}
-                                        >
-                                          <EditOutlined />
-                                        </IconButton>
-                                        <IconButton
-                                          name={category}
-                                          onClick={() => {
-                                            handleCategoryDeleteButtonOnClick(
-                                              category
-                                            );
-                                          }}
-                                        >
-                                          <DeleteOutlined />
-                                        </IconButton>
-                                      </Box>
-                                    </Box>
 
-                                    {menus.categories[category].menuOrder &&
-                                      menus.categories[category].menuOrder.map(
-                                        (menuId, index) => (
+                                      {menus.categories[category].menuOrder &&
+                                        menus.categories[
+                                          category
+                                        ].menuOrder.map((menuId, index) => (
                                           <Draggable
                                             key={menuId}
                                             draggableId={menuId.toString()}
@@ -394,29 +422,26 @@ export default function MenuOrderEditorHomeView({
                                               </Box>
                                             )}
                                           </Draggable>
-                                        )
-                                      )}
-                                    {provided.placeholder}
-                                    <LoadingButton
-                                      loading={loading}
-                                      fullWidth
-                                      variant="outlined"
-                                      startIcon={<Add />}
-                                      name={category}
-                                      onClick={handleAddButtonOnClick}
-                                    >
-                                      Add Menu
-                                    </LoadingButton>
-                                  </Box>
-                                )}
-                              </Droppable>
-                            </Box>
-                          )}
-                        </Draggable>
-                      ))
-                    ) : (
-                      <Grid item>No Data Available</Grid>
-                    )}
+                                        ))}
+                                      {provided.placeholder}
+                                      <LoadingButton
+                                        loading={loading}
+                                        fullWidth
+                                        variant="outlined"
+                                        startIcon={<Add />}
+                                        name={category}
+                                        onClick={handleAddButtonOnClick}
+                                      >
+                                        Add Menu
+                                      </LoadingButton>
+                                    </Box>
+                                  )}
+                                </Droppable>
+                              </Box>
+                            )}
+                          </Draggable>
+                        ))
+                      : null}
                     {provided.placeholder}
                     <Box>
                       <LoadingButton

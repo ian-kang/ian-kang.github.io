@@ -32,6 +32,7 @@ function MenuCardView({ menus }) {
           alignItems="flex-start"
         >
           {category &&
+            menus.categories[category].menuOrder &&
             menus.categories[category].menuOrder.map((menuId) => (
               <Grid key={menuId} item xs={12} md={6} lg={4} xl={3}>
                 <PairedMenuCard

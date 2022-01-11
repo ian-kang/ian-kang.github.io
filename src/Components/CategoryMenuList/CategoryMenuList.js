@@ -4,13 +4,14 @@ import CategoryMenuListItem from "../CategoryMenuListItem/CategoryMenuListItem";
 function CategoryMenuList({ menus, category }) {
   return (
     <>
-      {menus.categories[category].menuOrder.map((menuId) => (
-        <CategoryMenuListItem
-          key={menuId}
-          menus={menus.items}
-          menu={menus.items[menuId]}
-        />
-      ))}
+      {menus.categories[category].menuOrder &&
+        menus.categories[category].menuOrder.map((menuId) => (
+          <CategoryMenuListItem
+            key={menuId}
+            menus={menus.items}
+            menu={menus.items[menuId]}
+          />
+        ))}
     </>
   );
 }

@@ -24,6 +24,7 @@ function CategoryAddForm({ open, setOpen, addCategory }) {
   };
   const handleCancel = () => {
     setOpen(false);
+    setCategory("");
   };
 
   return (
