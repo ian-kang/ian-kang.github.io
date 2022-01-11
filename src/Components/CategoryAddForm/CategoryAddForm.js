@@ -1,41 +1,55 @@
-import { Add } from "@mui/icons-material";
-import { Button, Divider, Grid, TextField } from "@mui/material";
+import { Save } from "@mui/icons-material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Grid,
+  TextField,
+} from "@mui/material";
 import React, { useState } from "react";
 
-function CategoryAddForm({ customerId, addCategory }) {
+function CategoryAddForm({ open, setOpen, addCategory }) {
   const [category, setCategory] = useState("New Category");
   const handleOnChange = (event) => {
     const value = event.target.value;
     setCategory(value);
   };
-  const handleAddButtonOnClick = () => {
-    addCategory(customerId, category);
+  const handleSave = () => {
+    addCategory(category);
+    setOpen(false);
     setCategory("");
+  };
+  const handleCancel = () => {
+    setOpen(false);
   };
 
   return (
-    <Grid container item xs={12} spacing={2} alignItems="center">
-      <Divider />
-      <Grid item xs={9}>
-        <TextField
-          required
-          label="New category"
-          name="category"
-          value={category}
-          onChange={handleOnChange}
-          fullWidth
-        />
-      </Grid>
-      <Grid item xs={3}>
-        <Button
-          fullWidth
-          variant="contained"
-          startIcon={<Add />}
-          onClick={handleAddButtonOnClick}
-        >
-          Add
-        </Button>
-      </Grid>
+    <Grid container item spacing={2} alignItems="center">
+      <Dialog open={open} onClose={handleCancel}>
+        <DialogTitle>Add New Category</DialogTitle>
+        <DialogContent>
+          <DialogContentText></DialogContentText>
+          <TextField
+            sx={{ mt: 1 }}
+            required
+            autoFocus
+            label="Category"
+            name="category"
+            value={category}
+            fullWidth
+            onChange={handleOnChange}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancel}>Cancel</Button>
+          <Button onClick={handleSave} startIcon={<Save />}>
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Grid>
   );
 }

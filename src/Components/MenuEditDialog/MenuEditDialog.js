@@ -23,10 +23,11 @@ import { LoadingButton } from "@mui/lab";
 function MenuEditDialog({
   open,
   setOpen,
+  category,
   menu,
   menuItems,
   imageRepository,
-  menuRepository,
+  editMenu,
   customerId,
 }) {
   const [menuOnEdit, setMenuOnEdit] = useState(menu);
@@ -34,7 +35,10 @@ function MenuEditDialog({
   const [imageUrlOnEdit, setImageUrlOnEdit] = useState(menu.img);
   const [imageFileOnEdit, setImageFileOnEdit] = useState();
 
-  useEffect(() => {});
+  useEffect(() => {
+    setMenuOnEdit(menu);
+    setImageUrlOnEdit(menu.img);
+  }, [menu]);
 
   function handleOnChange(event) {
     if (event.target.name === "img") {
@@ -45,6 +49,7 @@ function MenuEditDialog({
         setImageFileOnEdit(file);
         return;
       }
+      return;
     } else if (event.target.name === "pairs") {
       const value = event.target.value;
       setMenuOnEdit({ ...menuOnEdit, pairs: value });
@@ -64,9 +69,11 @@ function MenuEditDialog({
       const result = await imageRepository.imageUpload(
         customerId,
         imageFileOnEdit,
-        [menuOnEdit.menuId, menuOnEdit.name]
+        [menuOnEdit.menuId, category, menuOnEdit.name]
       );
-      menuRepository.updateMenu(customerId, menu, {
+      setMenuOnEdit({ ...menuOnEdit, img: result.url });
+
+      editMenu(menu, {
         ...menuOnEdit,
         img: result.url,
       });
@@ -75,7 +82,7 @@ function MenuEditDialog({
       setLoading(false);
       return;
     }
-    menuRepository.updateMenu(customerId, menu.menuId, {
+    editMenu(menu, {
       ...menuOnEdit,
       img: imageUrlOnEdit,
     });
@@ -92,7 +99,7 @@ function MenuEditDialog({
 
   return (
     <Dialog open={open} onClose={handleCancel}>
-      <DialogTitle>Edit</DialogTitle>
+      <DialogTitle>Edit Menu</DialogTitle>
       <DialogContent>
         <DialogContentText></DialogContentText>
 
@@ -281,7 +288,9 @@ function MenuEditDialog({
         </Button>
         <LoadingButton
           loading={loading}
-          onClick={handleSave}
+          onClick={() => {
+            handleSave();
+          }}
           startIcon={<Save />}
         >
           Save

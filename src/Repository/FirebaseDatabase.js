@@ -18,7 +18,10 @@ export default class FirebaseDatabase {
     set(ref(this.database, customerId + "/menus/" + menuId), menu);
   }
   updateMenu(customerId, menuId, updatedMenu) {
-    update(ref(this.database, customerId + "/menus/" + menuId), updatedMenu);
+    update(
+      ref(this.database, customerId + "/menus/items/" + menuId),
+      updatedMenu
+    );
   }
   deleteMenu(customerId, menuId) {
     remove(ref(this.database, customerId + "/menus/" + menuId));

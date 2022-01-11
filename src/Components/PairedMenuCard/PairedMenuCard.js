@@ -42,7 +42,11 @@ function PairedMenuCard({ menu, menus, type, editMenu, deleteMenu }) {
           }
           action={
             <Box sx={{ ml: 1 }}>
-              <IconButton onClick={editMenu}>
+              <IconButton
+                onClick={() => {
+                  editMenu(menu.menuId);
+                }}
+              >
                 <Edit />
               </IconButton>
               <IconButton

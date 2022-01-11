@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import BaseLayout from "./Components/BaseLayout/BaseLayout";
-import MenuEditorHomeView from "./Components/MenuEditorHomeView/MenuEditorHomeView";
 import MenuHomeView from "./Components/MenuHomeView/MenuHomeView";
 import Login from "./Components/Login/Login";
 import { UserContext } from "./App";
@@ -30,23 +29,6 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
           <>
             <Route
               path="/editor"
-              element={
-                <BaseLayout
-                  customerId={user.uid}
-                  menuRepository={menuRepository}
-                  authService={authService}
-                  component={
-                    <MenuEditorHomeView
-                      customerId={user.uid}
-                      menuRepository={menuRepository}
-                      imageRepository={imageRepository}
-                    />
-                  }
-                />
-              }
-            ></Route>
-            <Route
-              path="/order-editor"
               element={
                 <BaseLayout
                   customerId={user.uid}

@@ -21,9 +21,8 @@ export default function MenuAddDialog({
   category,
   customerId,
   imageRepository,
-  menuRepository,
+  addMenu,
   menus,
-  saved,
 }) {
   const [menuOnEdit, setMenuOnEdit] = useState({
     name: "",
@@ -66,11 +65,67 @@ export default function MenuAddDialog({
       const result = await imageRepository.imageUpload(
         customerId,
         imageFileOnEdit,
-        [menuOnEdit.menuId, menuOnEdit.category, menuOnEdit.name]
+        [menuOnEdit.menuId, category, menuOnEdit.name]
       );
       const menuId = Date.now().toString();
       setMenuOnEdit({ ...menuOnEdit, img: result.url, menuId });
-      const newMenus = {
+      let newMenus;
+      if (menusOnEdit.categories[category].menuOrder) {
+        newMenus = {
+          ...menusOnEdit,
+          categories: {
+            ...menusOnEdit.categories,
+            [category]: {
+              ...menusOnEdit.categories[category],
+              menuOrder: [
+                ...menusOnEdit.categories[category].menuOrder,
+                menuId,
+              ],
+            },
+          },
+          items: {
+            ...menusOnEdit.items,
+            [menuId]: { ...menuOnEdit, menuId },
+          },
+        };
+      } else {
+        newMenus = {
+          ...menusOnEdit,
+          categories: {
+            ...menusOnEdit.categories,
+            [category]: {
+              ...menusOnEdit.categories[category],
+              menuOrder: [menuId],
+            },
+          },
+          items: {
+            ...menusOnEdit.items,
+            [menuId]: { ...menuOnEdit, menuId },
+          },
+        };
+      }
+
+      setMenusOnEdit(newMenus);
+      addMenu(newMenus);
+      setMenuOnEdit({
+        name: "",
+        rate: "none",
+        price: "",
+        priceB: "",
+        desc: "",
+        img: "",
+        pairs: [],
+      });
+      setImageFileOnAdd();
+      setLoading(false);
+      setOpen(false);
+      return;
+    }
+    const menuId = Date.now().toString();
+    setMenuOnEdit({ ...menuOnEdit, menuId });
+    let newMenus;
+    if (menusOnEdit.categories[category].menuOrder) {
+      newMenus = {
         ...menusOnEdit,
         categories: {
           ...menusOnEdit.categories,
@@ -84,41 +139,24 @@ export default function MenuAddDialog({
           [menuId]: { ...menuOnEdit, menuId },
         },
       };
-      setMenusOnEdit(newMenus);
-      menuRepository.updateMenus(customerId, newMenus);
-      setMenuOnEdit({
-        name: "",
-        rate: "none",
-        price: "",
-        priceB: "",
-        desc: "",
-        img: "",
-        pairs: [],
-      });
-      setImageFileOnAdd();
-      setLoading(false);
-      setOpen(false);
-      saved();
-      return;
-    }
-    const menuId = Date.now().toString();
-    setMenuOnEdit({ ...menuOnEdit, menuId });
-    const newMenus = {
-      ...menusOnEdit,
-      categories: {
-        ...menusOnEdit.categories,
-        [category]: {
-          ...menusOnEdit.categories[category],
-          menuOrder: [...menusOnEdit.categories[category].menuOrder, menuId],
+    } else {
+      newMenus = {
+        ...menusOnEdit,
+        categories: {
+          ...menusOnEdit.categories,
+          [category]: {
+            ...menusOnEdit.categories[category],
+            menuOrder: [menuId],
+          },
         },
-      },
-      items: {
-        ...menusOnEdit.items,
-        [menuId]: { ...menuOnEdit, menuId },
-      },
-    };
+        items: {
+          ...menusOnEdit.items,
+          [menuId]: { ...menuOnEdit, menuId },
+        },
+      };
+    }
     setMenusOnEdit(newMenus);
-    menuRepository.updateMenus(customerId, newMenus);
+    addMenu(newMenus);
     setMenuOnEdit({
       name: "",
       rate: "none",
@@ -130,7 +168,6 @@ export default function MenuAddDialog({
     });
     setLoading(false);
     setOpen(false);
-    saved();
   }
   return (
     <Dialog open={open} onClose={handleCancel}>

@@ -63,6 +63,7 @@ function MenuEditorListView({
                   <Grid item xs={12} md={6}>
                     <MenuEditForm
                       imageRepository={imageRepository}
+                      menuRepository={menuRepository}
                       customerId={customerId}
                       menu={data.menus.items[menuId]}
                       menuItems={data.menus.items}

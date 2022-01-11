@@ -5,6 +5,7 @@ import MenuEditDialog from "../MenuEditDialog/MenuEditDialog";
 
 function MenuEditForm({
   imageRepository,
+  menuRepository,
   customerId,
   menu,
   menuItems,
@@ -33,6 +34,7 @@ function MenuEditForm({
         menu={menu}
         menuItems={menuItems}
         imageRepository={imageRepository}
+        menuRepository={menuRepository}
         updateMenu={updateMenu}
         customerId={customerId}
       />

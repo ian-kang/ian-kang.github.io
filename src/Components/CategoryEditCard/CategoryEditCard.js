@@ -9,10 +9,9 @@ import {
   DialogActions,
   Grid,
 } from "@mui/material";
-import { Edit, Save } from "@mui/icons-material";
+import { Save } from "@mui/icons-material";
 
-function CategoryEditCard({ customerId, category, editCategory }) {
-  const [open, setOpen] = useState(false);
+function CategoryEditCard({ open, setOpen, category, editCategory }) {
   const [categoryOnEdit, setCategoryOnEdit] = useState(category);
   const handleOnChange = (event) => {
     const value = event.target.value;
@@ -23,37 +22,14 @@ function CategoryEditCard({ customerId, category, editCategory }) {
     setOpen(false);
   };
   const handleSave = () => {
-    editCategory(customerId, category, categoryOnEdit);
+    editCategory(category, categoryOnEdit);
     setCategoryOnEdit(categoryOnEdit);
     setOpen(false);
   };
-  const handleEditButtonOnClick = () => {
-    setOpen(true);
-  };
   return (
     <Grid container item spacing={2} alignItems="center">
-      <Grid item xs={9}>
-        <TextField
-          disabled
-          required
-          label="Category"
-          name="category"
-          value={category}
-          fullWidth
-        />
-      </Grid>
-      <Grid item xs={3}>
-        <Button
-          fullWidth
-          variant="contained"
-          startIcon={<Edit />}
-          onClick={handleEditButtonOnClick}
-        >
-          Edit
-        </Button>
-      </Grid>
       <Dialog open={open} onClose={handleCancel}>
-        <DialogTitle>Edit</DialogTitle>
+        <DialogTitle>Edit Category</DialogTitle>
         <DialogContent>
           <DialogContentText></DialogContentText>
           <TextField
