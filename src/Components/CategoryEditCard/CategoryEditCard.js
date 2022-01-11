@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   TextField,
@@ -13,6 +13,11 @@ import { Save } from "@mui/icons-material";
 
 function CategoryEditCard({ open, setOpen, category, editCategory }) {
   const [categoryOnEdit, setCategoryOnEdit] = useState(category);
+
+  useEffect(() => {
+    setCategoryOnEdit(category);
+  }, [category]);
+
   const handleOnChange = (event) => {
     const value = event.target.value;
     setCategoryOnEdit(value);

@@ -1,6 +1,13 @@
 import { Add, DeleteOutlined, EditOutlined } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Box, Grid, IconButton, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Grid,
+  IconButton,
+  Snackbar,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import { Draggable } from "react-beautiful-dnd";
@@ -24,7 +31,7 @@ export default function MenuOrderEditorHomeView({
   const [editOpen, setEditOpen] = useState(false);
   const [categoryEditOpen, setCategoryEditOpen] = useState(false);
   const [categoryAddOpen, setCategoryAddOpen] = useState(false);
-
+  const [categoryExist, setCategoryExist] = useState();
   const [deleteAlertOpen, setDeleteAlertOpen] = useState(false);
   const [clickedCategory, setClickedCategory] = useState();
   const [editMenuId, setEditMenuId] = useState();
@@ -154,6 +161,10 @@ export default function MenuOrderEditorHomeView({
 
   function editCategory(oldCategory, newCategory) {
     const newMenus = JSON.parse(JSON.stringify(menus));
+    if (newCategory in newMenus.categories) {
+      setCategoryExist(true);
+      return;
+    }
     const copiedCategory = newMenus.categories[oldCategory];
     delete newMenus.categories[oldCategory];
     newMenus.categories[newCategory] = copiedCategory;
@@ -166,7 +177,6 @@ export default function MenuOrderEditorHomeView({
 
     menuRepository.updateMenus(customerId, newMenus);
     setMenus(newMenus);
-    setCategoryEditOpen(false);
   }
 
   function deleteCategory() {
@@ -193,6 +203,10 @@ export default function MenuOrderEditorHomeView({
       newMenus = {};
     } else {
       newMenus = JSON.parse(JSON.stringify(menus));
+      if (newCategory in menus.categories) {
+        setCategoryExist(true);
+        return;
+      }
     }
     if (!newMenus.categories && !newMenus.categoryOrder) {
       newMenus["categories"] = {
@@ -502,6 +516,18 @@ export default function MenuOrderEditorHomeView({
                 setOpen={setCategoryAddOpen}
                 addCategory={addCategory}
               />
+            }
+            {
+              <Snackbar
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                open={categoryExist}
+                autoHideDuration={3000}
+                onClose={() => {
+                  setCategoryExist(false);
+                }}
+              >
+                <Alert severity="error">Category Name already Exists</Alert>
+              </Snackbar>
             }
           </Grid>
         </Grid>
