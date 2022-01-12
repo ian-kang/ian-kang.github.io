@@ -13,6 +13,7 @@ import {
   Input,
   InputAdornment,
   InputLabel,
+  ListSubheader,
   MenuItem,
   OutlinedInput,
   Select,
@@ -25,6 +26,7 @@ function MenuEditDialog({
   setOpen,
   category,
   menu,
+  menus,
   menuItems,
   imageRepository,
   editMenu,
@@ -257,17 +259,19 @@ function MenuEditDialog({
                 onChange={handleOnChange}
                 disabled={loading}
                 input={<OutlinedInput label="Best Paired With" />}
-                renderValue={(selected) => (
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                    {selected.map((value) => (
-                      <Chip
-                        key={value}
-                        label={menuItems[value].name}
-                        onClick={() => {}}
-                      />
-                    ))}
-                  </Box>
-                )}
+                renderValue={(selected) => {
+                  return (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {selected.map((value) => (
+                        <Chip
+                          key={value}
+                          label={menuItems[value].name}
+                          onClick={() => {}}
+                        />
+                      ))}
+                    </Box>
+                  );
+                }}
                 MenuProps={{
                   PaperProps: {
                     style: {
@@ -278,13 +282,14 @@ function MenuEditDialog({
                   },
                 }}
               >
-                {Object.values(menuItems)
-                  .filter((each) => each.menuId !== menu.menuId)
-                  .map((menu) => (
-                    <MenuItem key={menu.menuId} value={menu.menuId}>
-                      {menu.name}
+                {menus.categoryOrder.map((category) => [
+                  <ListSubheader>{category}</ListSubheader>,
+                  menus.categories[category].menuOrder.map((menuId) => (
+                    <MenuItem key={menuId} value={menuId}>
+                      {menuItems[menuId].name}
                     </MenuItem>
-                  ))}
+                  )),
+                ])}
               </Select>
             </FormControl>
           </Grid>

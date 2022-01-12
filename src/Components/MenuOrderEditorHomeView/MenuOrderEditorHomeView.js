@@ -502,6 +502,7 @@ export default function MenuOrderEditorHomeView({
                 setOpen={setEditOpen}
                 category={clickedCategory}
                 menu={menus.items[editMenuId]}
+                menus={menus}
                 menuItems={menus.items}
                 imageRepository={imageRepository}
                 editMenu={editMenu}
