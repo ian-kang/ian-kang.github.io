@@ -19,7 +19,6 @@ import LoadingView from "../LoadingView/LoadingView";
 import MenuAddDialog from "../MenuAddDialog/MenuAddDialog";
 import MenuEditDialog from "../MenuEditDialog/MenuEditDialog";
 import PairedMenuCard from "../PairedMenuCard/PairedMenuCard";
-
 export default function MenuOrderEditorHomeView({
   customerId,
   menuRepository,
@@ -56,6 +55,7 @@ export default function MenuOrderEditorHomeView({
     setEditMenuId(menuId);
     setEditOpen(true);
   }
+
   function handleCategoryAddButtonOnClick() {
     setCategoryAddOpen(true);
   }
@@ -67,7 +67,22 @@ export default function MenuOrderEditorHomeView({
     setDeleteAlertOpen(true);
     setClickedCategory(category);
   }
-  function handleDeleteButtonOnClick(menuId) {
+  function refresh() {
+    menuRepository.getCustomerInfo(customerId, (data) => {
+      if (data) {
+        setMenus(data.menus);
+
+        setLoading(false);
+        return;
+      }
+      setLoading(false);
+    });
+  }
+  function addMenu(newMenus) {
+    menuRepository.updateMenus(customerId, newMenus);
+    refresh();
+  }
+  function deleteMenu(menuId) {
     const newMenus = JSON.parse(JSON.stringify(menus));
     newMenus.categoryOrder.forEach((category) => {
       let index;
@@ -88,27 +103,13 @@ export default function MenuOrderEditorHomeView({
         const index = pairs.indexOf(menuId);
         if (index > -1) {
           newMenus.items[id].pairs.splice(index, 1);
+        } else {
+          return;
         }
-        return;
       }
     });
     setMenus(newMenus);
     menuRepository.updateMenus(customerId, newMenus);
-  }
-  function refresh() {
-    menuRepository.getCustomerInfo(customerId, (data) => {
-      if (data) {
-        setMenus(data.menus);
-
-        setLoading(false);
-        return;
-      }
-      setLoading(false);
-    });
-  }
-  function addMenu(newMenus) {
-    menuRepository.updateMenus(customerId, newMenus);
-    refresh();
   }
   function difference(oldArray, newArray) {
     return oldArray.filter((x) => !newArray.includes(x));
@@ -119,6 +120,7 @@ export default function MenuOrderEditorHomeView({
       menuRepository.getCustomerInfo(customerId, (data) => {
         setMenus(data.menus);
       });
+      setEditMenuId();
     } else {
       menuRepository.updateMenu(customerId, oldMenu.menuId, updatedMenu);
       let addedPairs;
@@ -155,6 +157,7 @@ export default function MenuOrderEditorHomeView({
         }
         menuRepository.updateMenus(customerId, data.menus);
         setMenus(data.menus);
+        setEditMenuId();
       });
     }
   }
@@ -184,6 +187,18 @@ export default function MenuOrderEditorHomeView({
     if (newMenus.categories[clickedCategory].menuOrder) {
       newMenus.categories[clickedCategory].menuOrder.forEach((menuId) => {
         delete newMenus.items[menuId];
+        const menuIds = Object.keys(newMenus.items);
+        menuIds.forEach((id) => {
+          const pairs = newMenus.items[id].pairs;
+          if (pairs) {
+            const index = pairs.indexOf(menuId);
+            if (index > -1) {
+              newMenus.items[id].pairs.splice(index, 1);
+            } else {
+              return;
+            }
+          }
+        });
       });
     }
 
@@ -429,9 +444,7 @@ export default function MenuOrderEditorHomeView({
                                                   editMenu={
                                                     handleEditButtonOnClick
                                                   }
-                                                  deleteMenu={
-                                                    handleDeleteButtonOnClick
-                                                  }
+                                                  deleteMenu={deleteMenu}
                                                 />
                                               </Box>
                                             )}

@@ -268,7 +268,15 @@ function MenuEditDialog({
                     ))}
                   </Box>
                 )}
-                MenuProps={{ PaperProps: { style: { maxHeight: "400px" } } }}
+                MenuProps={{
+                  PaperProps: {
+                    style: {
+                      maxHeight: "400px",
+                      maxWidth: "400px",
+                      overflow: "auto",
+                    },
+                  },
+                }}
               >
                 {Object.values(menuItems)
                   .filter((each) => each.menuId !== menu.menuId)
