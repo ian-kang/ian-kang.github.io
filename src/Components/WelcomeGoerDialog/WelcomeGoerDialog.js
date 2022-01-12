@@ -71,34 +71,10 @@ export default function WelcomeGoerDialog({ open, setOpen, menuRepository }) {
           email: value,
         });
         return;
-      case "addressLine1":
+      case "yelp":
         setGoerInfo({
           ...goerInfo,
-          address: { ...goerInfo.address, addressLine1: value },
-        });
-        return;
-      case "addressLine2":
-        setGoerInfo({
-          ...goerInfo,
-          address: { ...goerInfo.address, addressLine2: value },
-        });
-        return;
-      case "city":
-        setGoerInfo({
-          ...goerInfo,
-          address: { ...goerInfo.address, city: value },
-        });
-        return;
-      case "state":
-        setGoerInfo({
-          ...goerInfo,
-          address: { ...goerInfo.address, state: value },
-        });
-        return;
-      case "zipCode":
-        setGoerInfo({
-          ...goerInfo,
-          address: { ...goerInfo.address, zipCode: value },
+          yelp: value,
         });
         return;
 
@@ -157,55 +133,16 @@ export default function WelcomeGoerDialog({ open, setOpen, menuRepository }) {
               />
             </Grid>
             <Grid item xs={12}>
-              <Typography>Location</Typography>
+              <Typography>Yelp User Link (Optional)</Typography>
             </Grid>
             <Grid item xs={12}>
               <TextField
                 disabled={loading}
                 fullWidth
+                type="url"
                 variant="outlined"
-                label="Address Line1"
-                name="addressLine1"
-                onChange={handleOnChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                disabled={loading}
-                fullWidth
-                variant="outlined"
-                label="Address Line2"
-                name="addressLine2"
-                onChange={handleOnChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                disabled={loading}
-                fullWidth
-                variant="outlined"
-                label="City"
-                name="city"
-                onChange={handleOnChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                disabled={loading}
-                fullWidth
-                variant="outlined"
-                label="State"
-                name="state"
-                onChange={handleOnChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                disabled={loading}
-                fullWidth
-                variant="outlined"
-                label="ZIP Code"
-                name="zipCode"
+                label="Yelp User Link"
+                name="yelp"
                 onChange={handleOnChange}
               />
             </Grid>
