@@ -35,6 +35,9 @@ function NavBar({ customerId, authService, menuRepository }) {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const handleLogoOnClick = () => {
+    navigate("/menu");
+  };
   const handleProfileClick = () => {
     navigate("/profile");
     setAnchorElUser(null);
@@ -73,7 +76,11 @@ function NavBar({ customerId, authService, menuRepository }) {
         }}
       >
         <Box>
-          <Button sx={{ color: "black" }} startIcon={<WineBar />}>
+          <Button
+            sx={{ color: "black" }}
+            startIcon={<WineBar />}
+            onClick={handleLogoOnClick}
+          >
             <Typography>Pairable</Typography>
           </Button>
         </Box>

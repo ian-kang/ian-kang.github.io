@@ -288,7 +288,9 @@ function MenuEditDialog({
                     <MenuItem
                       key={menuId}
                       value={menuId}
-                      disabled={menu.menuId == menuId ? true : false}
+                      disabled={
+                        menu.menuId.toString() === menuId ? true : false
+                      }
                     >
                       {menuItems[menuId].name}
                     </MenuItem>
