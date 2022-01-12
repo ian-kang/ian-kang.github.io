@@ -160,7 +160,7 @@ export default function WelcomeGoerDialog({ open, setOpen, menuRepository }) {
             }}
             startIcon={<Send />}
           >
-            Save
+            Submit
           </LoadingButton>
         </DialogActions>
       </Dialog>

@@ -249,7 +249,7 @@ export default function WelcomeOwnerDialog({ open, setOpen, menuRepository }) {
             }}
             startIcon={<Send />}
           >
-            Save
+            Submit
           </LoadingButton>
         </DialogActions>
       </Dialog>
