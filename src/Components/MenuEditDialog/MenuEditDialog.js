@@ -285,7 +285,11 @@ function MenuEditDialog({
                 {menus.categoryOrder.map((category) => [
                   <ListSubheader>{category}</ListSubheader>,
                   menus.categories[category].menuOrder.map((menuId) => (
-                    <MenuItem key={menuId} value={menuId}>
+                    <MenuItem
+                      key={menuId}
+                      value={menuId}
+                      disabled={menu.menuId == menuId ? true : false}
+                    >
                       {menuItems[menuId].name}
                     </MenuItem>
                   )),
