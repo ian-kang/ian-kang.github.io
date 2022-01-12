@@ -187,7 +187,7 @@ function MenuEditDialog({
                   src={imageUrlOnEdit}
                   alt=""
                   loading="lazy"
-                  style={{ width: "100%", height: "100%" }}
+                  style={{ width: "300px", borderRadius: 4 }}
                 />
               </Grid>
             </Grid>

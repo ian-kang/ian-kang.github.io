@@ -254,19 +254,13 @@ export default function ProfileView({
             <Typography>Logo</Typography>
           </Grid>
           {(imageFileOnEdit || customerInfo.logo) && (
-            <Grid
-              container
-              item
-              xs={12}
-              justifyContent="center"
-              alignItems="center"
-            >
+            <Grid container item xs={12} alignItems="center">
               <Grid item>
                 <img
                   src={imageFileOnEdit || customerInfo.logo}
                   alt=""
                   loading="lazy"
-                  style={{ width: "100%", height: "100%" }}
+                  style={{ width: "200px", borderRadius: 4 }}
                 />
               </Grid>
             </Grid>
