@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import {
+  createUserWithEmailAndPassword,
   getAuth,
   getRedirectResult,
   GoogleAuthProvider,
@@ -31,6 +32,10 @@ export default class FirebaseAuth {
   signInWithEmailAndPassword = (email, password) => {
     const auth = getAuth();
     return signInWithEmailAndPassword(auth, email, password);
+  };
+  createUserWithEmailAndPassword = (email, password) => {
+    const auth = getAuth();
+    return createUserWithEmailAndPassword(auth, email, password);
   };
   sendPasswordResetEmail = (email) => {
     const auth = getAuth();

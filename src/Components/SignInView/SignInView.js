@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
 
-function SignInView({ authService, setForgotPassword }) {
+function SignInView({ authService, setForgotPassword, setSignUp }) {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
@@ -103,7 +103,7 @@ function SignInView({ authService, setForgotPassword }) {
             onChange={handleOnChange}
           />
         </Grid>
-        <Grid item container justifyContent="center">
+        <Grid item container justifyContent="space-around">
           <Grid item>
             <Button
               onClick={() => {
@@ -111,6 +111,15 @@ function SignInView({ authService, setForgotPassword }) {
               }}
             >
               Forgot password?
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button
+              onClick={() => {
+                setSignUp(true);
+              }}
+            >
+              Sign up
             </Button>
           </Grid>
         </Grid>

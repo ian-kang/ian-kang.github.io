@@ -25,6 +25,10 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
       <Routes>
         <Route path="/" element={<LoginView authService={authService} />} />
         <Route
+          path="/signup"
+          element={<LoginView authService={authService} />}
+        />
+        <Route
           path="/login"
           element={<LoginView authService={authService} />}
         />

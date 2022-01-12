@@ -3,9 +3,11 @@ import { Button, Dialog, DialogTitle, Typography } from "@mui/material";
 import React, { useState } from "react";
 import ForgotPassword from "../ForgotPasswordView/ForgotPasswordView";
 import SignInView from "../SignInView/SignInView";
+import SignUpView from "../SignUpView/SignUpView";
 
 function LoginView({ authService }) {
   const [forgotPassword, setForgotPassword] = useState();
+  const [signUp, setSignUp] = useState();
   return (
     <Dialog open maxWidth="xs" fullWidth>
       <DialogTitle
@@ -20,10 +22,13 @@ function LoginView({ authService }) {
           authService={authService}
           setForgotPassword={setForgotPassword}
         />
+      ) : signUp ? (
+        <SignUpView authService={authService} setSignUp={setSignUp} />
       ) : (
         <SignInView
           authService={authService}
           setForgotPassword={setForgotPassword}
+          setSignUp={setSignUp}
         />
       )}
     </Dialog>
