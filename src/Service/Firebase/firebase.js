@@ -4,6 +4,7 @@ import {
   getRedirectResult,
   GoogleAuthProvider,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithRedirect,
   signOut,
@@ -30,6 +31,10 @@ export default class FirebaseAuth {
   signInWithEmailAndPassword = (email, password) => {
     const auth = getAuth();
     return signInWithEmailAndPassword(auth, email, password);
+  };
+  sendPasswordResetEmail = (email) => {
+    const auth = getAuth();
+    return sendPasswordResetEmail(auth, email);
   };
   signOut = () => {
     const auth = getAuth();

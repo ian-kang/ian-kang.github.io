@@ -1,17 +1,9 @@
-import {
-  Alert,
-  Button,
-  Dialog,
-  DialogTitle,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Alert, Button, Grid, TextField, Typography } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
 
-function Login({ authService }) {
+function SignInView({ authService, setForgotPassword }) {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
@@ -65,73 +57,77 @@ function Login({ authService }) {
       });
   };
   return (
-    <Dialog open maxWidth="xs" fullWidth>
-      <DialogTitle
-        sx={{ textAlign: "center", fontSize: 24, fontWeight: "bold" }}
+    <Grid container justifyContent="center">
+      <Grid
+        container
+        item
+        direction="column"
+        justifyContent="space-around"
+        spacing={2}
+        sx={{ p: 4, maxWidth: "400px" }}
       >
-        Log in
-      </DialogTitle>
-      <Grid container justifyContent="center">
-        <Grid
-          container
-          item
-          direction="column"
-          justifyContent="space-around"
-          spacing={2}
-          sx={{ p: 4, maxWidth: "400px" }}
-        >
-          {errorMsg && (
-            <Grid item>
-              <Alert severity="error">{errorMsg}</Alert>
-            </Grid>
-          )}
+        {errorMsg && (
+          <Grid item>
+            <Alert severity="error">{errorMsg}</Alert>
+          </Grid>
+        )}
 
+        <Grid item>
+          <Typography>Email</Typography>
+        </Grid>
+        <Grid item>
+          <TextField
+            error={error === "email" && true}
+            helperText={error === "email" && "Incorrect entry"}
+            autoFocus
+            fullWidth
+            type="email"
+            variant="outlined"
+            label="Email"
+            name="email"
+            onChange={handleOnChange}
+          />
+        </Grid>
+        <Grid item>
+          <Typography>Password</Typography>
+        </Grid>
+        <Grid item>
+          <TextField
+            error={error === "password" && true}
+            helperText={error === "password" && "Incorrect entry"}
+            fullWidth
+            variant="outlined"
+            label="Password"
+            type="password"
+            name="password"
+            onChange={handleOnChange}
+          />
+        </Grid>
+        <Grid item container justifyContent="center">
           <Grid item>
-            <Typography>Email</Typography>
+            <Button
+              onClick={() => {
+                setForgotPassword(true);
+              }}
+            >
+              Forgot password?
+            </Button>
           </Grid>
-          <Grid item>
-            <TextField
-              error={error === "email" && true}
-              helperText={error === "email" && "Incorrect entry"}
-              autoFocus
+        </Grid>
+        <Grid item container justifyContent="center">
+          <Grid item xs={12}>
+            <Button
               fullWidth
-              type="email"
-              variant="outlined"
-              label="Email"
-              name="email"
-              onChange={handleOnChange}
-            />
-          </Grid>
-          <Grid item>
-            <Typography>Password</Typography>
-          </Grid>
-          <Grid item>
-            <TextField
-              error={error === "password" && true}
-              helperText={error === "password" && "Incorrect entry"}
-              fullWidth
-              variant="outlined"
-              label="Password"
-              type="password"
-              name="password"
-              onChange={handleOnChange}
-            />
-          </Grid>
-          <Grid item container justifyContent="center">
-            <Grid item xs={12}>
-              <Button
-                fullWidth
-                variant="contained"
-                size="large"
-                onClick={handleOnClick}
-              >
-                Log in
-              </Button>
-            </Grid>
+              variant="contained"
+              size="large"
+              onClick={handleOnClick}
+            >
+              Log in
+            </Button>
           </Grid>
         </Grid>
       </Grid>
-    </Dialog>
+    </Grid>
   );
 }
-export default Login;
+export default SignInView;

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import BaseLayout from "./Components/BaseLayout/BaseLayout";
 import MenuHomeView from "./Components/MenuHomeView/MenuHomeView";
-import Login from "./Components/Login/Login";
+import LoginView from "./Components/LoginView/LoginView";
 import { UserContext } from "./App";
 import PublicMenuHomeView from "./Components/PublickMenuHomeView/PublicMenuHomeView";
 import ProfileView from "./Components/ProfileView/ProfileView";
@@ -23,8 +23,11 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
   return (
     <HashRouter>
       <Routes>
-        <Route path="/" element={<Login authService={authService} />} />
-        <Route path="/login" element={<Login authService={authService} />} />
+        <Route path="/" element={<LoginView authService={authService} />} />
+        <Route
+          path="/login"
+          element={<LoginView authService={authService} />}
+        />
         {user && (
           <>
             <Route

@@ -8,6 +8,9 @@ export default class AuthService {
   signInWithEmailPassword(email, password) {
     return this.authProvider.signInWithEmailAndPassword(email, password);
   }
+  sendPasswordResetEmail(email) {
+    return this.authProvider.sendPasswordResetEmail(email);
+  }
 
   logout() {
     return this.authProvider.signOut();
