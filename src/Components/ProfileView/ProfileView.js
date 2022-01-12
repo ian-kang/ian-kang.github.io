@@ -53,6 +53,7 @@ export default function ProfileView({
       setCustomerInfoOnEdit();
       setLoading(false);
       setDisabled(true);
+      window.location.reload();
       return;
     }
     menuRepository.updateCustomerInfo(customerId, customerInfoOnEdit);
