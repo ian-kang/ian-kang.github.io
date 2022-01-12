@@ -70,4 +70,10 @@ export default class FirebaseDatabase {
   updateCustomerInfo(customerId, updatedInfo) {
     update(ref(this.database, customerId), updatedInfo);
   }
+  submitOwnerForm(submitId, ownerInfo) {
+    set(ref(this.database, "submitForm/owner/" + submitId), ownerInfo);
+  }
+  submitGoerForm(submitId, goerInfo) {
+    set(ref(this.database, "submitForm/goer/" + submitId), goerInfo);
+  }
 }

@@ -8,6 +8,7 @@ import PublicMenuHomeView from "./Components/PublickMenuHomeView/PublicMenuHomeV
 import ProfileView from "./Components/ProfileView/ProfileView";
 import LoadingViewWithAuth from "./Components/LoadingViewWithAuth/LoadingViewAuth";
 import MenuOrderEditorHomeView from "./Components/MenuOrderEditorHomeView/MenuOrderEditorHomeView";
+import WelcomePageView from "./Components/WelcomePageView/WelcomePageView";
 function AppRouter({ authService, menuRepository, imageRepository }) {
   const { user } = useContext(UserContext);
   const [customerIds, setCustomerIds] = useState();
@@ -23,10 +24,9 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
   return (
     <HashRouter>
       <Routes>
-        <Route path="/" element={<LoginView authService={authService} />} />
         <Route
-          path="/signup"
-          element={<LoginView authService={authService} />}
+          path="/"
+          element={<WelcomePageView menuRepository={menuRepository} />}
         />
         <Route
           path="/login"
