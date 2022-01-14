@@ -57,18 +57,22 @@ export default function WelcomePageView({ menuRepository }) {
       >
         <Box>
           <Grid container spacing={4}>
-            <Grid item>
+            <Grid item xs={6}>
               <Button
                 variant="contained"
                 size="large"
                 onClick={handleOwnerClick}
               >
-                Restaurant Owner?
+                Restaurant
+                <br />
+                Owner?
               </Button>
             </Grid>
-            <Grid item>
+            <Grid item xs={6}>
               <Button variant="outlined" size="large" onClick={handleGoerClick}>
-                Restaurant Go-er?
+                Restaurant
+                <br />
+                Go-er?
               </Button>
             </Grid>
           </Grid>

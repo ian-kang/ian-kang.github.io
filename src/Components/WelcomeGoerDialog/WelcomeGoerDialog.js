@@ -96,6 +96,7 @@ export default function WelcomeGoerDialog({ open, setOpen, menuRepository }) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                autoFocus
                 required
                 fullWidth
                 variant="outlined"
