@@ -143,6 +143,7 @@ export default function ProfileView({
               </Link>
             </Grid>
           </Grid>
+
           <Grid item xs={12}>
             <Typography>Business Name</Typography>
           </Grid>

@@ -1,5 +1,6 @@
 import { Dashboard, ViewList } from "@mui/icons-material";
-import { Grid, Switch, Typography } from "@mui/material";
+import { Button, Grid, Switch, Typography } from "@mui/material";
+import QRCode from "qrcode.react";
 import React, { useEffect, useState } from "react";
 import MenuCardView from "../MenuCardView/MenuCardView";
 import MenuListView from "../MenuListView/MenuListView";
@@ -20,11 +21,35 @@ function MenuHomeView({ customerId, menuRepository }) {
   const handleSwitch = (event) => {
     setToggle(!toggle);
   };
+  const handleDownloadQrcode = () => {
+    const canvas = document.getElementById("qr-code");
+    const pngUrl = canvas.toDataURL("image/png");
+
+    let downloadLink = document.createElement("a");
+    downloadLink.href = pngUrl;
+    downloadLink.download = "Pairable-Menu-QR-Code.png";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
 
   return (
     <Grid container item alignItems="center" direction="column" spacing={4}>
       <Grid item>
         <Typography variant="h5">Your Menu</Typography>
+      </Grid>
+      <Grid item container direction="column" alignItems="center">
+        <Grid item>
+          <QRCode
+            id="qr-code"
+            value={`https://pairable.menu/#/menu/${database.publicUrl}`}
+          />
+        </Grid>
+        <Grid item>
+          <Button variant="contained" onClick={handleDownloadQrcode}>
+            QR Code Download
+          </Button>
+        </Grid>
       </Grid>
       <Grid item container justifyContent="center" alignItems="center">
         <Grid item>
