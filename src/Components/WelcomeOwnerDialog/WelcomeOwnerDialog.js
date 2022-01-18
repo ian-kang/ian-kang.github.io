@@ -16,8 +16,10 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function WelcomeOwnerDialog({ open, setOpen, menuRepository }) {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState();
   const [ownerInfo, setOwnerInfo] = useState();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -38,6 +40,10 @@ export default function WelcomeOwnerDialog({ open, setOpen, menuRepository }) {
         msg: "Please fill in the forms for our sales team to contact you",
       });
       setSnackbarOpen(true);
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+
       return;
     }
     setLoading(true);
@@ -51,6 +57,9 @@ export default function WelcomeOwnerDialog({ open, setOpen, menuRepository }) {
     setSnackbarOpen(true);
     setOpen(false);
     setOwnerInfo();
+    setTimeout(() => {
+      navigate("/login");
+    }, 3000);
   }
   function handleClose() {
     setSnackbarOpen(false);
