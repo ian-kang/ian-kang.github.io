@@ -1,4 +1,4 @@
-import { WineBar } from "@mui/icons-material";
+import { Login, WineBar } from "@mui/icons-material";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -33,7 +33,7 @@ export default function WelcomePageView({ menuRepository }) {
           width: "100%",
           display: "flex",
           flexDirection: "row",
-          justifyContent: "start",
+          justifyContent: "space-between",
         }}
       >
         <Box sx={{ m: 2, ml: 3 }}>
@@ -43,6 +43,17 @@ export default function WelcomePageView({ menuRepository }) {
             onClick={handleLogoOnClick}
           >
             <Typography>Pairable</Typography>
+          </Button>
+        </Box>
+        <Box sx={{ m: 2, mr: 3 }}>
+          <Button
+            sx={{ color: "black" }}
+            startIcon={<Login />}
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
+            <Typography>Login</Typography>
           </Button>
         </Box>
       </Box>
