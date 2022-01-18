@@ -24,15 +24,21 @@ export default function CategoryMenuListItem({ menu, menus }) {
   };
   return (
     <List>
-      <ListItem
-        secondaryAction={
-          <Typography variant="subtitle2">
-            ${menu.price}
-            {menu.priceB && ` / $${menu.priceB}`}
-          </Typography>
-        }
-      >
-        <ListItemText primary={menu.name} secondary={menu.desc} />
+      <ListItem>
+        <ListItemText
+          sx={{ width: "50%" }}
+          primary={menu.name}
+          secondary={menu.desc}
+        />
+        <ListItemText
+          sx={{ width: "50%", textAlign: "right" }}
+          primary={
+            <Typography variant="subtitle2">
+              ${menu.price}
+              {menu.priceB && ` / $${menu.priceB}`}
+            </Typography>
+          }
+        />
       </ListItem>
       {menu.pairs ? (
         <>
