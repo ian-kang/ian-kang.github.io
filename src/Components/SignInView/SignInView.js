@@ -34,6 +34,12 @@ function SignInView({ authService, setForgotPassword, setSignUp }) {
         return;
     }
   };
+  const handleOnKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleOnClick();
+      return;
+    }
+  };
   const handleOnClick = () => {
     authService
       .signInWithEmailPassword(email, password)
@@ -85,6 +91,7 @@ function SignInView({ authService, setForgotPassword, setSignUp }) {
             label="Email"
             name="email"
             onChange={handleOnChange}
+            onKeyPress={handleOnKeyPress}
           />
         </Grid>
         <Grid item>
@@ -100,6 +107,7 @@ function SignInView({ authService, setForgotPassword, setSignUp }) {
             type="password"
             name="password"
             onChange={handleOnChange}
+            onKeyPress={handleOnKeyPress}
           />
         </Grid>
         <Grid item container justifyContent="space-around">
