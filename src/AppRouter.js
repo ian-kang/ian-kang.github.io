@@ -4,11 +4,11 @@ import BaseLayout from "./Components/BaseLayout/BaseLayout";
 import MenuHomeView from "./Components/MenuHomeView/MenuHomeView";
 import LoginView from "./Components/LoginView/LoginView";
 import { UserContext } from "./App";
-import PublicMenuHomeView from "./Components/PublickMenuHomeView/PublicMenuHomeView";
+import PublicMenuHomeView from "./Components/PublicMenuHomeView/PublicMenuHomeView";
 import ProfileView from "./Components/ProfileView/ProfileView";
-import LoadingViewWithAuth from "./Components/LoadingViewWithAuth/LoadingViewAuth";
 import MenuOrderEditorHomeView from "./Components/MenuOrderEditorHomeView/MenuOrderEditorHomeView";
 import WelcomePageView from "./Components/WelcomePageView/WelcomePageView";
+import PageNotFoundView from "./Components/PageNotFoundView/PageNotFoundView";
 function AppRouter({ authService, menuRepository, imageRepository }) {
   const { user } = useContext(UserContext);
   const [customerIds, setCustomerIds] = useState();
@@ -32,62 +32,60 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
           path="/login"
           element={<LoginView authService={authService} />}
         />
-        {user && (
-          <>
-            <Route
-              path="/editor"
-              element={
-                <BaseLayout
-                  customerId={user.uid}
+
+        <Route
+          path="/editor"
+          element={
+            <BaseLayout
+              customerId={user && user.uid}
+              menuRepository={menuRepository}
+              authService={authService}
+              component={
+                <MenuOrderEditorHomeView
+                  customerId={user && user.uid}
                   menuRepository={menuRepository}
-                  authService={authService}
-                  component={
-                    <MenuOrderEditorHomeView
-                      customerId={user.uid}
-                      menuRepository={menuRepository}
-                      imageRepository={imageRepository}
-                    />
-                  }
+                  imageRepository={imageRepository}
                 />
               }
-            ></Route>
-            <Route
-              path="/menu"
-              element={
-                <BaseLayout
-                  customerId={user.uid}
+            />
+          }
+        ></Route>
+        <Route
+          path="/preview"
+          element={
+            <BaseLayout
+              customerId={user && user.uid}
+              menuRepository={menuRepository}
+              authService={authService}
+              component={
+                <MenuHomeView
+                  user={user && user}
+                  customerId={user && user.uid}
                   menuRepository={menuRepository}
-                  authService={authService}
-                  component={
-                    <MenuHomeView
-                      user={user}
-                      customerId={user.uid}
-                      menuRepository={menuRepository}
-                    />
-                  }
                 />
               }
-            ></Route>
-            <Route
-              path="/profile"
-              element={
-                <BaseLayout
-                  customerId={user.uid}
+            />
+          }
+        ></Route>
+        <Route
+          path="/profile"
+          element={
+            <BaseLayout
+              customerId={user && user.uid}
+              menuRepository={menuRepository}
+              authService={authService}
+              component={
+                <ProfileView
+                  user={user && user}
+                  customerId={user && user.uid}
                   menuRepository={menuRepository}
-                  authService={authService}
-                  component={
-                    <ProfileView
-                      user={user}
-                      customerId={user.uid}
-                      menuRepository={menuRepository}
-                      imageRepository={imageRepository}
-                    />
-                  }
+                  imageRepository={imageRepository}
                 />
               }
-            ></Route>
-          </>
-        )}
+            />
+          }
+        ></Route>
+
         {customerIds &&
           database &&
           customerIds.map((customerId) => (
@@ -104,16 +102,7 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
             />
           ))}
 
-        <Route
-          path="*"
-          element={
-            <LoadingViewWithAuth
-              loading={true}
-              text="Loading..."
-              authService={authService}
-            />
-          }
-        />
+        <Route path="*" element={<PageNotFoundView />} />
       </Routes>
     </HashRouter>
   );

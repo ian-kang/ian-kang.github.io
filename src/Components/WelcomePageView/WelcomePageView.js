@@ -59,7 +59,7 @@ export default function WelcomePageView({ menuRepository }) {
       </Box>
       <Box
         sx={{
-          width: "90vw",
+          width: "100vw",
           height: "90vh",
           display: "flex",
           justifyContent: "center",

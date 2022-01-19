@@ -36,7 +36,7 @@ function NavBar({ customerId, authService, menuRepository }) {
     setAnchorElUser(null);
   };
   const handleLogoOnClick = () => {
-    navigate("/menu");
+    navigate("/editor");
   };
   const handleProfileClick = () => {
     navigate("/profile");
@@ -47,8 +47,8 @@ function NavBar({ customerId, authService, menuRepository }) {
     setAnchorElUser(null);
   };
 
-  const handleYourMenuClick = () => {
-    navigate("/menu");
+  const handleMenuPreviewClick = () => {
+    navigate("/preview");
     setAnchorElUser(null);
   };
   const handleSignOut = () => {
@@ -108,11 +108,11 @@ function NavBar({ customerId, authService, menuRepository }) {
                 </IconButton>
                 <Typography>Menu Editor</Typography>
               </MenuItem>
-              <MenuItem onClick={handleYourMenuClick}>
+              <MenuItem onClick={handleMenuPreviewClick}>
                 <IconButton>
                   <WineBar />
                 </IconButton>
-                <Typography>Your Menu</Typography>
+                <Typography>Menu Preview</Typography>
               </MenuItem>
               <MenuItem onClick={handleSignOut}>
                 <IconButton>

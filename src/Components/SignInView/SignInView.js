@@ -5,7 +5,7 @@ import { UserContext } from "../../App";
 
 function SignInView({ authService, setForgotPassword, setSignUp }) {
   const navigate = useNavigate();
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -14,13 +14,12 @@ function SignInView({ authService, setForgotPassword, setSignUp }) {
   useEffect(() => {
     authService.onAuthChange((user) => {
       if (user) {
-        setUser(user);
-        navigate("/menu");
+        navigate("/editor");
       } else {
         setUser(undefined);
       }
     });
-  }, [user, setUser, authService, navigate]);
+  });
   const handleOnChange = (event) => {
     const target = event.target.name;
     const value = event.target.value;
