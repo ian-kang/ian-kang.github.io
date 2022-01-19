@@ -1,6 +1,7 @@
 import { WineBar } from "@mui/icons-material";
 import { Button, Dialog, DialogTitle, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ForgotPassword from "../ForgotPasswordView/ForgotPasswordView";
 import SignInView from "../SignInView/SignInView";
 import SignUpView from "../SignUpView/SignUpView";
@@ -8,12 +9,20 @@ import SignUpView from "../SignUpView/SignUpView";
 function LoginView({ authService }) {
   const [forgotPassword, setForgotPassword] = useState();
   const [signUp, setSignUp] = useState();
+  const navigate = useNavigate();
+  function handleLogoOnClick() {
+    navigate("/");
+  }
   return (
     <Dialog open maxWidth="xs" fullWidth>
       <DialogTitle
         sx={{ textAlign: "center", fontSize: 24, fontWeight: "bold" }}
       >
-        <Button sx={{ color: "black" }} startIcon={<WineBar />}>
+        <Button
+          sx={{ color: "black" }}
+          startIcon={<WineBar />}
+          onClick={handleLogoOnClick}
+        >
           <Typography>Pairable</Typography>
         </Button>
       </DialogTitle>
