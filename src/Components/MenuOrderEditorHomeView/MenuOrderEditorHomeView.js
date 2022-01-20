@@ -138,9 +138,9 @@ export default function MenuOrderEditorHomeView({
           addedPairs.forEach((id) => {
             const pairs = data.menus.items[id].pairs;
             if (pairs) {
-              pairs.push(updatedMenu.menuId);
+              pairs.push(`${updatedMenu.menuId}`);
             } else {
-              data.menus.items[id]["pairs"] = [updatedMenu.menuId];
+              data.menus.items[id]["pairs"] = [`${updatedMenu.menuId}`];
             }
           });
         }
@@ -148,7 +148,7 @@ export default function MenuOrderEditorHomeView({
           removedPairs.forEach((id) => {
             const pairs = data.menus.items[id].pairs;
             if (pairs) {
-              const index = pairs.indexOf(updatedMenu.menuId);
+              const index = pairs.indexOf(`${updatedMenu.menuId}`);
               if (index > -1) {
                 data.menus.items[id].pairs.splice(index, 1);
               }

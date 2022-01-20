@@ -19,6 +19,7 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
       setCustomerIds(customerIdArray);
       setDatabase(data);
     });
+    console.log("appRouter userEffect");
   }, [menuRepository, user]);
 
   return (
@@ -30,7 +31,12 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
         />
         <Route
           path="/login"
-          element={<LoginView authService={authService} />}
+          element={
+            <LoginView
+              authService={authService}
+              menuRepository={menuRepository}
+            />
+          }
         />
 
         <Route
@@ -102,7 +108,7 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
             />
           ))}
 
-        <Route path="*" element={<PageNotFoundView />} />
+        {/* <Route path="*" element={<PageNotFoundView />} /> */}
       </Routes>
     </HashRouter>
   );

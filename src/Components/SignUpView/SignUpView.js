@@ -2,7 +2,7 @@ import { LoadingButton } from "@mui/lab";
 import { Alert, Button, Grid, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 
-export default function SignUpView({ authService, setSignUp }) {
+export default function SignUpView({ authService, menuRepository, setSignUp }) {
   const [email, setEmail] = useState();
   const [confirmEmail, setConfirmEmail] = useState();
   const [password, setPassword] = useState();
@@ -37,7 +37,14 @@ export default function SignUpView({ authService, setSignUp }) {
     }
     authService
       .createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {})
+      .then((userCredential) => {
+        console.log(userCredential);
+        const uid = userCredential.user.uid;
+        menuRepository.addCustomerInfo(uid, {
+          name: "My Business",
+          publicUrl: uid,
+        });
+      })
       .catch((error) => {
         if (error.code === "auth/email-already-in-use") {
           setMsg({

@@ -67,6 +67,9 @@ export default class FirebaseDatabase {
       callbackFn(data);
     });
   }
+  addCustomerInfo(customerId, customerInfo) {
+    set(ref(this.database, customerId), customerInfo);
+  }
   updateCustomerInfo(customerId, updatedInfo) {
     update(ref(this.database, customerId), updatedInfo);
   }

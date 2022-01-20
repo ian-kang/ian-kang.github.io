@@ -85,20 +85,23 @@ function PairedMenuCard({ menu, menus, type, editMenu, deleteMenu }) {
           {menu.desc}
         </Typography>
       </CardContent>
-      <ListItemButton onClick={handleClick}>
-        <ListItem
-          secondaryAction={
-            <Typography variant="body2">Best Paired With</Typography>
-          }
-        >
-          <ListItemIcon>
-            <WineBar />
-            <DinnerDining />
-          </ListItemIcon>
-        </ListItem>
+      {menu.pairs && menu.pairs.length > 0 && (
+        <ListItemButton onClick={handleClick}>
+          <ListItem
+            secondaryAction={
+              <Typography variant="body2">Best Paired With</Typography>
+            }
+          >
+            <ListItemIcon>
+              <WineBar />
+              <DinnerDining />
+            </ListItemIcon>
+          </ListItem>
 
-        {expanded ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
+          {expanded ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+      )}
+
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         {menu.pairs &&
           menu.pairs.map((menuId) => (

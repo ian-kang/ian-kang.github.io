@@ -6,7 +6,7 @@ import ForgotPassword from "../ForgotPasswordView/ForgotPasswordView";
 import SignInView from "../SignInView/SignInView";
 import SignUpView from "../SignUpView/SignUpView";
 
-function LoginView({ authService }) {
+function LoginView({ authService, menuRepository }) {
   const [forgotPassword, setForgotPassword] = useState();
   const [signUp, setSignUp] = useState();
   const navigate = useNavigate();
@@ -32,7 +32,11 @@ function LoginView({ authService }) {
           setForgotPassword={setForgotPassword}
         />
       ) : signUp ? (
-        <SignUpView authService={authService} setSignUp={setSignUp} />
+        <SignUpView
+          authService={authService}
+          menuRepository={menuRepository}
+          setSignUp={setSignUp}
+        />
       ) : (
         <SignInView
           authService={authService}

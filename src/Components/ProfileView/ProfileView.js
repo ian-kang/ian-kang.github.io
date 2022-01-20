@@ -15,6 +15,7 @@ export default function ProfileView({
   const [imageFileOnEdit, setImageFileOnEdit] = useState();
   const [loading, setLoading] = useState();
   const [disabled, setDisabled] = useState(true);
+  const [noCustomerInfo, setNoCustomerInfo] = useState();
   useEffect(() => {
     setLoading(true);
     menuRepository.getCustomerInfo(customerId, (data) => {
@@ -23,6 +24,7 @@ export default function ProfileView({
         setLoading(false);
         return;
       }
+      setNoCustomerInfo(true);
       setLoading(false);
     });
   }, [menuRepository, customerId]);
@@ -60,6 +62,7 @@ export default function ProfileView({
     setCustomerInfoOnEdit();
     setLoading(false);
     setDisabled(true);
+    window.location.reload();
   };
   const handleOnChange = (event) => {
     setDisabled(false);
@@ -134,7 +137,7 @@ export default function ProfileView({
       <Grid item xs={10} sx={{ textAlign: "center" }}>
         <Typography variant="h5">Profile</Typography>
       </Grid>
-      {customerInfo ? (
+      {!loading && customerInfo && (
         <Grid container item spacing={2} sx={{ p: 4, maxWidth: "800px" }}>
           <Grid item container xs={12} justifyContent="center">
             <Grid item>
@@ -354,7 +357,8 @@ export default function ProfileView({
             </LoadingButton>
           </Grid>
         </Grid>
-      ) : (
+      )}
+      {noCustomerInfo && (
         <Grid item sx={{ p: 4 }}>
           This page will be available after your first menu is created. please
           follow this link to create your first menu (
