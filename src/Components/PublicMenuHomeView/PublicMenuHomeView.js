@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import MenuCardView from "../MenuCardView/MenuCardView";
 import MenuListView from "../MenuListView/MenuListView";
 
-function PublicMenuHomeView({ menus, logo, name }) {
+function PublicMenuHomeView({ menuRepository, customerId, menus, logo, name }) {
   const [toggle, setToggle] = useState(true);
 
   const handleSwitch = (event) => {
@@ -30,7 +30,12 @@ function PublicMenuHomeView({ menus, logo, name }) {
         <Grid container item justifyContent="center" xs={10}>
           {menus ? (
             toggle ? (
-              <MenuCardView key={Date.now()} menus={menus} />
+              <MenuCardView
+                key={Date.now()}
+                menus={menus}
+                menuRepository={menuRepository}
+                customerId={customerId}
+              />
             ) : (
               <MenuListView menus={menus} />
             )

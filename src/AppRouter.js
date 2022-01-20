@@ -19,13 +19,13 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
       setCustomerIds(customerIdArray);
       setDatabase(data);
     });
-    console.log("appRouter userEffect");
   }, [menuRepository, user]);
 
   return (
     <HashRouter>
       <Routes>
         <Route
+          exact
           path="/"
           element={<WelcomePageView menuRepository={menuRepository} />}
         />
@@ -100,6 +100,8 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
               path={`/menu/${database[customerId].publicUrl}`}
               element={
                 <PublicMenuHomeView
+                  menuRepository={menuRepository}
+                  customerId={customerId}
                   menus={database[customerId].menus}
                   logo={database[customerId].logo && database[customerId].logo}
                   name={database[customerId].name}

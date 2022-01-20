@@ -23,6 +23,20 @@ export default class FirebaseDatabase {
       updatedMenu
     );
   }
+  getMenu(customerId, menuId, callbackfn) {
+    const dbRef = ref(this.database);
+    get(child(dbRef, `${customerId}/menus/items/${menuId}`))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          callbackfn(snapshot.val());
+        } else {
+          callbackfn(null);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
   deleteMenu(customerId, menuId) {
     remove(ref(this.database, customerId + "/menus/" + menuId));
   }

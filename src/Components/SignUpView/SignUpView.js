@@ -38,7 +38,6 @@ export default function SignUpView({ authService, menuRepository, setSignUp }) {
     authService
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        console.log(userCredential);
         const uid = userCredential.user.uid;
         menuRepository.addCustomerInfo(uid, {
           name: "My Business",
