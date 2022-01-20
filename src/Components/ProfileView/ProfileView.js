@@ -50,7 +50,7 @@ export default function ProfileView({
       );
       menuRepository.updateCustomerInfo(customerId, {
         ...customerInfoOnEdit,
-        logo: result.url,
+        logo: result.secure_url,
       });
       setCustomerInfoOnEdit();
       setLoading(false);

@@ -73,11 +73,11 @@ function MenuEditDialog({
         imageFileOnEdit,
         [menuOnEdit.menuId, category, menuOnEdit.name]
       );
-      setMenuOnEdit({ ...menuOnEdit, img: result.url });
 
+      setMenuOnEdit({ ...menuOnEdit, img: result.secure_url });
       editMenu(menu, {
         ...menuOnEdit,
-        img: result.url,
+        img: result.secure_url,
       });
       // setMenuOnEdit(menu);
       setOpen(false);

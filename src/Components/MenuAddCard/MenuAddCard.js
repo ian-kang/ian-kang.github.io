@@ -60,7 +60,7 @@ function MenuAddCard({
         [menuOnEdit.menuId, menuOnEdit.category, menuOnEdit.name]
       );
       const menuId = Date.now().toString();
-      setMenuOnEdit({ ...menuOnEdit, img: result.url, menuId });
+      setMenuOnEdit({ ...menuOnEdit, img: result.secure_url, menuId });
       const newMenus = {
         ...menusOnEdit,
         categories: {
