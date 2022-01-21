@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import {
   createUserWithEmailAndPassword,
+  deleteUser,
   getAuth,
   getRedirectResult,
   GoogleAuthProvider,
@@ -9,6 +10,7 @@ import {
   signInWithEmailAndPassword,
   signInWithRedirect,
   signOut,
+  updatePassword,
 } from "firebase/auth";
 export default class FirebaseAuth {
   constructor() {
@@ -40,6 +42,16 @@ export default class FirebaseAuth {
   sendPasswordResetEmail = (email) => {
     const auth = getAuth();
     return sendPasswordResetEmail(auth, email);
+  };
+  updatePassword = (newPassword) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    return updatePassword(user, newPassword);
+  };
+  deleteUser = () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    return deleteUser(user);
   };
   signOut = () => {
     const auth = getAuth();

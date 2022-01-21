@@ -86,6 +86,7 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
                   customerId={user && user.uid}
                   menuRepository={menuRepository}
                   imageRepository={imageRepository}
+                  authService={authService}
                 />
               }
             />

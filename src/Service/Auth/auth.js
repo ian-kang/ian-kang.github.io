@@ -14,6 +14,12 @@ export default class AuthService {
   sendPasswordResetEmail(email) {
     return this.authProvider.sendPasswordResetEmail(email);
   }
+  updatePassword(newPassword) {
+    return this.authProvider.updatePassword(newPassword);
+  }
+  deleteUser() {
+    return this.authProvider.deleteUser();
+  }
 
   logout() {
     return this.authProvider.signOut();

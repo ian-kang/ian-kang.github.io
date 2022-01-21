@@ -1,14 +1,29 @@
 import { Add, Save } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Button, Grid, Input, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Grid,
+  Input,
+  Snackbar,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import DeleteAlertDialog from "../DeleteAlertDialog/DeleteAlertDialog";
 
 export default function ProfileView({
   user,
   customerId,
   menuRepository,
   imageRepository,
+  authService,
 }) {
   const [customerInfo, setCustomerInfo] = useState();
   const [customerInfoOnEdit, setCustomerInfoOnEdit] = useState();
@@ -16,6 +31,16 @@ export default function ProfileView({
   const [loading, setLoading] = useState();
   const [disabled, setDisabled] = useState(true);
   const [noCustomerInfo, setNoCustomerInfo] = useState();
+  const [updatePasswordOpen, setUpdatePasswordOpen] = useState(false);
+  const [updatePassword, setUpdatePassword] = useState({
+    newPassword: "",
+    confirmNewPassword: "",
+  });
+  const [alertMsg, setAlertMsg] = useState({ type: "", msg: "" });
+  const [snackbarMsg, setSnackbarMsg] = useState({ type: "", msg: "" });
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [deleteAccountOpen, setDeleteAccountOpen] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     setLoading(true);
     menuRepository.getCustomerInfo(customerId, (data) => {
@@ -55,6 +80,11 @@ export default function ProfileView({
       setCustomerInfoOnEdit();
       setLoading(false);
       setDisabled(true);
+      setSnackbarOpen(true);
+      setSnackbarMsg({
+        type: "success",
+        msg: "Saved!",
+      });
       window.location.reload();
       return;
     }
@@ -62,7 +92,77 @@ export default function ProfileView({
     setCustomerInfoOnEdit();
     setLoading(false);
     setDisabled(true);
+    setSnackbarOpen(true);
+    setSnackbarMsg({
+      type: "success",
+      msg: "Saved!",
+    });
     window.location.reload();
+  };
+  const handleUpdatePasswordOnClick = () => {
+    setUpdatePasswordOpen(true);
+  };
+  const handleCancelOnUpdatePassword = () => {
+    setUpdatePassword({
+      newPassword: "",
+      confirmNewPassword: "",
+    });
+    setAlertMsg({ type: "", msg: "" });
+    setUpdatePasswordOpen(false);
+  };
+  const handleSaveOnUpdatePassword = () => {
+    if (updatePassword.newPassword !== updatePassword.confirmNewPassword) {
+      setAlertMsg({
+        type: "error",
+        msg: "The new passwords you entered do not match",
+      });
+    } else {
+      setAlertMsg({ type: "", msg: "" });
+      authService
+        .updatePassword(updatePassword.newPassword)
+        .then(() => {
+          setUpdatePasswordOpen(false);
+          setSnackbarOpen(true);
+          setSnackbarMsg({
+            type: "success",
+            msg: "New password is updated successfully!",
+          });
+          setUpdatePassword({
+            newPassword: "",
+            confirmNewPassword: "",
+          });
+        })
+        .catch((error) => {
+          if (error.code === "auth/requires-recent-login") {
+            setAlertMsg({
+              type: "error",
+              msg: "Please try to login again!",
+            });
+            return;
+          } else if (error.code === "auth/weak-password") {
+            setAlertMsg({
+              type: "error",
+              msg: "Password should be at least 6 characters",
+            });
+            return;
+          }
+          console.log(error);
+        });
+    }
+  };
+  const handleOnChangeUpdatePassword = (event) => {
+    const target = event.target.name;
+    const value = event.target.value;
+    switch (target) {
+      case "newPassword":
+        setUpdatePassword({ ...updatePassword, newPassword: value });
+        return;
+      case "confirmNewPassword":
+        setUpdatePassword({ ...updatePassword, confirmNewPassword: value });
+        return;
+      default:
+        return;
+    }
   };
   const handleOnChange = (event) => {
     setDisabled(false);
@@ -132,6 +232,17 @@ export default function ProfileView({
         return;
     }
   };
+  const handleDeleteAccountOnClick = () => {
+    setDeleteAccountOpen(true);
+  };
+  const deleteAccount = () => {
+    authService
+      .deleteUser()
+      .then(() => {
+        navigate("/login");
+      })
+      .catch(console.log);
+  };
   return (
     <Grid container justifyContent="center">
       <Grid item xs={10} sx={{ textAlign: "center" }}>
@@ -148,7 +259,7 @@ export default function ProfileView({
           </Grid>
 
           <Grid item xs={12}>
-            <Typography>Business Name</Typography>
+            <Typography sx={{ fontWeight: "bold" }}>Business Name</Typography>
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -162,7 +273,9 @@ export default function ProfileView({
             />
           </Grid>
           <Grid item xs={12}>
-            <Typography>Business Description (Bio)</Typography>
+            <Typography sx={{ fontWeight: "bold" }}>
+              Business Description (Bio)
+            </Typography>
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -176,7 +289,7 @@ export default function ProfileView({
             />
           </Grid>
           <Grid item xs={12}>
-            <Typography>Location</Typography>
+            <Typography sx={{ fontWeight: "bold" }}>Location</Typography>
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -255,7 +368,7 @@ export default function ProfileView({
             />
           </Grid>
           <Grid item xs={12}>
-            <Typography>Logo</Typography>
+            <Typography sx={{ fontWeight: "bold" }}>Logo</Typography>
           </Grid>
           {(imageFileOnEdit || customerInfo.logo) && (
             <Grid container item xs={12} alignItems="center">
@@ -291,13 +404,13 @@ export default function ProfileView({
             </label>
           </Grid>
           <Grid item xs={12}>
-            <Typography>Business Hours</Typography>
+            <Typography sx={{ fontWeight: "bold" }}>Business Hours</Typography>
           </Grid>
           <Grid item xs={12}>
             business hours settings
           </Grid>
           <Grid item xs={12}>
-            <Typography>Website</Typography>
+            <Typography sx={{ fontWeight: "bold" }}>Website</Typography>
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -315,7 +428,7 @@ export default function ProfileView({
           {user && (
             <>
               <Grid item xs={12}>
-                <Typography>Email</Typography>
+                <Typography sx={{ fontWeight: "bold" }}>Email</Typography>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -329,18 +442,83 @@ export default function ProfileView({
                 />
               </Grid>
               <Grid item xs={12}>
-                <Typography>Password</Typography>
+                <Typography sx={{ fontWeight: "bold" }}>Password</Typography>
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  disabled
-                  fullWidth
-                  variant="outlined"
-                  label="Password"
-                  type="password"
-                  name="password"
-                />
+                <Button
+                  variant="contained"
+                  component="span"
+                  disabled={loading}
+                  onClick={handleUpdatePasswordOnClick}
+                >
+                  Update Password
+                </Button>
               </Grid>
+              <Dialog
+                open={updatePasswordOpen}
+                onClose={handleCancelOnUpdatePassword}
+              >
+                <DialogTitle>Update Password</DialogTitle>
+                <DialogContent>
+                  <DialogContentText></DialogContentText>
+                  {alertMsg.type && (
+                    <Grid item>
+                      <Alert severity={alertMsg.type}>{alertMsg.msg}</Alert>
+                    </Grid>
+                  )}
+                  <TextField
+                    sx={{ mt: 1 }}
+                    required
+                    type="password"
+                    label="New Password"
+                    name="newPassword"
+                    value={updatePassword.newPassword}
+                    fullWidth
+                    onChange={handleOnChangeUpdatePassword}
+                  />
+                  <TextField
+                    sx={{ mt: 1 }}
+                    required
+                    type="password"
+                    label="Confirm New Password"
+                    name="confirmNewPassword"
+                    value={updatePassword.confirmNewPassword}
+                    fullWidth
+                    onChange={handleOnChangeUpdatePassword}
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleCancelOnUpdatePassword}>Cancel</Button>
+                  <Button
+                    onClick={handleSaveOnUpdatePassword}
+                    startIcon={<Save />}
+                  >
+                    Save
+                  </Button>
+                </DialogActions>
+              </Dialog>
+              <Grid item xs={12}>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  Delete Account
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  variant="contained"
+                  component="span"
+                  color="error"
+                  disabled={loading}
+                  onClick={handleDeleteAccountOnClick}
+                >
+                  Delete Account
+                </Button>
+              </Grid>
+              <DeleteAlertDialog
+                open={deleteAccountOpen}
+                setDeleteAlertOpen={setDeleteAccountOpen}
+                deleteFn={deleteAccount}
+                text="Are you sure you want to delete this account? the account won't be able to restored permanently."
+              />
             </>
           )}
 
@@ -364,6 +542,18 @@ export default function ProfileView({
           follow this link to create your first menu (
           <Link to="/editor">Menu Editor</Link>)
         </Grid>
+      )}
+      {snackbarMsg.type && (
+        <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={snackbarOpen}
+          autoHideDuration={3000}
+          onClose={() => {
+            setSnackbarOpen(false);
+          }}
+        >
+          <Alert severity={snackbarMsg.type}>{snackbarMsg.msg}</Alert>
+        </Snackbar>
       )}
     </Grid>
   );

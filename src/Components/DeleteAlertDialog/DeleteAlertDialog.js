@@ -12,23 +12,21 @@ import React from "react";
 export default function DeleteAlertDialog({
   open,
   setDeleteAlertOpen,
-  deleteCategory,
+  deleteFn,
+  text,
 }) {
   function handleClose() {
     setDeleteAlertOpen(false);
   }
   function handleDelete() {
-    deleteCategory();
+    deleteFn();
     setDeleteAlertOpen(false);
   }
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>Delete</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          Are you sure you want to delete this category and the menus in this
-          category?
-        </DialogContentText>
+        <DialogContentText>{text}</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>

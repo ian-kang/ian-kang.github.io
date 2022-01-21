@@ -521,7 +521,9 @@ export default function MenuOrderEditorHomeView({
               <DeleteAlertDialog
                 open={deleteAlertOpen}
                 setDeleteAlertOpen={setDeleteAlertOpen}
-                deleteCategory={deleteCategory}
+                deleteFn={deleteCategory}
+                text="Are you sure you want to delete this category and the menus in this
+                category?"
               />
             }
             {
