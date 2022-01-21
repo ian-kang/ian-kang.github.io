@@ -1,25 +1,12 @@
 import { Alert, Button, Grid, TextField, Typography } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../App";
+import React, { useState } from "react";
 
 function SignInView({ authService, setForgotPassword, setSignUp }) {
-  const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState();
 
-  useEffect(() => {
-    authService.onAuthChange((user) => {
-      if (user) {
-        navigate("/editor");
-      } else {
-        setUser(undefined);
-      }
-    });
-  });
   const handleOnChange = (event) => {
     const target = event.target.name;
     const value = event.target.value;

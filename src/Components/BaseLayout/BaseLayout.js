@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
 import Footer from "../Footer/Footer";
@@ -7,14 +7,17 @@ import NavBar from "../NavBar/NavBar";
 function BaseLayout({ customerId, menuRepository, authService, component }) {
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
-  authService.onAuthChange((user) => {
-    if (user) {
-      setUser(user);
-    } else {
-      setUser(undefined);
-      navigate("/login");
-    }
+  useEffect(() => {
+    authService.onAuthChange((user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(undefined);
+        navigate("/login");
+      }
+    });
   });
+
   return (
     <>
       {user && (

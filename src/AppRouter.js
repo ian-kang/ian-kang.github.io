@@ -16,8 +16,8 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
   useEffect(() => {
     menuRepository.getDatabase((data) => {
       const customerIdArray = Object.keys(data);
-      setCustomerIds(customerIdArray);
       setDatabase(data);
+      setCustomerIds(customerIdArray);
     });
   }, [menuRepository, user]);
 

@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import DeleteAlertDialog from "../DeleteAlertDialog/DeleteAlertDialog";
 
 export default function ProfileView({
@@ -40,7 +40,6 @@ export default function ProfileView({
   const [snackbarMsg, setSnackbarMsg] = useState({ type: "", msg: "" });
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [deleteAccountOpen, setDeleteAccountOpen] = useState(false);
-  const navigate = useNavigate();
   useEffect(() => {
     setLoading(true);
     menuRepository.getCustomerInfo(customerId, (data) => {
@@ -238,9 +237,7 @@ export default function ProfileView({
   const deleteAccount = () => {
     authService
       .deleteUser()
-      .then(() => {
-        navigate("/login");
-      })
+      .then(() => {})
       .catch(console.log);
   };
   return (

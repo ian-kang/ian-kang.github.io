@@ -1,7 +1,8 @@
 import { WineBar } from "@mui/icons-material";
 import { Button, Dialog, DialogTitle, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../App";
 import ForgotPassword from "../ForgotPasswordView/ForgotPasswordView";
 import SignInView from "../SignInView/SignInView";
 import SignUpView from "../SignUpView/SignUpView";
@@ -9,7 +10,18 @@ import SignUpView from "../SignUpView/SignUpView";
 function LoginView({ authService, menuRepository }) {
   const [forgotPassword, setForgotPassword] = useState();
   const [signUp, setSignUp] = useState();
+  const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    authService.onAuthChange((user) => {
+      if (user) {
+        navigate("/editor");
+      } else {
+        setUser(undefined);
+      }
+    });
+  });
   function handleLogoOnClick() {
     navigate("/");
   }
