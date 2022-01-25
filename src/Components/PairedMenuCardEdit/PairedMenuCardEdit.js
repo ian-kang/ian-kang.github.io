@@ -1,15 +1,19 @@
 import {
+  Delete,
   DinnerDining,
+  Edit,
   ExpandLess,
   ExpandMore,
   WineBar,
 } from "@mui/icons-material";
 import {
+  Box,
   Card,
   CardContent,
   CardHeader,
   CardMedia,
   Collapse,
+  IconButton,
   ListItem,
   ListItemButton,
   ListItemIcon,
@@ -18,7 +22,7 @@ import {
 import React, { useState } from "react";
 import MenuEditorPreviewListItem from "../MenuEditorPreviewListItem/MenuEditorPreviewListItem";
 
-function PairedMenuCard({ menu, menus, type }) {
+function PairedMenuCardEdit({ menu, menus, type, editMenu, deleteMenu }) {
   const [expanded, setExpanded] = useState(false);
 
   const handleClick = () => {
@@ -35,6 +39,24 @@ function PairedMenuCard({ menu, menus, type }) {
               ${menu.price}
               {menu.priceB && ` / $${menu.priceB}`}
             </Typography>
+          }
+          action={
+            <Box sx={{ ml: 1 }}>
+              <IconButton
+                onClick={() => {
+                  editMenu(menu.menuId);
+                }}
+              >
+                <Edit />
+              </IconButton>
+              <IconButton
+                onClick={() => {
+                  deleteMenu(menu.menuId);
+                }}
+              >
+                <Delete />
+              </IconButton>
+            </Box>
           }
         />
       ) : (
@@ -90,4 +112,4 @@ function PairedMenuCard({ menu, menus, type }) {
   );
 }
 
-export default PairedMenuCard;
+export default PairedMenuCardEdit;

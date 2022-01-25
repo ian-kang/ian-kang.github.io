@@ -1,8 +1,8 @@
 import { Dashboard, ViewList } from "@mui/icons-material";
 import { Box, Grid, Switch, Typography } from "@mui/material";
 import React, { useState } from "react";
-import MenuCardView from "../MenuCardView/MenuCardView";
-import MenuListView from "../MenuListView/MenuListView";
+import PublicMenuCardView from "../PublicMenuCardView/PublicMenuCardView";
+import PublicMenuListView from "../PublicMenuListView/PublicMenuListView";
 
 function PublicMenuHomeView({ menuRepository, customerId, menus, logo, name }) {
   const [toggle, setToggle] = useState(true);
@@ -30,14 +30,18 @@ function PublicMenuHomeView({ menuRepository, customerId, menus, logo, name }) {
         <Grid container item justifyContent="center" xs={10}>
           {menus ? (
             toggle ? (
-              <MenuCardView
+              <PublicMenuCardView
                 key={Date.now()}
                 menus={menus}
                 menuRepository={menuRepository}
                 customerId={customerId}
               />
             ) : (
-              <MenuListView menus={menus} />
+              <PublicMenuListView
+                menus={menus}
+                menuRepository={menuRepository}
+                customerId={customerId}
+              />
             )
           ) : (
             <Grid item>No Data Available</Grid>

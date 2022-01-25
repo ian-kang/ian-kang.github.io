@@ -18,7 +18,7 @@ import DeleteAlertDialog from "../DeleteAlertDialog/DeleteAlertDialog";
 import LoadingView from "../LoadingView/LoadingView";
 import MenuAddDialog from "../MenuAddDialog/MenuAddDialog";
 import MenuEditDialog from "../MenuEditDialog/MenuEditDialog";
-import PairedMenuCard from "../PairedMenuCard/PairedMenuCard";
+import PairedMenuCardEdit from "../PairedMenuCardEdit/PairedMenuCardEdit";
 export default function MenuOrderEditorHomeView({
   customerId,
   menuRepository,
@@ -437,7 +437,7 @@ export default function MenuOrderEditorHomeView({
                                                 {...provided.draggableProps}
                                                 {...provided.dragHandleProps}
                                               >
-                                                <PairedMenuCard
+                                                <PairedMenuCardEdit
                                                   menu={menus.items[menuId]}
                                                   menus={menus.items}
                                                   type="edit"

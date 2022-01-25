@@ -113,7 +113,7 @@ function SignInView({ authService, setForgotPassword, setSignUp }) {
                 setSignUp(true);
               }}
             >
-              Sign up
+              Don't have an account? Sign up
             </Button>
           </Grid>
         </Grid>

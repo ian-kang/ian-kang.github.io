@@ -2,9 +2,9 @@ import { Grid } from "@mui/material";
 import React, { useState } from "react";
 import MenuCategoryTabBar from "../MenuCategoryTabBar/MenuCategoryTabBar";
 import { Box } from "@mui/system";
-import PairedMenuCard from "../PairedMenuCard/PairedMenuCard";
+import PublicPairedMenuCard from "../PublicPairedMenuCard/PublicPairedMenuCard";
 
-function MenuCardView({ menus }) {
+function PublicMenuCardView({ menus, menuRepository, customerId }) {
   const [category, setCategory] = useState(menus.categoryOrder[0]);
 
   const handleTabChange = (event, newCategory) => {
@@ -35,8 +35,11 @@ function MenuCardView({ menus }) {
             menus.categories[category].menuOrder &&
             menus.categories[category].menuOrder.map((menuId) => (
               <Grid key={menuId} item xs={12} md={6} lg={4} xl={3}>
-                <PairedMenuCard
+                <PublicPairedMenuCard
+                  menuRepository={menuRepository}
+                  customerId={customerId}
                   key={menuId}
+                  menuId={menuId}
                   menu={menus.items[menuId]}
                   menus={menus.items}
                   type="menu"
@@ -49,4 +52,4 @@ function MenuCardView({ menus }) {
   );
 }
 
-export default MenuCardView;
+export default PublicMenuCardView;
