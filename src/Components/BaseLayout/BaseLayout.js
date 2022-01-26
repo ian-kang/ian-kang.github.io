@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
@@ -21,7 +21,7 @@ function BaseLayout({ customerId, menuRepository, authService, component }) {
   return (
     <>
       {user && (
-        <Box>
+        <Container>
           <Box sx={{ mb: 4 }}>
             <NavBar
               customerId={customerId}
@@ -33,7 +33,7 @@ function BaseLayout({ customerId, menuRepository, authService, component }) {
           <Box sx={{ mb: 8 }}>
             <Footer />
           </Box>
-        </Box>
+        </Container>
       )}
     </>
   );

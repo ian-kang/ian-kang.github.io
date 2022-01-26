@@ -38,19 +38,25 @@ function MenuHomeView({ customerId, menuRepository }) {
       <Grid item>
         <Typography variant="h5">Menu Preview</Typography>
       </Grid>
-      <Grid item container direction="column" alignItems="center">
-        <Grid item>
-          <QRCode
-            id="qr-code"
-            value={`https://pairable.menu/#/menu/${database.publicUrl}`}
-          />
+      <Grid container item>
+        <Grid item xs={6}>
+          Share your menu
         </Grid>
-        <Grid item>
-          <Button variant="contained" onClick={handleDownloadQrcode}>
-            QR Code Download
-          </Button>
+        <Grid item container xs={6} direction="column" alignItems="center">
+          <Grid item>
+            <QRCode
+              id="qr-code"
+              value={`https://pairable.menu/#/menu/${database.publicUrl}`}
+            />
+          </Grid>
+          <Grid item>
+            <Button variant="contained" onClick={handleDownloadQrcode}>
+              QR Code Download
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
+
       <Grid item container justifyContent="center" alignItems="center">
         <Grid item>
           <ViewList />
