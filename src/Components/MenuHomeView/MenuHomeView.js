@@ -58,9 +58,26 @@ function MenuHomeView({ customerId, menuRepository }) {
           </Grid>
           <Grid item>
             <Link
-              href={`https://pairable.menu/#/menu/${database.publicUrl}`}
+              target="_blank"
+              href={`/#/menu/${database.publicUrl}`}
             >{`https://pairable.menu/#/menu/${database.publicUrl}`}</Link>
           </Grid>
+        </Grid>
+      </Grid>
+      <Grid item container justifyContent="center" alignItems="center">
+        {database.logo && (
+          <Grid item sx={{ mr: 2 }}>
+            <img
+              src={database.logo}
+              alt=""
+              loading="lazy"
+              style={{ width: "80px", height: "80px", borderRadius: 4 }}
+            />
+          </Grid>
+        )}
+
+        <Grid item>
+          <Typography variant="h4">{database.name}</Typography>
         </Grid>
       </Grid>
 

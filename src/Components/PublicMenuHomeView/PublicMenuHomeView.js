@@ -13,8 +13,27 @@ function PublicMenuHomeView({ menuRepository, customerId, menus, logo, name }) {
   return (
     <Box sx={{ mt: 4, mb: 8 }}>
       <Grid container alignItems="center" direction="column" spacing={4}>
-        <Grid item>
-          <Typography variant="h5">{name}</Typography>
+        <Grid
+          item
+          container
+          justifyContent="center"
+          alignItems="center"
+          spacing={2}
+        >
+          {logo && (
+            <Grid item>
+              <img
+                src={logo}
+                alt=""
+                loading="lazy"
+                style={{ width: "80px", height: "80px", borderRadius: 4 }}
+              />
+            </Grid>
+          )}
+
+          <Grid item>
+            <Typography variant="h4">{name}</Typography>
+          </Grid>
         </Grid>
         <Grid item container justifyContent="center" alignItems="center">
           <Grid item>

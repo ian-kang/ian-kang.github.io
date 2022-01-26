@@ -21,7 +21,7 @@ function BaseLayout({ customerId, menuRepository, authService, component }) {
   return (
     <>
       {user && (
-        <Container>
+        <Container maxWidth="xl">
           <Box sx={{ mb: 4 }}>
             <NavBar
               customerId={customerId}
