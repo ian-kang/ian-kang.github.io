@@ -1,5 +1,5 @@
 import { Dashboard, ViewList } from "@mui/icons-material";
-import { Button, Grid, Switch, Typography } from "@mui/material";
+import { Button, Grid, Link, Switch, Typography } from "@mui/material";
 import QRCode from "qrcode.react";
 import React, { useEffect, useState } from "react";
 import MenuCardView from "../MenuCardView/MenuCardView";
@@ -39,10 +39,7 @@ function MenuHomeView({ customerId, menuRepository }) {
         <Typography variant="h5">Menu Preview</Typography>
       </Grid>
       <Grid container item>
-        <Grid item xs={6}>
-          Share your menu
-        </Grid>
-        <Grid item container xs={6} direction="column" alignItems="center">
+        <Grid item container direction="column" alignItems="center" spacing={1}>
           <Grid item>
             <QRCode
               id="qr-code"
@@ -53,6 +50,16 @@ function MenuHomeView({ customerId, menuRepository }) {
             <Button variant="contained" onClick={handleDownloadQrcode}>
               QR Code Download
             </Button>
+          </Grid>
+          <Grid item>
+            <Typography>
+              Share this Public Link on social media or with anyone
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Link
+              href={`https://pairable.menu/#/menu/${database.publicUrl}`}
+            >{`https://pairable.menu/#/menu/${database.publicUrl}`}</Link>
           </Grid>
         </Grid>
       </Grid>

@@ -247,14 +247,6 @@ export default function ProfileView({
       </Grid>
       {!loading && customerInfo && (
         <Grid container item spacing={2} sx={{ p: 4, maxWidth: "800px" }}>
-          <Grid item container xs={12} justifyContent="center">
-            <Grid item>
-              <Link to={`/menu/${customerInfo.publicUrl}`} target="_blank">
-                Public Menu URL
-              </Link>
-            </Grid>
-          </Grid>
-
           <Grid item xs={12}>
             <Typography sx={{ fontWeight: "bold" }}>Business Name</Typography>
           </Grid>
