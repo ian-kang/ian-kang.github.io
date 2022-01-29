@@ -14,7 +14,7 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
   const [customerIds, setCustomerIds] = useState();
   const [database, setDatabase] = useState();
   useEffect(() => {
-    menuRepository.getDatabase((data) => {
+    menuRepository.getClients((data) => {
       const customerIdArray = Object.keys(data);
       setDatabase(data);
       setCustomerIds(customerIdArray);

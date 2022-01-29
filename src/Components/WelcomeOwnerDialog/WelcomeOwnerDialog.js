@@ -42,7 +42,7 @@ export default function WelcomeOwnerDialog({ open, setOpen, menuRepository }) {
       setSnackbarOpen(true);
       setTimeout(() => {
         navigate("/login");
-      }, 3000);
+      }, 2000);
 
       return;
     }

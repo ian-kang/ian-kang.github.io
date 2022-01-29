@@ -7,7 +7,6 @@ import {
   get,
   child,
   remove,
-  onValue,
 } from "firebase/database";
 
 export default class FirebaseDatabase {
@@ -15,17 +14,17 @@ export default class FirebaseDatabase {
     this.database = getDatabase(app);
   }
   addMenu(customerId, menu, menuId) {
-    set(ref(this.database, customerId + "/menus/" + menuId), menu);
+    set(ref(this.database, "clients/" + customerId + "/menus/" + menuId), menu);
   }
   updateMenu(customerId, menuId, updatedMenu) {
     update(
-      ref(this.database, customerId + "/menus/items/" + menuId),
+      ref(this.database, "clients/" + customerId + "/menus/items/" + menuId),
       updatedMenu
     );
   }
   getMenu(customerId, menuId, callbackfn) {
     const dbRef = ref(this.database);
-    get(child(dbRef, `${customerId}/menus/items/${menuId}`))
+    get(child(dbRef, `clients/${customerId}/menus/items/${menuId}`))
       .then((snapshot) => {
         if (snapshot.exists()) {
           callbackfn(snapshot.val());
@@ -38,17 +37,35 @@ export default class FirebaseDatabase {
       });
   }
   deleteMenu(customerId, menuId) {
-    remove(ref(this.database, customerId + "/menus/" + menuId));
+    remove(ref(this.database, "clients/" + customerId + "/menus/" + menuId));
   }
   updateMenus(customerId, updatedMenus) {
-    update(ref(this.database, customerId + "/menus/"), updatedMenus);
+    update(
+      ref(this.database, "clients/" + customerId + "/menus/"),
+      updatedMenus
+    );
   }
-  updateLayout(customerId, updatedLayout) {
-    update(ref(this.database, customerId), updatedLayout);
+  updateCategory(customerId, menusWithNewCategory) {
+    update(
+      ref(this.database, "clients/" + customerId + "/menus/"),
+      menusWithNewCategory
+    );
   }
+  getClients(callbackFn) {
+    const dbRef = ref(this.database);
+    get(child(dbRef, "clients/")).then((snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        callbackFn(data);
+      } else {
+        callbackFn(null);
+      }
+    });
+  }
+
   getCustomerInfo(customerId, callbackfn) {
     const dbRef = ref(this.database);
-    get(child(dbRef, customerId))
+    get(child(dbRef, `clients/${customerId}`))
       .then((snapshot) => {
         if (snapshot.exists()) {
           callbackfn(snapshot.val());
@@ -60,32 +77,11 @@ export default class FirebaseDatabase {
         console.error(error);
       });
   }
-  updateCategory(customerId, menusWithNewCategory) {
-    update(ref(this.database, customerId + "/menus/"), menusWithNewCategory);
-  }
-  getDatabase(callbackFn) {
-    const dbRef = ref(this.database);
-    get(dbRef).then((snapshot) => {
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        callbackFn(data);
-      } else {
-        callbackFn(null);
-      }
-    });
-  }
-  onDatabaseChange(callbackFn) {
-    const dbRef = ref(this.database);
-    onValue(dbRef, (snapshot) => {
-      const data = snapshot.val();
-      callbackFn(data);
-    });
-  }
   addCustomerInfo(customerId, customerInfo) {
-    set(ref(this.database, customerId), customerInfo);
+    set(ref(this.database, "clients/" + customerId), customerInfo);
   }
-  updateCustomerInfo(customerId, updatedInfo) {
-    update(ref(this.database, customerId), updatedInfo);
+  updateCustomerInfo(customerId, customerInfo) {
+    update(ref(this.database, "clients/" + customerId), customerInfo);
   }
   submitOwnerForm(submitId, ownerInfo) {
     set(ref(this.database, "submitForm/owner/" + submitId), ownerInfo);
@@ -93,4 +89,7 @@ export default class FirebaseDatabase {
   submitGoerForm(submitId, goerInfo) {
     set(ref(this.database, "submitForm/goer/" + submitId), goerInfo);
   }
+  // updateDatabase(updatedInfo) {
+  //   update(ref(this.database), updatedInfo);
+  // }
 }
