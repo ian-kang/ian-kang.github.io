@@ -36,6 +36,7 @@ function MenuEditDialog({
   const [loading, setLoading] = useState(false);
   const [imageUrlOnEdit, setImageUrlOnEdit] = useState(menu.img);
   const [imageFileOnEdit, setImageFileOnEdit] = useState();
+  console.log(menus);
 
   useEffect(() => {
     setMenuOnEdit(menu);
@@ -284,17 +285,18 @@ function MenuEditDialog({
               >
                 {menus.categoryOrder.map((category) => [
                   <ListSubheader>{category}</ListSubheader>,
-                  menus.categories[category].menuOrder.map((menuId) => (
-                    <MenuItem
-                      key={menuId}
-                      value={menuId}
-                      disabled={
-                        menu.menuId.toString() === menuId ? true : false
-                      }
-                    >
-                      {menuItems[menuId].name}
-                    </MenuItem>
-                  )),
+                  menus.categories[category].menuOrder &&
+                    menus.categories[category].menuOrder.map((menuId) => (
+                      <MenuItem
+                        key={menuId}
+                        value={menuId}
+                        disabled={
+                          menu.menuId.toString() === menuId ? true : false
+                        }
+                      >
+                        {menuItems[menuId].name}
+                      </MenuItem>
+                    )),
                 ])}
               </Select>
             </FormControl>

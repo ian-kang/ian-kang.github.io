@@ -110,6 +110,7 @@ export default function MenuOrderEditorHomeView({
     });
     setMenus(newMenus);
     menuRepository.updateMenus(customerId, newMenus);
+    setEditMenuId();
   }
   function difference(oldArray, newArray) {
     return oldArray.filter((x) => !newArray.includes(x));
