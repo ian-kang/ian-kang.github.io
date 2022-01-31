@@ -111,7 +111,7 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
             />
           ))}
 
-        <Route path="*" element={<PageNotFoundView />} />
+        {/* <Route path="*" element={<PageNotFoundView />} /> */}
       </Routes>
     </HashRouter>
   );
