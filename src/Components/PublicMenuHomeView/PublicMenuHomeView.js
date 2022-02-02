@@ -36,7 +36,7 @@ function PublicMenuHomeView({ menuRepository, customerId, customer }) {
           </Grid>
         </Grid>
         {customer.address && (
-          <Grid item>
+          <Grid item sx={{ textAlign: "center" }}>
             <Typography variant="subtitle1">
               {customer.address.addressLine1 &&
                 `${customer.address.addressLine1}, `}

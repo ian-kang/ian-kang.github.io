@@ -7,7 +7,8 @@ function MenuCategoryTabBar({ category, categories, handleTabChange }) {
       value={category}
       onChange={handleTabChange}
       variant="scrollable"
-      scrollButtons="auto"
+      scrollButtons
+      allowScrollButtonsMobile
     >
       {categories.map((category) => (
         <Tab key={category} label={category} value={category} />

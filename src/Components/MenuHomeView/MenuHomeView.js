@@ -7,7 +7,7 @@ import MenuListView from "../MenuListView/MenuListView";
 
 function MenuHomeView({ customerId, menuRepository }) {
   const [database, setDatabase] = useState({});
-  const [toggle, setToggle] = useState(true);
+  const [toggle, setToggle] = useState(false);
 
   useEffect(() => {
     menuRepository.getCustomerInfo(customerId, (data) => {
