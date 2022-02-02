@@ -45,6 +45,7 @@ export default function ProfileView({
     menuRepository.getCustomerInfo(customerId, (data) => {
       if (data) {
         setCustomerInfo(data);
+        setCustomerInfoOnEdit(data);
         setLoading(false);
         return;
       }
@@ -248,7 +249,9 @@ export default function ProfileView({
       {!loading && customerInfo && (
         <Grid container item spacing={2} sx={{ p: 4, maxWidth: "800px" }}>
           <Grid item xs={12}>
-            <Typography sx={{ fontWeight: "bold" }}>Business Name</Typography>
+            <Typography sx={{ fontWeight: "bold" }}>
+              Business Name (*English only)
+            </Typography>
           </Grid>
           <Grid item xs={12}>
             <TextField

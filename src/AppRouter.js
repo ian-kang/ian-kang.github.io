@@ -103,9 +103,7 @@ function AppRouter({ authService, menuRepository, imageRepository }) {
                 <PublicMenuHomeView
                   menuRepository={menuRepository}
                   customerId={customerId}
-                  menus={database[customerId].menus}
-                  logo={database[customerId].logo && database[customerId].logo}
-                  name={database[customerId].name}
+                  customer={database[customerId]}
                 />
               }
             />
