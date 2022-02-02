@@ -67,7 +67,6 @@ export default function ProfileView({
     setCustomerInfoOnEdit({ ...customerInfoOnEdit, logo: "" });
   };
   const handleSaveButtonOnClick = async () => {
-    setLoading(true);
     if (customerInfoOnEdit.logo) {
       const result = await imageRepository.logoImageUpload(
         customerId,
@@ -90,7 +89,6 @@ export default function ProfileView({
     }
     menuRepository.updateCustomerInfo(customerId, customerInfoOnEdit);
     setCustomerInfoOnEdit();
-    setLoading(false);
     setDisabled(true);
     setSnackbarOpen(true);
     setSnackbarMsg({
