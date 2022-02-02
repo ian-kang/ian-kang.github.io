@@ -1,6 +1,6 @@
 import { Dashboard, ViewList } from "@mui/icons-material";
 import { Box, Grid, Switch, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PublicMenuCardView from "../PublicMenuCardView/PublicMenuCardView";
 import PublicMenuListView from "../PublicMenuListView/PublicMenuListView";
 

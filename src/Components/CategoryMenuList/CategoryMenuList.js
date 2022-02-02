@@ -1,7 +1,7 @@
 import React from "react";
 import CategoryMenuListItem from "../CategoryMenuListItem/CategoryMenuListItem";
 
-function CategoryMenuList({ menus, category, menuRepository, customerId }) {
+function CategoryMenuList({ menus, category }) {
   return (
     <>
       {menus.categories[category].menuOrder &&
