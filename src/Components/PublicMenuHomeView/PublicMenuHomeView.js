@@ -11,7 +11,7 @@ function PublicMenuHomeView({ menuRepository, customerId, customer }) {
     setToggle(!toggle);
   };
   return (
-    <Box sx={{ mt: 4, mb: 8, overflow: "hidden" }}>
+    <Box sx={{ mt: 4, mb: 8 }}>
       <Grid container alignItems="center" direction="column" spacing={4}>
         <Grid
           item

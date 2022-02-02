@@ -29,7 +29,7 @@ export default function MenuListView({ menus }) {
         categories={menus.categoryOrder}
         handleTabChange={handleTabChange}
       />
-      {menus.categoryOrder.map((category, i) => (
+      {menus.categoryOrder.map((category) => (
         <Grid
           key={category}
           ref={(el) =>

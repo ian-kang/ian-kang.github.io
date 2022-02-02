@@ -1,7 +1,11 @@
 import { Tab, Tabs } from "@mui/material";
 import React from "react";
 
-function MenuCategoryTabBar({ category, categories, handleTabChange }) {
+function PublicMenuCategoryTabBarForListView({
+  category,
+  categories,
+  handleTabChange,
+}) {
   return (
     <Tabs
       sx={{
@@ -17,10 +21,10 @@ function MenuCategoryTabBar({ category, categories, handleTabChange }) {
       allowScrollButtonsMobile
     >
       {categories.map((category) => (
-        <Tab key={category} label={category} value={category} />
+        <Tab key={category} label={category} value={category}></Tab>
       ))}
     </Tabs>
   );
 }
 
-export default MenuCategoryTabBar;
+export default PublicMenuCategoryTabBarForListView;
