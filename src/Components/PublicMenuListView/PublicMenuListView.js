@@ -44,7 +44,7 @@ export default function PublicMenuListView({
           container
           direction="column"
         >
-          <Grid item sx={{ mt: 10 }}>
+          <Grid item sx={{ mt: 8 }}>
             <Typography variant="h5">{category}</Typography>
           </Grid>
           <Grid item>

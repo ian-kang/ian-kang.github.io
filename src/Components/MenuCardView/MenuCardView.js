@@ -1,7 +1,6 @@
 import { Grid } from "@mui/material";
 import React, { useState } from "react";
 import MenuCategoryTabBar from "../MenuCategoryTabBar/MenuCategoryTabBar";
-import { Box } from "@mui/system";
 import PairedMenuCard from "../PairedMenuCard/PairedMenuCard";
 
 function MenuCardView({ menus }) {
@@ -12,17 +11,13 @@ function MenuCardView({ menus }) {
   };
   return (
     <Grid container item justifyContent="center" xs={10}>
-      <Grid item xs={12} sx={{ mb: 4 }}>
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <MenuCategoryTabBar
-            category={category}
-            categories={menus.categoryOrder}
-            handleTabChange={handleTabChange}
-          />
-        </Box>
-      </Grid>
+      <MenuCategoryTabBar
+        category={category}
+        categories={menus.categoryOrder}
+        handleTabChange={handleTabChange}
+      />
 
-      <Grid container justifyContent="center">
+      <Grid container justifyContent="center" sx={{ mt: 4 }}>
         <Grid
           item
           container
